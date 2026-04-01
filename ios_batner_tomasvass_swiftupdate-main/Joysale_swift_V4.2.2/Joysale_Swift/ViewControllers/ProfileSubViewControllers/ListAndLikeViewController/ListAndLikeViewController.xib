@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ListAndLikeViewController" customModule="Batner" customModuleProvider="target">
+            <connections>
+                <outlet property="bottomLoader" destination="hKx-TS-gpr" id="mNS-QU-aLl"/>
+                <outlet property="collectionView" destination="WRR-Ag-ikW" id="N4F-cn-3kc"/>
+                <outlet property="noItemDesLabel" destination="QNQ-iq-Xb3" id="wwG-mn-XZ9"/>
+                <outlet property="noItemStackView" destination="r0i-bw-21N" id="yTK-l6-Lwt"/>
+                <outlet property="noItemTitleLabel" destination="Pba-pZ-ToZ" id="n0g-kW-zdR"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Hjq-ly-ZxF">
+                    <rect key="frame" x="0.0" y="48" width="414" height="814"/>
+                    <subviews>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="WRR-Ag-ikW">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
+                            <color key="backgroundColor" name="clearcolor"/>
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="8" minimumInteritemSpacing="8" id="bSn-KR-NI3">
+                                <size key="itemSize" width="50" height="50"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                            <connections>
+                                <outlet property="dataSource" destination="-1" id="qCc-Ab-khD"/>
+                                <outlet property="delegate" destination="-1" id="Tb3-c0-SpN"/>
+                            </connections>
+                        </collectionView>
+                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="hKx-TS-gpr">
+                            <rect key="frame" x="0.0" y="774" width="414" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="ePL-k4-6bl"/>
+                            </constraints>
+                        </activityIndicatorView>
+                    </subviews>
+                </stackView>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="r0i-bw-21N">
+                    <rect key="frame" x="157" y="147" width="100" height="161"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noItemImg" translatesAutoresizingMaskIntoConstraints="NO" id="Gic-TH-iYm">
+                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="Gic-TH-iYm" secondAttribute="height" multiplier="1:1" id="ANx-5k-d4z"/>
+                                <constraint firstAttribute="height" constant="100" id="lXg-db-11l"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pba-pZ-ToZ">
+                            <rect key="frame" x="29.5" y="110" width="41.5" height="20.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QNQ-iq-Xb3">
+                            <rect key="frame" x="29.5" y="140.5" width="41.5" height="20.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" name="BackGroundColorNew"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Hjq-ly-ZxF" secondAttribute="bottom" id="2Yo-Bw-w1Z"/>
+                <constraint firstItem="r0i-bw-21N" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" multiplier="1:2" id="Efq-aX-Ya6"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Hjq-ly-ZxF" secondAttribute="trailing" id="d3v-bE-7Zr"/>
+                <constraint firstItem="Hjq-ly-ZxF" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="jCq-eS-oGy"/>
+                <constraint firstItem="Hjq-ly-ZxF" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="lLf-Zh-Y1J"/>
+                <constraint firstItem="r0i-bw-21N" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="srQ-h0-0vi"/>
+            </constraints>
+            <point key="canvasLocation" x="141" y="117"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="noItemImg" width="146.5" height="146.5"/>
+        <namedColor name="BackGroundColorNew">
+            <color red="0.95686274509803926" green="0.95686274509803926" blue="0.95686274509803926" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="clearcolor">
+            <color red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

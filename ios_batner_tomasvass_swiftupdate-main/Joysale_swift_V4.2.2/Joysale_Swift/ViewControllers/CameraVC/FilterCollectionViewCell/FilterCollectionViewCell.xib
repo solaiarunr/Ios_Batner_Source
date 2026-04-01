@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="FilterCollectionViewCell" customModule="ProductsVideo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="75" height="95"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="75" height="95"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="XoJ-85-RsF">
+                        <rect key="frame" x="0.0" y="0.0" width="75" height="95"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="filter_sample_image.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="aQZ-OL-dWh">
+                                <rect key="frame" x="0.0" y="0.0" width="75" height="63.666666666666664"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yas-ta-xg0">
+                                <rect key="frame" x="0.0" y="74.666666666666671" width="75" height="20.333333333333329"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="aQZ-OL-dWh" firstAttribute="leading" secondItem="XoJ-85-RsF" secondAttribute="leading" id="P8j-8D-f3V"/>
+                            <constraint firstItem="Yas-ta-xg0" firstAttribute="leading" secondItem="XoJ-85-RsF" secondAttribute="leading" id="new-ki-81E"/>
+                            <constraint firstAttribute="width" constant="75" id="sZg-rp-rou"/>
+                        </constraints>
+                    </stackView>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="XoJ-85-RsF" secondAttribute="trailing" id="1cO-gZ-y9e"/>
+                <constraint firstItem="XoJ-85-RsF" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Gfn-Zt-hkW"/>
+                <constraint firstAttribute="bottom" secondItem="XoJ-85-RsF" secondAttribute="bottom" id="ZKQ-h8-PtO"/>
+                <constraint firstItem="XoJ-85-RsF" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="yY9-VT-wcn"/>
+            </constraints>
+            <size key="customSize" width="169" height="99"/>
+            <connections>
+                <outlet property="filterImageView" destination="aQZ-OL-dWh" id="6sb-kx-tCg"/>
+                <outlet property="filterLabel" destination="Yas-ta-xg0" id="QLn-Dt-TTX"/>
+            </connections>
+            <point key="canvasLocation" x="127.48091603053435" y="36.971830985915496"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="filter_sample_image.jpg" width="640" height="729"/>
+    </resources>
+</document>

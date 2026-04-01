@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="73" id="KGk-i7-Jjw" customClass="ProfileTableViewCell" customModule="Batner" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="73"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="73"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="NN7-a9-q1d">
+                        <rect key="frame" x="15" y="5" width="290" height="63"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VPB-wy-Fas">
+                                <rect key="frame" x="0.0" y="21.5" width="204" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XaM-Lc-G2O">
+                                <rect key="frame" x="209" y="18.5" width="56" height="26"/>
+                                <color key="backgroundColor" red="1" green="0.72549019607843135" blue="0.058823529411764705" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="FT5-kE-yvI"/>
+                                    <constraint firstAttribute="height" constant="26" id="XUm-Sk-kIr"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                <state key="normal" title="Button"/>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="InArrowImg" translatesAutoresizingMaskIntoConstraints="NO" id="jEg-yB-aSo">
+                                <rect key="frame" x="270" y="21.5" width="20" height="20"/>
+                                <color key="tintColor" name="Placeholdercolor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="T8C-mu-yHj"/>
+                                    <constraint firstAttribute="width" constant="20" id="leP-f1-VzU"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <color key="backgroundColor" name="BackColorwhite"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="NN7-a9-q1d" secondAttribute="trailing" constant="15" id="Iii-By-zXt"/>
+                    <constraint firstAttribute="bottom" secondItem="NN7-a9-q1d" secondAttribute="bottom" constant="5" id="Saa-xS-Tvs"/>
+                    <constraint firstItem="NN7-a9-q1d" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="tHR-Sk-yC9"/>
+                    <constraint firstItem="NN7-a9-q1d" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="uEG-vw-Txu"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" name="BackColorwhite"/>
+            <connections>
+                <outlet property="arrowImageView" destination="jEg-yB-aSo" id="MFV-Pa-5gL"/>
+                <outlet property="notificationButton" destination="XaM-Lc-G2O" id="g9Z-4R-BiX"/>
+                <outlet property="titleLabel" destination="VPB-wy-Fas" id="eKQ-wb-VTw"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="131.58482142857142"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="InArrowImg" width="23" height="40"/>
+        <namedColor name="BackColorwhite">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Placeholdercolor">
+            <color red="0.77999997138977051" green="0.77999997138977051" blue="0.80400002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

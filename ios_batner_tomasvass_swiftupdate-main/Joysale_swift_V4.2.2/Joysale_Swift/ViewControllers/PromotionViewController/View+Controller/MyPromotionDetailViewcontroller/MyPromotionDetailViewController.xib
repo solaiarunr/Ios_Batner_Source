@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MyPromotionDetailViewController" customModule="Joysale_Swift" customModuleProvider="target">
+            <connections>
+                <outlet property="collectionView" destination="uxa-my-xV0" id="htX-d9-eEr"/>
+                <outlet property="tableView" destination="NTB-i1-pwc" id="uLQ-UB-ZqH"/>
+                <outlet property="topView" destination="uVI-oz-vry" id="7El-xv-slC"/>
+                <outlet property="topViewHeightConst" destination="T7z-8d-lWp" id="rcx-SU-BeV"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="NTB-i1-pwc">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <color key="backgroundColor" name="BackGroundColor"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="FJv-iV-fJl"/>
+                        <outlet property="delegate" destination="-1" id="baK-vo-lj2"/>
+                    </connections>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uVI-oz-vry">
+                    <rect key="frame" x="0.0" y="44" width="414" height="250"/>
+                    <subviews>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="uxa-my-xV0">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="250"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="h03-Pc-HFT">
+                                <size key="itemSize" width="50" height="50"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                            <connections>
+                                <outlet property="dataSource" destination="-1" id="Onk-1s-6T9"/>
+                                <outlet property="delegate" destination="-1" id="iJM-Qf-1Oj"/>
+                            </connections>
+                        </collectionView>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ItemTransparentImg" translatesAutoresizingMaskIntoConstraints="NO" id="HZG-oh-b9a">
+                            <rect key="frame" x="0.0" y="190" width="414" height="60"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="x6N-1t-2Jr"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstItem="uxa-my-xV0" firstAttribute="leading" secondItem="uVI-oz-vry" secondAttribute="leading" id="E27-9W-ANA"/>
+                        <constraint firstAttribute="bottom" secondItem="uxa-my-xV0" secondAttribute="bottom" id="JDS-3O-bvg"/>
+                        <constraint firstAttribute="trailing" secondItem="uxa-my-xV0" secondAttribute="trailing" id="QPb-bs-lmX"/>
+                        <constraint firstAttribute="height" constant="250" id="T7z-8d-lWp"/>
+                        <constraint firstAttribute="bottom" secondItem="HZG-oh-b9a" secondAttribute="bottom" id="Uxa-Om-vZW"/>
+                        <constraint firstItem="HZG-oh-b9a" firstAttribute="leading" secondItem="uVI-oz-vry" secondAttribute="leading" id="YvP-8Q-dd3"/>
+                        <constraint firstItem="uxa-my-xV0" firstAttribute="top" secondItem="uVI-oz-vry" secondAttribute="top" id="dMq-hD-thh"/>
+                        <constraint firstAttribute="trailing" secondItem="HZG-oh-b9a" secondAttribute="trailing" id="fe0-yx-YG0"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" name="BackGroundColor"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="uVI-oz-vry" secondAttribute="trailing" id="0s7-Ip-dFc"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="NTB-i1-pwc" secondAttribute="bottom" id="7te-eu-GTg"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="NTB-i1-pwc" secondAttribute="trailing" id="Jpp-tg-1yJ"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="NTB-i1-pwc" secondAttribute="top" id="PvI-Nz-Ved"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="leading" secondItem="NTB-i1-pwc" secondAttribute="leading" id="dhn-7t-RMN"/>
+                <constraint firstItem="uVI-oz-vry" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="isc-vN-W1u"/>
+                <constraint firstItem="uVI-oz-vry" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="q5H-yJ-2rD"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="141" y="117"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="ItemTransparentImg" width="251" height="76"/>
+        <namedColor name="BackGroundColor">
+            <color red="0.95686274509803926" green="0.95686274509803926" blue="0.95686274509803926" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

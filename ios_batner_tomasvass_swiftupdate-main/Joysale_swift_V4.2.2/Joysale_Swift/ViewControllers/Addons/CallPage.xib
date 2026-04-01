@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CallPage" customModule="Joysale" customModuleProvider="target">
+            <connections>
+                <outlet property="attenBtn" destination="53y-7d-ggp" id="Ekp-ni-LWp"/>
+                <outlet property="cameraspeakerBtn" destination="NvA-Te-vjr" id="Hbq-46-2Mc"/>
+                <outlet property="containerView" destination="MYm-oq-aGh" id="smv-n6-gta"/>
+                <outlet property="countDownLbl" destination="tkQ-jT-qZY" id="2q3-v3-9na"/>
+                <outlet property="inComingcutBtn" destination="xUz-aB-SPH" id="NgZ-C2-QEc"/>
+                <outlet property="incomingPropertiesView" destination="hEl-aR-08b" id="CEJ-xe-uOP"/>
+                <outlet property="muteBtn" destination="nch-NT-CLh" id="I8b-2s-j0S"/>
+                <outlet property="ongoingCutBtn" destination="6Dd-gQ-hzY" id="eyh-H8-HUl"/>
+                <outlet property="ongoingPropertiesView" destination="1Tv-IJ-A5X" id="7zl-Kz-iXo"/>
+                <outlet property="preview" destination="SlL-Tv-2DC" id="gzf-KS-bff"/>
+                <outlet property="receiverImgView" destination="KeG-en-kij" id="5K6-PD-Yk4"/>
+                <outlet property="receiverNameLbl" destination="D0e-oD-WRd" id="8YQ-Jt-pgK"/>
+                <outlet property="statusLbl" destination="UPW-e4-PhF" id="3Zv-oM-dUI"/>
+                <outlet property="userImgView" destination="kQg-6N-uof" id="rz1-AR-ynm"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SlL-Tv-2DC">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MYm-oq-aGh">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kQg-6N-uof">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="677"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tkQ-jT-qZY" customClass="MZTimerLabel">
+                            <rect key="frame" x="45" y="204" width="285" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KeG-en-kij">
+                            <rect key="frame" x="138" y="77" width="100" height="100"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D0e-oD-WRd">
+                            <rect key="frame" x="45" y="177" width="285" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UPW-e4-PhF">
+                            <rect key="frame" x="45" y="204" width="285" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Tv-IJ-A5X">
+                            <rect key="frame" x="0.0" y="544" width="375" height="125"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nch-NT-CLh">
+                                    <rect key="frame" x="26" y="31" width="60" height="60"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="0.59851241440000003" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="imageEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
+                                    <state key="normal" image="mute.png"/>
+                                    <connections>
+                                        <action selector="muteBtnTapped:" destination="-1" eventType="touchUpInside" id="azx-4w-LKF"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Dd-gQ-hzY">
+                                    <rect key="frame" x="158" y="31" width="60" height="60"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <inset key="imageEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
+                                    <state key="normal" image="call_cancel.png"/>
+                                    <connections>
+                                        <action selector="CutBtnTapped:" destination="-1" eventType="touchUpInside" id="yHN-ZD-3sN"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NvA-Te-vjr">
+                                    <rect key="frame" x="286" y="31" width="60" height="60"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="0.59851241440000003" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="imageEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
+                                    <state key="normal" image="change_camera.png"/>
+                                    <connections>
+                                        <action selector="cameraspeakerBtnAct:" destination="-1" eventType="touchUpInside" id="huF-4V-evE"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hEl-aR-08b">
+                            <rect key="frame" x="0.0" y="544" width="375" height="125"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="53y-7d-ggp">
+                                    <rect key="frame" x="74" y="31" width="60" height="60"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" red="0.0" green="0.75686274509999996" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <inset key="imageEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
+                                    <state key="normal" image="call_atten.png"/>
+                                    <connections>
+                                        <action selector="attenBtnTapped:" destination="-1" eventType="touchUpInside" id="Vau-A8-kUs"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xUz-aB-SPH">
+                                    <rect key="frame" x="236" y="31" width="60" height="60"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <inset key="imageEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
+                                    <state key="normal" image="call_cancel.png"/>
+                                    <connections>
+                                        <action selector="inComingCutBtnAct:" destination="-1" eventType="touchUpInside" id="S3a-0E-4ty"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <point key="canvasLocation" x="-9" y="58"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="call_atten.png" width="64" height="64"/>
+        <image name="call_cancel.png" width="64" height="64"/>
+        <image name="change_camera.png" width="64" height="64"/>
+        <image name="mute.png" width="64" height="64"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

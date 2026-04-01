@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="126" id="KGk-i7-Jjw" customClass="ProfileHeaderTableViewCell" customModule="Batner" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="126"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="126"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="VRq-l9-QGh">
+                        <rect key="frame" x="15" y="15" width="290" height="96"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profilelogo" translatesAutoresizingMaskIntoConstraints="NO" id="SHv-D5-9wX">
+                                <rect key="frame" x="0.0" y="23" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="fLF-Fh-KAs"/>
+                                    <constraint firstAttribute="height" constant="50" id="kkr-MW-RqP"/>
+                                </constraints>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="u5N-kX-a3J">
+                                <rect key="frame" x="65" y="27" width="195" height="42.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T2g-xS-N2Z">
+                                        <rect key="frame" x="0.0" y="0.0" width="41.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="1S5-CA-K79">
+                                        <rect key="frame" x="0.0" y="22.5" width="166.5" height="20"/>
+                                        <subviews>
+                                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WCk-yX-QVa" customClass="CosmosView" customModule="Cosmos">
+                                                <rect key="frame" x="0.0" y="0.0" width="120" height="20"/>
+                                                <color key="backgroundColor" name="clearcolor"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="rating">
+                                                        <real key="value" value="0.0"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="totalStars">
+                                                        <integer key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="filledColor">
+                                                        <color key="value" name="Starcolor"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="emptyColor">
+                                                        <color key="value" name="whitecolor"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="emptyBorderColor">
+                                                        <color key="value" name="graycolor"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="filledBorderColor">
+                                                        <color key="value" name="Starcolor"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="starSize">
+                                                        <real key="value" value="20"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="filledBorderWidth">
+                                                        <real key="value" value="1"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="emptyBorderWidth">
+                                                        <real key="value" value="1"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="fillMode">
+                                                        <integer key="value" value="2"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="image" keyPath="emptyImage" value="StarEmpty"/>
+                                                    <userDefinedRuntimeAttribute type="image" keyPath="filledImage" value="StarFull"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oqJ-Ks-rKw">
+                                                <rect key="frame" x="125" y="0.0" width="41.5" height="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="ggc-ag-ioy"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="InArrowImg" translatesAutoresizingMaskIntoConstraints="NO" id="4pO-C2-LNY">
+                                <rect key="frame" x="275" y="40.5" width="15" height="15"/>
+                                <color key="tintColor" name="Placeholdercolor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="15" id="5Kv-3E-UwJ"/>
+                                    <constraint firstAttribute="height" constant="15" id="FCK-EQ-RN0"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="VRq-l9-QGh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="HIG-ls-Xf0"/>
+                    <constraint firstAttribute="trailing" secondItem="VRq-l9-QGh" secondAttribute="trailing" constant="15" id="Ms9-9g-ymr"/>
+                    <constraint firstAttribute="bottom" secondItem="VRq-l9-QGh" secondAttribute="bottom" constant="15" id="SRZ-4T-whS"/>
+                    <constraint firstItem="VRq-l9-QGh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="q2e-NW-ePw"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" name="BackColorwhite"/>
+            <connections>
+                <outlet property="profileImageview" destination="SHv-D5-9wX" id="kLP-ZT-7O1"/>
+                <outlet property="ratingLabel" destination="oqJ-Ks-rKw" id="ibZ-f1-SFW"/>
+                <outlet property="ratingView" destination="WCk-yX-QVa" id="ft1-cU-mBU"/>
+                <outlet property="reviewStackView" destination="1S5-CA-K79" id="O4H-tz-hgs"/>
+                <outlet property="userNameLabel" destination="T2g-xS-N2Z" id="2J3-MC-EXi"/>
+            </connections>
+            <point key="canvasLocation" x="92.753623188405811" y="109.82142857142857"/>
+        </tableViewCell>
+    </objects>
+    <designables>
+        <designable name="WCk-yX-QVa">
+            <size key="intrinsicContentSize" width="120" height="20"/>
+        </designable>
+    </designables>
+    <resources>
+        <image name="InArrowImg" width="23" height="40"/>
+        <image name="StarEmpty" width="256" height="256"/>
+        <image name="StarFull" width="256" height="256"/>
+        <image name="profilelogo" width="90" height="90"/>
+        <namedColor name="BackColorwhite">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Placeholdercolor">
+            <color red="0.77999997138977051" green="0.77999997138977051" blue="0.80400002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Starcolor">
+            <color red="0.49019607843137253" green="0.74117647058823533" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="clearcolor">
+            <color red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="graycolor">
+            <color red="0.59999999999999998" green="0.63137254901960782" blue="0.6588235294117647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="whitecolor">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

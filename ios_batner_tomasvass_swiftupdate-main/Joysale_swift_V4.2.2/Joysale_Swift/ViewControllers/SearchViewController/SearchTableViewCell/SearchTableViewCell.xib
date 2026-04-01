@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="108" id="KGk-i7-Jjw" customClass="SearchTableViewCell" customModule="Joysale" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="108"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="108"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Wq4-w3-Iop">
+                        <rect key="frame" x="15" y="10" width="290" height="98"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="oDr-Zu-weJ">
+                                <rect key="frame" x="0.0" y="0.0" width="290" height="87.5"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clock" translatesAutoresizingMaskIntoConstraints="NO" id="PSI-Qb-ySK">
+                                        <rect key="frame" x="0.0" y="36.5" width="15" height="15"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="15" id="ORw-pA-ZRp"/>
+                                            <constraint firstAttribute="height" constant="15" id="akO-Xm-e3c"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fSM-Oa-wTT">
+                                        <rect key="frame" x="25" y="33.5" width="265" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkicon" translatesAutoresizingMaskIntoConstraints="NO" id="wkk-8L-6zb">
+                                        <rect key="frame" x="290" y="34" width="20" height="20"/>
+                                        <color key="tintColor" name="textfiledBackGroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="20" id="LgT-cM-VHy"/>
+                                            <constraint firstAttribute="height" constant="20" id="cRX-EB-Qox"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="55h-qb-weV">
+                                <rect key="frame" x="0.0" y="97.5" width="290" height="0.5"/>
+                                <color key="backgroundColor" name="linegraycolor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="MBf-Va-am2"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <color key="backgroundColor" name="clearcolor"/>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="Wq4-w3-Iop" secondAttribute="bottom" id="LMl-q5-AhQ"/>
+                    <constraint firstAttribute="trailing" secondItem="Wq4-w3-Iop" secondAttribute="trailing" constant="15" id="Lud-AC-MRe"/>
+                    <constraint firstItem="Wq4-w3-Iop" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="RzM-t5-N0X"/>
+                    <constraint firstItem="Wq4-w3-Iop" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="UUL-Lt-HQf"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" name="clearcolor"/>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="checkImageView" destination="wkk-8L-6zb" id="NMw-td-3Y4"/>
+                <outlet property="searchImageView" destination="PSI-Qb-ySK" id="o1b-NS-qt6"/>
+                <outlet property="searchLabel" destination="fSM-Oa-wTT" id="M2S-Lr-qtt"/>
+                <outlet property="searchStackView" destination="oDr-Zu-weJ" id="lmx-Th-uWp"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="143.97321428571428"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="checkicon" width="32" height="32"/>
+        <image name="clock" width="20" height="20"/>
+        <namedColor name="clearcolor">
+            <color red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="linegraycolor">
+            <color red="0.60000002384185791" green="0.63099998235702515" blue="0.6589999794960022" alpha="0.30000001192092896" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="textfiledBackGroundColor">
+            <color red="0.87450980392156863" green="0.87450980392156863" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

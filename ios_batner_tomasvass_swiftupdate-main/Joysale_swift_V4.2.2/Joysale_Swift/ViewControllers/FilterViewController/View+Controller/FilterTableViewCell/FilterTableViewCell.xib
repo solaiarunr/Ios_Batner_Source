@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="142" id="KGk-i7-Jjw" customClass="FilterTableViewCell" customModule="Batner" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="142"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="142"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2hD-fj-g90">
+                        <rect key="frame" x="15" y="141.5" width="290" height="0.5"/>
+                        <color key="backgroundColor" name="whitecolorNEW"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="P5t-jl-aCy"/>
+                        </constraints>
+                    </view>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Oxe-PE-wGG">
+                        <rect key="frame" x="10" y="10" width="300" height="117"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="zP6-eh-yUq">
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="20"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Pz-fY-zf6">
+                                        <rect key="frame" x="0.0" y="0.0" width="218.5" height="20"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="jUx-8d-ThB">
+                                        <rect key="frame" x="233.5" y="0.0" width="66.5" height="20"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JtO-mX-SrO">
+                                                <rect key="frame" x="0.0" y="0.0" width="41.5" height="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="InArrowImg" translatesAutoresizingMaskIntoConstraints="NO" id="XgN-Ji-Xnu">
+                                                <rect key="frame" x="46.5" y="0.0" width="20" height="20"/>
+                                                <color key="tintColor" name="Placeholdercolor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="PfV-Fl-Htg"/>
+                                                    <constraint firstAttribute="width" constant="20" id="wRP-g8-2rS"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="Y1s-F6-Keh"/>
+                                    <constraint firstItem="JtO-mX-SrO" firstAttribute="width" relation="lessThanOrEqual" secondItem="1Pz-fY-zf6" secondAttribute="width" id="q6x-0x-9aG"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Rox-ti-p6n">
+                                <rect key="frame" x="0.0" y="25" width="300" height="25"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="filterHome" translatesAutoresizingMaskIntoConstraints="NO" id="fzN-St-0Ub">
+                                        <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
+                                        <color key="tintColor" name="appblackcolor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="25" id="A5Q-kK-Ep3"/>
+                                            <constraint firstAttribute="width" constant="25" id="fWh-65-7Ng"/>
+                                        </constraints>
+                                    </imageView>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="7ug-Bd-BLI" customClass="CustomSlider" customModule="Batner" customModuleProvider="target">
+                                        <rect key="frame" x="28" y="0.0" width="244" height="26"/>
+                                        <color key="minimumTrackTintColor" name="AppThemeColorNew"/>
+                                        <color key="maximumTrackTintColor" name="LocationTextcolor"/>
+                                        <color key="thumbTintColor" name="AppThemeColorNew"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="trackWidth">
+                                                <real key="value" value="2"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </slider>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="filterdesignation" translatesAutoresizingMaskIntoConstraints="NO" id="XBI-Ig-Txg">
+                                        <rect key="frame" x="275" y="0.0" width="25" height="25"/>
+                                        <color key="tintColor" name="appblackcolor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="25" id="H20-7o-nL7"/>
+                                            <constraint firstAttribute="width" constant="25" id="qIH-A5-QS5"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="V5T-lC-w5a">
+                                <rect key="frame" x="0.0" y="55" width="300" height="62"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="akH-un-fib" customClass="RangeSlider" customModule="SwiftRangeSlider">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="35"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="35" id="E4F-Po-zDp"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="minimumValue">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="maximumValue">
+                                                <real key="value" value="10000"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="minimumDistance">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="lowerValue">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="upperValue">
+                                                <real key="value" value="10000"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="trackTintColor">
+                                                <color key="value" name="LocationTextcolor"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="trackHighlightTintColor">
+                                                <color key="value" name="AppThemeColor"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="trackThickness">
+                                                <real key="value" value="0.050000000000000003"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="knobSize">
+                                                <real key="value" value="31"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="trueKnobSize" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="knobTintColor">
+                                                <color key="value" name="AppThemeColor"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="labelColor">
+                                                <color key="value" name="AppThemeColor"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="hideLabels" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="OVi-CT-kWS">
+                                        <rect key="frame" x="0.0" y="40" width="300" height="22"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PGN-EV-geW">
+                                                <rect key="frame" x="0.0" y="0.0" width="150" height="22"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tyg-v5-l92">
+                                                <rect key="frame" x="150" y="0.0" width="150" height="22"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                    </stackView>
+                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Fc-it-j0v">
+                        <rect key="frame" x="12" y="18" width="56" height="15"/>
+                        <color key="backgroundColor" name="TransparentBlack"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="wco-l6-hRd"/>
+                        </constraints>
+                        <inset key="contentEdgeInsets" minX="5" minY="2" maxX="5" maxY="2"/>
+                        <state key="normal" title="Button"/>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" name="whitecolorNEW"/>
+                <constraints>
+                    <constraint firstItem="7ug-Bd-BLI" firstAttribute="top" secondItem="7Fc-it-j0v" secondAttribute="bottom" constant="2" id="0FC-9K-Gi4"/>
+                    <constraint firstItem="2hD-fj-g90" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="HS1-q6-Fmf"/>
+                    <constraint firstAttribute="trailing" secondItem="2hD-fj-g90" secondAttribute="trailing" constant="15" id="Nx7-uS-mwE"/>
+                    <constraint firstAttribute="trailing" secondItem="Oxe-PE-wGG" secondAttribute="trailing" constant="10" id="Tjf-TE-WxS"/>
+                    <constraint firstAttribute="bottom" secondItem="2hD-fj-g90" secondAttribute="bottom" id="Tlq-ba-1Jp"/>
+                    <constraint firstItem="Oxe-PE-wGG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="UI1-7g-dva"/>
+                    <constraint firstItem="Oxe-PE-wGG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="bhJ-dE-bo2"/>
+                    <constraint firstItem="7Fc-it-j0v" firstAttribute="centerX" secondItem="7ug-Bd-BLI" secondAttribute="leading" id="nyF-9c-pBf"/>
+                    <constraint firstItem="7Fc-it-j0v" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="2" id="qjp-qg-xmL"/>
+                    <constraint firstAttribute="bottom" secondItem="Oxe-PE-wGG" secondAttribute="bottom" constant="15" id="x1W-2O-vhc"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="arrowImageView" destination="XgN-Ji-Xnu" id="SwJ-hM-iaa"/>
+                <outlet property="destinationFilterImageView" destination="XBI-Ig-Txg" id="DiW-qh-N5V"/>
+                <outlet property="distanceButton" destination="7Fc-it-j0v" id="s94-Xq-5nI"/>
+                <outlet property="distanceButtonLeadingConst" destination="nyF-9c-pBf" id="7Yq-p5-gCK"/>
+                <outlet property="distanceFilterStackView" destination="Rox-ti-p6n" id="htZ-vp-6ah"/>
+                <outlet property="filterDescLabel" destination="JtO-mX-SrO" id="bsb-uA-BPV"/>
+                <outlet property="filterLabel" destination="1Pz-fY-zf6" id="FFR-Y6-0Hl"/>
+                <outlet property="homeFilterImageView" destination="fzN-St-0Ub" id="I84-RV-O2r"/>
+                <outlet property="maximumPriceLabel" destination="tyg-v5-l92" id="mxb-1R-oZ2"/>
+                <outlet property="minimumPriceLabel" destination="PGN-EV-geW" id="yQW-ox-7aA"/>
+                <outlet property="priceSlider" destination="akH-un-fib" id="asf-Dp-ROX"/>
+                <outlet property="priceStackView" destination="V5T-lC-w5a" id="Sgt-Hw-ReG"/>
+                <outlet property="slider" destination="7ug-Bd-BLI" id="vso-DD-qPU"/>
+                <outlet property="titleStackView" destination="zP6-eh-yUq" id="mXG-7Z-nzU"/>
+            </connections>
+            <point key="canvasLocation" x="86.956521739130437" y="147.32142857142856"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="InArrowImg" width="23" height="40"/>
+        <image name="filterHome" width="31.5" height="30"/>
+        <image name="filterdesignation" width="31.5" height="30"/>
+        <namedColor name="AppThemeColor">
+            <color red="0.54509803921568623" green="0.73333333333333328" blue="0.22352941176470589" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="AppThemeColorNew">
+            <color red="0.54509803921568623" green="0.73333333333333328" blue="0.22352941176470589" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="LocationTextcolor">
+            <color red="0.68627450980392157" green="0.72549019607843135" blue="0.76078431372549016" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Placeholdercolor">
+            <color red="0.77999997138977051" green="0.77999997138977051" blue="0.80400002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="TransparentBlack">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="appblackcolor">
+            <color red="0.28999999165534973" green="0.28999999165534973" blue="0.28999999165534973" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="whitecolorNEW">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

@@ -1,0 +1,81 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'Joysale_Swift' do
+  
+use_frameworks!
+
+pod 'SwiftyJSON'
+pod 'Alamofire'
+pod 'SDWebImage'
+
+# Loader
+pod 'NVActivityIndicatorView'
+pod 'IQKeyboardManagerSwift'
+# Custom Work
+pod 'Cosmos'
+pod 'MXSegmentedPager'
+pod 'DropDown'
+pod 'SwiftRangeSlider'
+pod "ImageSlideshow/SDWebImage"
+pod "YoutubePlayer-in-WKWebView"
+
+# Google
+pod 'GoogleMaps'
+pod 'GooglePlaces'
+pod 'GoogleSignIn'
+
+# Add Cards
+pod 'StripeApplePay'
+pod 'Stripe'
+pod 'BraintreeDropIn'
+
+pod 'Socket.IO-Client-Swift', '~> 15.2.0'
+
+pod 'FirebaseUI/Auth'
+pod 'FirebaseUI/Phone'
+pod 'Firebase/Messaging'
+
+pod 'PhoneNumberKit'
+
+pod 'FBSDKCoreKit'
+pod 'FBSDKLoginKit'
+pod 'FBSDKShareKit'
+pod 'Charts'
+pod 'AssetsPickerViewController'
+pod 'Toast-Swift'
+# ADDONS
+pod 'Giphy'
+pod 'Google-Mobile-Ads-SDK'
+#pod 'iRecordView'
+pod 'GoogleWebRTC'
+ 
+# mapbox
+#pod 'Mapbox-iOS-SDK', '~> 5.2.0'
+#pod 'MapboxNavigation', '~> 0.36.0'
+
+#pod 'Mapbox-iOS-SDK', '~> 6.4.1'
+#pod 'MapboxGeocoder.swift', '~> 0.12'
+#pod 'MapboxStatic.swift', '~> 0.11'
+
+
+
+#smart reply
+#  pod 'GoogleMLKit/SmartReply'
+  
+  pod 'GSImageViewerController'
+  pod 'Firebase/Crashlytics'
+  
+  
+  
+  #ProductsVideo
+  pod 'lottie-ios'
+  pod 'BBMetalImage'
+  pod "PryntTrimmerView"
+  pod "GCDWebServer"
+  pod 'Cache'
+  pod 'SimpleCollapsingHeaderView'
+  pod 'SidebarOverlay'
+  pod 'SwiftyGif'
+#  pod 'Firebase/DynamicLinks'
+end

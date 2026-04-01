@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="81" id="KGk-i7-Jjw" customClass="PriceTableViewCell" customModule="Batner" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="81"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="81"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zZt-RH-i4S">
+                        <rect key="frame" x="10" y="5" width="300" height="45"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="C3d-Cr-yUZ">
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="44"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KM4-if-owR">
+                                        <rect key="frame" x="0.0" y="0.0" width="145" height="44"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NAc-BL-HGy">
+                                        <rect key="frame" x="155" y="0.0" width="145" height="44"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ilb-5l-Uzd">
+                                <rect key="frame" x="0.0" y="44" width="300" height="1"/>
+                                <color key="backgroundColor" name="lineviewColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="BDU-6w-i34"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="45" id="Fen-iY-1BI"/>
+                        </constraints>
+                    </stackView>
+                </subviews>
+                <color key="backgroundColor" name="whitecolorNEW"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="zZt-RH-i4S" secondAttribute="trailing" constant="10" id="TSm-7U-ifX"/>
+                    <constraint firstAttribute="bottom" secondItem="zZt-RH-i4S" secondAttribute="bottom" id="XWz-im-Mn2"/>
+                    <constraint firstItem="zZt-RH-i4S" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="Xq1-4i-WAX"/>
+                    <constraint firstItem="zZt-RH-i4S" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="t7R-fT-d41"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="priceDescLabel" destination="NAc-BL-HGy" id="cIX-K4-o6B"/>
+                <outlet property="priceTitleLabel" destination="KM4-if-owR" id="4b8-eg-gB0"/>
+            </connections>
+            <point key="canvasLocation" x="140.57971014492756" y="128.90625"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="lineviewColor">
+            <color red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="whitecolorNEW">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

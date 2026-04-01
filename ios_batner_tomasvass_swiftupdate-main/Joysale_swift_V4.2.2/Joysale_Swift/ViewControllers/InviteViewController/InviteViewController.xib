@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InviteViewController" customModule="Joysale" customModuleProvider="target">
+            <connections>
+                <outlet property="appLogoImageview" destination="XSO-2S-WSb" id="orV-hR-Ahe"/>
+                <outlet property="descLabel" destination="zVF-iB-oS6" id="HUo-fi-Gd1"/>
+                <outlet property="logoImageView" destination="5nw-RV-hQo" id="unm-Wy-BZ3"/>
+                <outlet property="mailButton" destination="K2h-G7-v1q" id="Gcb-9J-pHC"/>
+                <outlet property="messengerButton" destination="5qr-lj-SfG" id="iOg-Q0-xbn"/>
+                <outlet property="popupView" destination="Df8-wg-WZd" id="0ib-gR-LHG"/>
+                <outlet property="titleLabel" destination="b7p-KF-GHd" id="i4K-G8-IL0"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="whatsappButton" destination="Kqg-wm-HjV" id="wIU-oz-9bp"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Df8-wg-WZd">
+                    <rect key="frame" x="40" y="305" width="334" height="296"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5nw-RV-hQo">
+                            <rect key="frame" x="117" y="-50" width="100" height="100"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="applogo" translatesAutoresizingMaskIntoConstraints="NO" id="XSO-2S-WSb">
+                                    <rect key="frame" x="5" y="5" width="90" height="90"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="100" id="DJL-HI-rBI"/>
+                                <constraint firstAttribute="bottom" secondItem="XSO-2S-WSb" secondAttribute="bottom" constant="5" id="Fre-SQ-Z56"/>
+                                <constraint firstItem="XSO-2S-WSb" firstAttribute="leading" secondItem="5nw-RV-hQo" secondAttribute="leading" constant="5" id="Jpf-aF-Grj"/>
+                                <constraint firstAttribute="trailing" secondItem="XSO-2S-WSb" secondAttribute="trailing" constant="5" id="bs0-D0-GIP"/>
+                                <constraint firstItem="XSO-2S-WSb" firstAttribute="top" secondItem="5nw-RV-hQo" secondAttribute="top" constant="5" id="nb3-Pn-HpI"/>
+                                <constraint firstAttribute="width" constant="100" id="rZG-Ph-u2J"/>
+                            </constraints>
+                        </view>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="xiv-ur-Km4">
+                            <rect key="frame" x="15" y="60" width="304" height="216"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b7p-KF-GHd">
+                                    <rect key="frame" x="0.0" y="0.0" width="304" height="20.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zVF-iB-oS6">
+                                    <rect key="frame" x="0.0" y="30.5" width="304" height="20.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ees-eT-CdZ">
+                                    <rect key="frame" x="0.0" y="61" width="304" height="45"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5qr-lj-SfG">
+                                            <rect key="frame" x="0.0" y="0.0" width="304" height="45"/>
+                                            <color key="backgroundColor" name="StatusBlueTextColor"/>
+                                            <connections>
+                                                <action selector="messengerButtonAct:" destination="-1" eventType="touchUpInside" id="B1O-4l-5Lx"/>
+                                            </connections>
+                                        </button>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="invite_messenger" translatesAutoresizingMaskIntoConstraints="NO" id="Nu9-Kf-s1j">
+                                            <rect key="frame" x="10" y="10" width="25" height="25"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="25" id="KXp-E1-Pwl"/>
+                                                <constraint firstAttribute="height" constant="25" id="Tdz-mf-Gm7"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" name="clearcolor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="5qr-lj-SfG" secondAttribute="trailing" id="6tH-7S-bMy"/>
+                                        <constraint firstItem="5qr-lj-SfG" firstAttribute="leading" secondItem="Ees-eT-CdZ" secondAttribute="leading" id="H25-eJ-cZO"/>
+                                        <constraint firstItem="5qr-lj-SfG" firstAttribute="top" secondItem="Ees-eT-CdZ" secondAttribute="top" id="Hbk-Nm-nFN"/>
+                                        <constraint firstItem="Nu9-Kf-s1j" firstAttribute="centerY" secondItem="Ees-eT-CdZ" secondAttribute="centerY" id="Ra8-8Y-0pf"/>
+                                        <constraint firstAttribute="bottom" secondItem="5qr-lj-SfG" secondAttribute="bottom" id="Ry7-TT-FU0"/>
+                                        <constraint firstItem="Nu9-Kf-s1j" firstAttribute="leading" secondItem="Ees-eT-CdZ" secondAttribute="leading" constant="10" id="ZD0-gG-it5"/>
+                                        <constraint firstAttribute="height" constant="45" id="yvX-5C-P24"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hcm-cS-W1X">
+                                    <rect key="frame" x="0.0" y="116" width="304" height="45"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kqg-wm-HjV">
+                                            <rect key="frame" x="0.0" y="0.0" width="304" height="45"/>
+                                            <color key="backgroundColor" name="green_color"/>
+                                            <connections>
+                                                <action selector="whatsAppShareAct:" destination="-1" eventType="touchUpInside" id="Nba-RC-SEx"/>
+                                            </connections>
+                                        </button>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="invite_whatsapp" translatesAutoresizingMaskIntoConstraints="NO" id="uuO-sm-Ydq">
+                                            <rect key="frame" x="10" y="10" width="25" height="25"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="25" id="Vze-1Q-QcM"/>
+                                                <constraint firstAttribute="height" constant="25" id="gfj-br-ajY"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" name="clearcolor"/>
+                                    <constraints>
+                                        <constraint firstItem="uuO-sm-Ydq" firstAttribute="leading" secondItem="hcm-cS-W1X" secondAttribute="leading" constant="10" id="DJS-ez-PqU"/>
+                                        <constraint firstItem="Kqg-wm-HjV" firstAttribute="top" secondItem="hcm-cS-W1X" secondAttribute="top" id="N9B-fZ-uE9"/>
+                                        <constraint firstAttribute="trailing" secondItem="Kqg-wm-HjV" secondAttribute="trailing" id="V13-E6-nwO"/>
+                                        <constraint firstAttribute="height" constant="45" id="dWM-so-lL3"/>
+                                        <constraint firstAttribute="bottom" secondItem="Kqg-wm-HjV" secondAttribute="bottom" id="gZr-Oe-Fl1"/>
+                                        <constraint firstItem="uuO-sm-Ydq" firstAttribute="centerY" secondItem="hcm-cS-W1X" secondAttribute="centerY" id="ihS-wO-8FN"/>
+                                        <constraint firstItem="Kqg-wm-HjV" firstAttribute="leading" secondItem="hcm-cS-W1X" secondAttribute="leading" id="z92-aJ-KNR"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fw0-Va-Nla">
+                                    <rect key="frame" x="0.0" y="171" width="304" height="45"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K2h-G7-v1q">
+                                            <rect key="frame" x="0.0" y="0.0" width="304" height="45"/>
+                                            <color key="backgroundColor" name="googleColor"/>
+                                            <connections>
+                                                <action selector="mailShareAct:" destination="-1" eventType="touchUpInside" id="9yU-sK-J9E"/>
+                                            </connections>
+                                        </button>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="invite_mail" translatesAutoresizingMaskIntoConstraints="NO" id="HlE-WV-In8">
+                                            <rect key="frame" x="10" y="10" width="25" height="25"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="25" id="1g5-8Q-Iei"/>
+                                                <constraint firstAttribute="height" constant="25" id="c0l-Jk-cLF"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" name="clearcolor"/>
+                                    <constraints>
+                                        <constraint firstItem="HlE-WV-In8" firstAttribute="leading" secondItem="Fw0-Va-Nla" secondAttribute="leading" constant="10" id="4qP-sU-u9w"/>
+                                        <constraint firstItem="HlE-WV-In8" firstAttribute="centerY" secondItem="Fw0-Va-Nla" secondAttribute="centerY" id="EiM-m1-sHs"/>
+                                        <constraint firstAttribute="height" constant="45" id="FO5-SC-pMH"/>
+                                        <constraint firstAttribute="bottom" secondItem="K2h-G7-v1q" secondAttribute="bottom" id="Rvo-lb-Y7r"/>
+                                        <constraint firstAttribute="trailing" secondItem="K2h-G7-v1q" secondAttribute="trailing" id="Wjb-4N-FG4"/>
+                                        <constraint firstItem="K2h-G7-v1q" firstAttribute="leading" secondItem="Fw0-Va-Nla" secondAttribute="leading" id="bSK-4B-H0k"/>
+                                        <constraint firstItem="K2h-G7-v1q" firstAttribute="top" secondItem="Fw0-Va-Nla" secondAttribute="top" id="cmr-ys-2ZO"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="xiv-ur-Km4" secondAttribute="bottom" constant="20" id="LhB-pn-teU"/>
+                        <constraint firstItem="5nw-RV-hQo" firstAttribute="centerX" secondItem="Df8-wg-WZd" secondAttribute="centerX" id="Yxg-XG-Ckf"/>
+                        <constraint firstItem="xiv-ur-Km4" firstAttribute="top" secondItem="5nw-RV-hQo" secondAttribute="bottom" constant="10" id="hgq-TE-Zuf"/>
+                        <constraint firstItem="xiv-ur-Km4" firstAttribute="leading" secondItem="Df8-wg-WZd" secondAttribute="leading" constant="15" id="ode-i6-hJL"/>
+                        <constraint firstItem="5nw-RV-hQo" firstAttribute="centerY" secondItem="Df8-wg-WZd" secondAttribute="top" id="r78-am-6jj"/>
+                        <constraint firstAttribute="trailing" secondItem="xiv-ur-Km4" secondAttribute="trailing" constant="15" id="v1N-Z0-e5d"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" name="TransparentBlack"/>
+            <constraints>
+                <constraint firstItem="Df8-wg-WZd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="40" id="pXR-gJ-e9B"/>
+                <constraint firstItem="Df8-wg-WZd" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="tBj-FX-3SO"/>
+                <constraint firstItem="Df8-wg-WZd" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="v7A-Js-hul"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="137.68115942028987" y="116.51785714285714"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="applogo" width="90" height="90"/>
+        <image name="invite_mail" width="64" height="64"/>
+        <image name="invite_messenger" width="64" height="64"/>
+        <image name="invite_whatsapp" width="64" height="64"/>
+        <namedColor name="StatusBlueTextColor">
+            <color red="0.16899999976158142" green="0.46299999952316284" blue="0.76099997758865356" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="TransparentBlack">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="clearcolor">
+            <color red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="googleColor">
+            <color red="0.86299997568130493" green="0.29399999976158142" blue="0.24300000071525574" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="green_color">
+            <color red="0.3926798105" green="0.8396858573" blue="0.26547175649999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

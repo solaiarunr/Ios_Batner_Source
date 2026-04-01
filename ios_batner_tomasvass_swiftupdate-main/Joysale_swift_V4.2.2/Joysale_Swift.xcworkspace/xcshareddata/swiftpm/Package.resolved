@@ -1,0 +1,87 @@
+{
+  "originHash" : "417729a621ab70e1b2e5a4234fbd27c26d99fff085b2ef8e91ec8c51f3a75df3",
+  "pins" : [
+    {
+      "identity" : "mapbox-common-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mapbox/mapbox-common-ios.git",
+      "state" : {
+        "revision" : "0344eb61ec9e3cf96c81b1767354a8a3cd1246fc",
+        "version" : "20.0.0"
+      }
+    },
+    {
+      "identity" : "mapbox-core-maps-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mapbox/mapbox-core-maps-ios.git",
+      "state" : {
+        "revision" : "fd3b7e65b51fd984831c1337876b038ed183480b",
+        "version" : "10.0.0"
+      }
+    },
+    {
+      "identity" : "mapbox-events-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mapbox/mapbox-events-ios.git",
+      "state" : {
+        "revision" : "42aa5121a6810adee85bbc3ceb45c9792ae416d0",
+        "version" : "1.0.5"
+      }
+    },
+    {
+      "identity" : "mapbox-maps-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mapbox/mapbox-maps-ios.git",
+      "state" : {
+        "revision" : "75f38ef5c15a7ff97bd41f4243ad343befcd3e6a",
+        "version" : "10.0.0"
+      }
+    },
+    {
+      "identity" : "mapboxgeocoder.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mapbox/MapboxGeocoder.swift",
+      "state" : {
+        "revision" : "10c497840c9e1142194563f402ddc903310a935d",
+        "version" : "0.15.0"
+      }
+    },
+    {
+      "identity" : "mapboxstatic.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mapbox/MapboxStatic.swift",
+      "state" : {
+        "revision" : "886e17c242fe9f573ab6c27871a26c0795400017",
+        "version" : "0.12.0"
+      }
+    },
+    {
+      "identity" : "polyline",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/raphaelmor/Polyline.git",
+      "state" : {
+        "revision" : "353f80378dcd8f17eefe8550090c6b1ae3c9da23",
+        "version" : "5.1.0"
+      }
+    },
+    {
+      "identity" : "radar-sdk-ios-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/radarlabs/radar-sdk-ios-spm.git",
+      "state" : {
+        "revision" : "0a3e7e867acfd66e8aec954662019d76bce6054a",
+        "version" : "3.25.1"
+      }
+    },
+    {
+      "identity" : "turf-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mapbox/turf-swift.git",
+      "state" : {
+        "revision" : "213050191cfcb3d5aa76e1fa90c6ff1e182a42ca",
+        "version" : "2.8.0"
+      }
+    }
+  ],
+  "version" : 3
+}

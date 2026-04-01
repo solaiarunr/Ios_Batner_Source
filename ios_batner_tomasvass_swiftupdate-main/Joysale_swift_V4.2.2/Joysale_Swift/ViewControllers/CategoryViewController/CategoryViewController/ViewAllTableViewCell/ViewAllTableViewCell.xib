@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="50" id="KGk-i7-Jjw" customClass="ViewAllTableViewCell" customModule="Joysale" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="cGX-8l-GsS">
+                        <rect key="frame" x="10" y="5" width="300" height="45"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ypd-sA-AHi">
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="34.5"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AlL-HN-SFh">
+                                        <rect key="frame" x="0.0" y="6" width="280" height="23"/>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="Button"/>
+                                    </button>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkicon" translatesAutoresizingMaskIntoConstraints="NO" id="uOR-Q7-N8D">
+                                        <rect key="frame" x="280" y="7.5" width="20" height="20"/>
+                                        <color key="tintColor" name="textfiledBackGroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="20" id="4dV-GL-IdH"/>
+                                            <constraint firstAttribute="height" constant="20" id="fO9-7c-5Fy"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="upk-Rg-0PR">
+                                <rect key="frame" x="0.0" y="44.5" width="300" height="0.5"/>
+                                <color key="backgroundColor" name="linegraycolor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="40k-tX-Ei3"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <color key="backgroundColor" name="clearcolor"/>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="cGX-8l-GsS" secondAttribute="bottom" id="1K5-rO-8oG"/>
+                    <constraint firstAttribute="trailing" secondItem="cGX-8l-GsS" secondAttribute="trailing" constant="10" id="56V-wF-ZwR"/>
+                    <constraint firstItem="cGX-8l-GsS" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="S3d-7W-8c0"/>
+                    <constraint firstItem="cGX-8l-GsS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="TWf-kL-8qu"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" name="clearcolor"/>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="checkImageView" destination="uOR-Q7-N8D" id="gDA-k3-RW8"/>
+                <outlet property="viewAllButton" destination="AlL-HN-SFh" id="RzF-tD-1kv"/>
+            </connections>
+            <point key="canvasLocation" x="140.57971014492756" y="102.45535714285714"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="checkicon" width="32" height="32"/>
+        <namedColor name="clearcolor">
+            <color red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="linegraycolor">
+            <color red="0.60000002384185791" green="0.63099998235702515" blue="0.6589999794960022" alpha="0.30000001192092896" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="textfiledBackGroundColor">
+            <color red="0.87450980392156863" green="0.87450980392156863" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

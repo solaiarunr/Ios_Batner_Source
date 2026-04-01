@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="CameraCollectionViewCell" customModule="Batner" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="224" height="224"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="224" height="224"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="applogo" translatesAutoresizingMaskIntoConstraints="NO" id="iYF-6P-Eg8">
+                        <rect key="frame" x="0.0" y="48" width="224" height="142"/>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bhn-ys-BAR">
+                        <rect key="frame" x="0.0" y="48" width="224" height="142"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CheckBoxWhite" translatesAutoresizingMaskIntoConstraints="NO" id="H7y-gv-dUC">
+                                <rect key="frame" x="102" y="61" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="Tfq-sp-IqQ"/>
+                                    <constraint firstAttribute="height" constant="20" id="fVd-95-WsE"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" name="TransparentBlack"/>
+                        <constraints>
+                            <constraint firstItem="H7y-gv-dUC" firstAttribute="centerX" secondItem="bhn-ys-BAR" secondAttribute="centerX" id="PzI-dk-QmS"/>
+                            <constraint firstItem="H7y-gv-dUC" firstAttribute="centerY" secondItem="bhn-ys-BAR" secondAttribute="centerY" id="wm6-fU-QgP"/>
+                        </constraints>
+                    </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MTU-Qu-2Sk">
+                        <rect key="frame" x="194" y="53" width="25" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="25" id="bwV-TK-xF7"/>
+                            <constraint firstAttribute="height" constant="25" id="o9K-CF-bX0"/>
+                        </constraints>
+                        <inset key="contentEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
+                        <state key="normal" image="deletenew"/>
+                    </button>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="iYF-6P-Eg8" firstAttribute="trailing" secondItem="MTU-Qu-2Sk" secondAttribute="trailing" constant="5" id="44X-Yb-zQH"/>
+                <constraint firstItem="MTU-Qu-2Sk" firstAttribute="top" secondItem="iYF-6P-Eg8" secondAttribute="top" constant="5" id="BMQ-G0-j4p"/>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="leading" secondItem="iYF-6P-Eg8" secondAttribute="leading" id="BaS-7i-6dT"/>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="trailing" secondItem="iYF-6P-Eg8" secondAttribute="trailing" id="Bxh-6q-mki"/>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="bottom" secondItem="iYF-6P-Eg8" secondAttribute="bottom" id="USs-Be-4bM"/>
+                <constraint firstItem="bhn-ys-BAR" firstAttribute="trailing" secondItem="iYF-6P-Eg8" secondAttribute="trailing" id="Xh6-Lt-6Dh"/>
+                <constraint firstItem="bhn-ys-BAR" firstAttribute="top" secondItem="iYF-6P-Eg8" secondAttribute="top" id="cTY-6W-SYo"/>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="top" secondItem="iYF-6P-Eg8" secondAttribute="top" id="iTK-Du-cIx"/>
+                <constraint firstItem="bhn-ys-BAR" firstAttribute="bottom" secondItem="iYF-6P-Eg8" secondAttribute="bottom" id="j5J-i1-O8Q"/>
+                <constraint firstItem="bhn-ys-BAR" firstAttribute="leading" secondItem="iYF-6P-Eg8" secondAttribute="leading" id="n2Z-wb-hyY"/>
+            </constraints>
+            <size key="customSize" width="181" height="224"/>
+            <connections>
+                <outlet property="cancelButton" destination="MTU-Qu-2Sk" id="gUl-dU-sM2"/>
+                <outlet property="itemImageView" destination="iYF-6P-Eg8" id="r8M-wC-ZP0"/>
+                <outlet property="selectedView" destination="bhn-ys-BAR" id="Ptl-yy-8Kx"/>
+            </connections>
+            <point key="canvasLocation" x="232.60869565217394" y="179.46428571428569"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="CheckBoxWhite" width="25" height="25"/>
+        <image name="applogo" width="90" height="90"/>
+        <image name="deletenew" width="16" height="16"/>
+        <namedColor name="TransparentBlack">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>
