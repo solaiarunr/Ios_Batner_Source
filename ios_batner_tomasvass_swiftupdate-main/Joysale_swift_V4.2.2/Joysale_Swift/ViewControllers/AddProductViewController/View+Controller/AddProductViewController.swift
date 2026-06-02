@@ -222,7 +222,7 @@ var thumb  = ""
     }
     func loadData() {
         DispatchQueue.main.async {
-            ADMIN_VIEW_MODEL.productBeforeAddData(lang_code: "en", onSuccess: { (success) in
+            ADMIN_VIEW_MODEL.productBeforeAddData(lang_code: "en",user_id:UserDefaultModule.shared.getUserData()?.user_id ?? "", onSuccess: { (success) in
                 if (ADMIN_VIEW_MODEL.productBeforeModel?.status ?? false) {
     //                ADD_EDIT_ITEM_MODEL.currency = "\(ADMIN_VIEW_MODEL.productBeforeModel?.result.currency.first?.symbol ?? "")"
     //                self.tableView.reloadData()
@@ -289,6 +289,22 @@ var thumb  = ""
         let filterMessage = self.checkFilterData()
         let titleString = ADD_EDIT_ITEM_MODEL.item_name.trimmingCharacters(in: .whitespacesAndNewlines)
         let descString = ADD_EDIT_ITEM_MODEL.item_des.trimmingCharacters(in: .whitespacesAndNewlines)
+        // Get current location
+        var currentLocation = ""
+        let locationIndexPath = IndexPath(row: 0, section: 8)
+        if let locationCell = tableView.cellForRow(at: locationIndexPath) as? AddProductTableViewCell {
+            currentLocation = locationCell.rightTextField.text ?? ""
+            if currentLocation.isEmpty {
+                message = "set_your_location"
+            }
+            else if currentLocation == "North Atlantic Ocean" {
+                message = "set_your_location"
+            }
+            else {
+                // Update the model with the current value
+                ADD_EDIT_ITEM_MODEL.address = currentLocation
+            }
+        }
         if self.imageArray.count == 0 {
             message = "uploadimage"
         }
@@ -301,12 +317,10 @@ var thumb  = ""
         else if !ADD_EDIT_ITEM_MODEL.giving_away && ADD_EDIT_ITEM_MODEL.price == "" {
             message = "pricecannotblank"
         }
-
         else if !ADD_EDIT_ITEM_MODEL.giving_away &&
                 (Double(ADD_EDIT_ITEM_MODEL.price.trimmingCharacters(in: .whitespaces)) ?? 0) <= 0 {
             message = "entervalidprice"
         }
-
         else if !ADD_EDIT_ITEM_MODEL.giving_away && ADD_EDIT_ITEM_MODEL.currency == "" {
             message = "currencycodenotselected"
         }
@@ -335,38 +349,63 @@ var thumb  = ""
         
         if isValid {
             let group = DispatchGroup()
-            group.enter()
+
             if ADD_EDIT_ITEM_MODEL.country_id == "" {
-                let location = CLLocation(latitude: Double(ADD_EDIT_ITEM_MODEL.lat) ?? 0, longitude: Double(ADD_EDIT_ITEM_MODEL.lon) ?? 0)
-                let geoCoder = CLGeocoder()
-                geoCoder.reverseGeocodeLocation(location, completionHandler:
-                    {
-                        placemarks, error -> Void in
-                        guard let placeMark = placemarks?.first else { group.leave(); return }
-                        // Country
-                        if let country = placeMark.country {
-                            if let countryDetails = ADMIN_VIEW_MODEL.productBeforeModel?.result.country.filter({$0.countryName.lowercased() == country.lowercased()}).first {
-                                ADD_EDIT_ITEM_MODEL.country_id = "\(countryDetails.countryId ?? 0)"
-                            }
-                            group.leave()
+                group.enter()
+                
+                // Use currentLocation here - it's now accessible
+                let addressToGeocode = (currentLocation.isEmpty ? ADD_EDIT_ITEM_MODEL.address : currentLocation) ?? ""
+                
+                CLGeocoder().geocodeAddressString(addressToGeocode) { placemarks, error in
+                    if let error = error {
+                        print("Geocode Error: \(error.localizedDescription)")
+                        group.leave()
+                        return
+                    }
+
+                    guard let location = placemarks?.first?.location else {
+                        print("Location not found")
+                        group.leave()
+                        return
+                    }
+
+                    let lat = location.coordinate.latitude
+                    let lon = location.coordinate.longitude
+
+                    ADD_EDIT_ITEM_MODEL.lat = "\(lat)"
+                    ADD_EDIT_ITEM_MODEL.lon = "\(lon)"
+
+                    print("Latitude: \(lat)")
+                    print("Longitude: \(lon)")
+
+                    CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
+                        defer { group.leave() }
+
+                        guard error == nil,
+                              let placeMark = placemarks?.first else {
+                            return
                         }
-                        else {
-                            group.leave()
+
+                        if let country = placeMark.country,
+                           let countryDetails = ADMIN_VIEW_MODEL.productBeforeModel?.result.country.first(where: {
+                               $0.countryName.lowercased() == country.lowercased()
+                           }) {
+                            ADD_EDIT_ITEM_MODEL.country_id = "\(countryDetails.countryId ?? 0)"
                         }
-                })
-            }
-            else {
+                    }
+                }
+            } else {
+                group.enter()
                 group.leave()
             }
-            group.notify(queue: DispatchQueue.main) {
-                if self.isskip == "image"{
+
+            group.notify(queue: .main) {
+                if self.isskip == "image" {
                     self.uploadImageToCamerViaServer()
-                }else{
+                } else {
                     self.uploadImageToServer()
                 }
-               
             }
-            
         }
         else {
             let alert = UIAlertController(title: nil, message: getLanguage[message] ?? message, preferredStyle: .alert)
@@ -1127,7 +1166,15 @@ extension AddProductViewController: UITableViewDelegate, UITableViewDataSource {
 //            ADD_EDIT_ITEM_MODEL.make_offer = offerVal
         }
         else if section == 11 {
-            ADD_EDIT_ITEM_MODEL.instant_buy = sender.isOn
+            print("dde",ADMIN_VIEW_MODEL.productBeforeModel?.result.stripeverifystatus)
+            if ADMIN_VIEW_MODEL.productBeforeModel?.result.stripeverifystatus == "true"{
+                ADD_EDIT_ITEM_MODEL.instant_buy = sender.isOn
+            }else{
+                let alert = UIAlertController(title: nil, message: "You should verify stripe to use this feature", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: getLanguage["ok"] ?? "", style: .cancel, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                alert.view.tintColor = UIColor(named: "DefaultBoxClr")
+            }
         }
         self.tableView.reloadData()
     }
@@ -1204,8 +1251,12 @@ extension AddProductViewController: CategoryDelegate {
     }
     
     func locationAct(city: String, state: String, country: String, countryCode:String, lat: String, long: String, location: String) {
-        ADD_EDIT_ITEM_MODEL.address = "\(location)"
-//        ADD_EDIT_ITEM_MODEL.address = "\(city), \(state), \(country)"
+        
+        let fullLocation = [city, state, country]
+            .filter { !$0.isEmpty }
+            .joined(separator: ", ")
+
+        ADD_EDIT_ITEM_MODEL.address = fullLocation
         ADD_EDIT_ITEM_MODEL.lat = lat
         ADD_EDIT_ITEM_MODEL.lon = long
         ADD_EDIT_ITEM_MODEL.state = state

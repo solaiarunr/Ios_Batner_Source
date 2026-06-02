@@ -124,9 +124,9 @@ class AdminViewModel {
     }
     
     
-    public func productBeforeAddData(lang_code: String = "", onSuccess success: @escaping (Bool) -> Void, onFailure failure: @escaping (String) -> Void) {
+    public func productBeforeAddData(lang_code: String = "",user_id: String = "", onSuccess success: @escaping (Bool) -> Void, onFailure failure: @escaping (String) -> Void) {
         
-        let parameter: [String: Any] = ["lang_type":DEFAULT_LANGUAGE_CODE]
+        let parameter: [String: Any] = ["lang_type":DEFAULT_LANGUAGE_CODE,"user_id":user_id]
     
         CallParsingFunction().postDataCall(subURl: PRODUCT_BEFORE_ADD_URL, params: parameter, onSuccess: { (response) in
             print(response)

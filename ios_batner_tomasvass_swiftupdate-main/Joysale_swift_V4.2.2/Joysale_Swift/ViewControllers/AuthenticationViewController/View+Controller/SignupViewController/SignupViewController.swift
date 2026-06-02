@@ -7,9 +7,12 @@
 //
 
 import UIKit
-import FirebaseUI
+//import FirebaseUI
 import PhoneNumberKit
-
+import SafariServices
+import FirebaseAuth
+import FirebaseAuthUI
+import FirebasePhoneAuthUI
 class SignupViewController: UIViewController {
 
     @IBOutlet weak var backButton: UIButton!
@@ -34,11 +37,12 @@ class SignupViewController: UIViewController {
     @IBOutlet var errorCollectionLabel: [UILabel]!
     @IBOutlet weak var termsBtn: UIButton!
     @IBOutlet weak var termsLbl: UILabel!
+    @IBOutlet weak var termsLblbtn: UIButton!
     var viewModel = AuthenticationViewModel()
     let delegate = UIApplication.shared.delegate as! AppDelegate
     let authUI = FUIAuth.defaultAuthUI()
     var mobileNo = ""
-
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(indicatorView)
@@ -52,10 +56,7 @@ class SignupViewController: UIViewController {
         userNameTextfield.autocapitalizationType = .none
         userNameTextfield.autocorrectionType = .no
         userNameTextfield.spellCheckingType = .no
-
-
         self.navigationController?.isNavigationBarHidden = true
-
         self.titleLabel.config(color: UIColor(named: "appblackcolor"), font: UIFont(name: APP_FONT_BOLD, size: 30.0), align: .center, text: "register")
         self.descLabel.config(color: UIColor(named: "appblackcolor"), font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .center, text: "startmaking1")
         self.emailTextField.config(color: UIColor(named: "AppTextColor"), align: .left, placeHolder: "", font: UIFont(name: APP_FONT_REGULAR, size: 14))
@@ -71,9 +72,34 @@ class SignupViewController: UIViewController {
         self.mobileTextField.config(color: UIColor(named: "AppTextColor"), align: .left, placeHolder: "", font: UIFont(name: APP_FONT_REGULAR, size: 14))
         self.mobileTitleLabel.config(color: UIColor(named: "SignSignupTextColorNew"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align: .left, text: "mobile")
         
-        self.termsLbl.config(color: UIColor(named: "SignSignupTextColorNew"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align: .left, text: "termsalert")
+//        self.termsLbl.config(color: UIColor(named: "SignSignupTextColorNew"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align: .left, text: "termsalert")
         
+//        self.termsLblbtn.config(color: UIColor(named: "AppThemeColorNew"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align: .left, title: "TermsConditions")
+        
+        let fullText = getLanguage["termsalert"] ?? ""
+        let highlightText = "Terms & Conditions"
+        let attributedString = NSMutableAttributedString(string: fullText)
 
+      
+        attributedString.addAttributes([
+            .foregroundColor: UIColor(named: "SignSignupTextColorNew")!,
+            .font: UIFont(name: APP_FONT_REGULAR, size: 14)! // 👈 small size here
+        ], range: NSRange(location: 0, length: fullText.count))
+
+        // Highlight color + underline
+        if let range = fullText.range(of: highlightText) {
+            let nsRange = NSRange(range, in: fullText)
+            
+            attributedString.addAttributes([
+                .foregroundColor: UIColor(named: "AppThemeColorNew")!,
+                .underlineStyle: NSUnderlineStyle.single.rawValue
+            ], range: nsRange)
+        }
+        termsLbl.attributedText = attributedString
+        termsLbl.isUserInteractionEnabled = true
+        // Add tap gesture
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTermsTap))
+        termsLbl.addGestureRecognizer(tapGesture)
         self.signupButton.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .center, title: "register")
         self.loginButton.config(color: UIColor(named: "AppThemeColorNew"), font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .center, title: "already_member_login")
         self.signupButton.cornerMiniumRadius()
@@ -101,11 +127,25 @@ class SignupViewController: UIViewController {
         let providers: [FUIAuthProvider] = [
             FUIPhoneAuth(authUI:FUIAuth.defaultAuthUI()!),
         ]
+       
         self.authUI?.providers = providers
         self.authUI?.delegate = self
         
         
         
+    }
+    @objc func handleTermsTap(_ gesture: UITapGestureRecognizer) {
+        guard let text = termsLbl.text else { return }
+        let highlightText = "Terms & Conditions"
+        
+        let nsText = text as NSString
+        let range = nsText.range(of: highlightText)
+        
+        if gesture.didTapAttributedTextInLabel(label: termsLbl, inRange: range) {
+            if let url = URL(string: "https://batner.com/message/help?details=terms-and-policy") {
+                UIApplication.shared.open(url)
+            }
+        }
     }
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return self.updateStatusBarStyle()
@@ -141,6 +181,19 @@ class SignupViewController: UIViewController {
         else {
             self.termsBtn.tag = 0
             self.termsBtn.setImage(UIImage(named: "CheckBox_withoutTick"), for: .normal)
+        }
+    }
+//    @IBAction func termsConditionButtonAct(_ sender: UIButton) {
+//       
+//        https://batner.com/message/help?details=terms-and-policy
+//    }
+    
+   
+
+    @IBAction func termsConditionButtonAct(_ sender: UIButton) {
+        if let url = URL(string: "https://batner.com/message/help?details=terms-and-policy") {
+            let vc = SFSafariViewController(url: url)
+            present(vc, animated: true)
         }
     }
 
@@ -344,8 +397,26 @@ extension SignupViewController: UITextFieldDelegate {
     
         if textField == mobileTextField {
             UINavigationBar.appearance().tintColor = UIColor(named: "whitecolor")
-            let phoneProvider = FUIAuth.defaultAuthUI()?.providers.first as! FUIPhoneAuth
-            phoneProvider.signIn(withPresenting: self, phoneNumber: nil)
+            guard let authUI = FUIAuth.defaultAuthUI() else { return }
+            if UserDefaultModule.shared.getcountrycode()  ??  "CZ" == "CZ"{
+                let phoneProvider = FUIPhoneAuth(
+                    authUI: authUI,
+                    whitelistedCountries: ["CZ","SK"]
+                )
+                print("Msmdmf",UserDefaultModule.shared.getcountrycode()  ??  "IN")
+                phoneProvider.defaultCountryCode = UserDefaultModule.shared.getcountrycode()  ??  "IN"
+                authUI.providers = [phoneProvider]
+                phoneProvider.signIn(withPresenting: self, phoneNumber: nil)
+            }else{
+                let phoneProvider = FUIPhoneAuth(
+                    authUI: authUI,
+                    whitelistedCountries: [UserDefaultModule.shared.getcountrycode()  ??  "IN"]
+                )
+                print("Msmdmf",UserDefaultModule.shared.getcountrycode()  ??  "IN")
+                phoneProvider.defaultCountryCode = UserDefaultModule.shared.getcountrycode()  ??  "IN"
+                authUI.providers = [phoneProvider]
+                phoneProvider.signIn(withPresenting: self, phoneNumber: nil)
+            }
         }
     
     }
@@ -373,29 +444,50 @@ extension SignupViewController: UITextFieldDelegate {
         return true
     }
 }
+//
+//extension SignupViewController: FUIAuthDelegate {
+//    @nonobjc func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
+//        print(error?.localizedDescription ?? "")
+//        if error == nil {
+//            print(authDataResult?.user.phoneNumber ?? "")
+//            let phoneNumberKit = PhoneNumberKit()
+//            do {
+//                let phoneNumbers = try phoneNumberKit.parse(authDataResult?.user.phoneNumber ?? "")
+//                self.mobileTextField.text = "+\(phoneNumbers.countryCode)\(phoneNumbers.nationalNumber)"
+//                self.mobileNo = "\(phoneNumbers.countryCode)\(phoneNumbers.nationalNumber)"
+//            }
+//            catch {
+//                print("Generic parser error")
+//            }
+//        }
+//        else {
+//        }
+//    }
+//    
+//    func authUI(_ authUI: FUIAuth, didFinish operation: FUIAccountSettingsOperationType, error: Error?) {
+//        print(error?.localizedDescription ?? "")
+//    }
+//    
+//}
+
 
 extension SignupViewController: FUIAuthDelegate {
-    func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
+    func authUI(_ authUI: FUIAuth, didSignInWith user: User?, error: Error?) {
         print(error?.localizedDescription ?? "")
         if error == nil {
-            print(authDataResult?.user.phoneNumber ?? "")
+            print(user?.phoneNumber ?? "")
             let phoneNumberKit = PhoneNumberKit()
             do {
-                let phoneNumbers = try phoneNumberKit.parse(authDataResult?.user.phoneNumber ?? "")
+                let phoneNumbers = try phoneNumberKit.parse(user?.phoneNumber ?? "")
                 self.mobileTextField.text = "+\(phoneNumbers.countryCode)\(phoneNumbers.nationalNumber)"
                 self.mobileNo = "\(phoneNumbers.countryCode)\(phoneNumbers.nationalNumber)"
-            }
-            catch {
+            } catch {
                 print("Generic parser error")
             }
         }
-        else {
-        }
     }
-    
+
     func authUI(_ authUI: FUIAuth, didFinish operation: FUIAccountSettingsOperationType, error: Error?) {
         print(error?.localizedDescription ?? "")
     }
-    
 }
-

@@ -37,10 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var newlanguagecodevalue = String()
     var chattranslate = String()
     var chattranslateCode = String()
-    
-    
     // CALL DECLARATION
-    
     var callStarted = Bool()
     var baseUUId = UUID()
     var callStatus : String!

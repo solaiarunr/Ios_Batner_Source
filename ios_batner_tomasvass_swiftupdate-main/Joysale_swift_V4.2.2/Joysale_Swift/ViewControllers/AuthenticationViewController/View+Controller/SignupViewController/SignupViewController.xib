@@ -34,6 +34,7 @@
                 <outlet property="stackViewBottomConst" destination="yn3-Xp-tvv" id="gaQ-Cc-Mad"/>
                 <outlet property="termsBtn" destination="S3w-El-8ld" id="SQH-Yg-X3T"/>
                 <outlet property="termsLbl" destination="VK5-EL-Alw" id="PPW-ht-r74"/>
+                <outlet property="termsLblbtn" destination="0dj-bG-jk6" id="WbY-wc-PDk"/>
                 <outlet property="titleLabel" destination="Fte-iT-IFF" id="rWi-Vl-eeN"/>
                 <outlet property="userNameTextfield" destination="TIg-xm-J7u" id="8Uh-z6-7OV"/>
                 <outlet property="userNameTitleLabel" destination="t1c-X8-oep" id="f43-ZR-qfN"/>
@@ -307,21 +308,45 @@
                                                 <action selector="termsButtonAct:" destination="-1" eventType="touchUpInside" id="sEx-kw-pRD"/>
                                             </connections>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VK5-EL-Alw">
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="v3m-wP-AXF">
                                             <rect key="frame" x="35" y="0.0" width="339" height="55"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="55" id="KbH-Ar-QgZ"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VK5-EL-Alw">
+                                                    <rect key="frame" x="0.0" y="0.0" width="339" height="55"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="55" id="KbH-Ar-QgZ"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0dj-bG-jk6">
+                                                    <rect key="frame" x="46.5" y="0.0" width="292.5" height="55"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="tintColor" name="AppThemeColorNew"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" title="Terms and Condtion">
+                                                        <color key="titleColor" name="AppThemeColorNew"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="termsConditionButtonAct:" destination="-1" eventType="touchUpInside" id="Myp-kS-PTF"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <variation key="default">
+                                                <mask key="subviews">
+                                                    <exclude reference="0dj-bG-jk6"/>
+                                                </mask>
+                                            </variation>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="v3m-wP-AXF" secondAttribute="bottom" id="9mT-cL-tWk"/>
+                                        <constraint firstItem="v3m-wP-AXF" firstAttribute="centerY" secondItem="S3w-El-8ld" secondAttribute="centerY" id="AnH-KW-qc1"/>
                                         <constraint firstItem="S3w-El-8ld" firstAttribute="centerY" secondItem="mya-9i-TRT" secondAttribute="centerY" id="DgR-4Y-5d1"/>
-                                        <constraint firstItem="VK5-EL-Alw" firstAttribute="leading" secondItem="S3w-El-8ld" secondAttribute="trailing" constant="10" id="Fza-qQ-QuC"/>
-                                        <constraint firstAttribute="trailing" secondItem="VK5-EL-Alw" secondAttribute="trailing" id="IFg-ta-5f2"/>
-                                        <constraint firstItem="VK5-EL-Alw" firstAttribute="centerY" secondItem="S3w-El-8ld" secondAttribute="centerY" id="RGb-oe-dHw"/>
+                                        <constraint firstItem="v3m-wP-AXF" firstAttribute="top" secondItem="mya-9i-TRT" secondAttribute="top" id="Qne-Gr-WLT"/>
+                                        <constraint firstItem="v3m-wP-AXF" firstAttribute="leading" secondItem="S3w-El-8ld" secondAttribute="trailing" constant="10" id="SHs-KE-oKF"/>
+                                        <constraint firstAttribute="trailing" secondItem="v3m-wP-AXF" secondAttribute="trailing" id="gNO-Av-XQo"/>
                                         <constraint firstAttribute="height" constant="55" id="odY-pF-yae"/>
                                         <constraint firstItem="S3w-El-8ld" firstAttribute="leading" secondItem="mya-9i-TRT" secondAttribute="leading" constant="5" id="u8T-qM-wz8"/>
                                     </constraints>

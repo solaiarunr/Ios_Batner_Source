@@ -893,6 +893,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             if ADMIN_VIEW_MODEL.adminModel?.result.category[selectedIndex].subcategory.count ?? 0 > 0 {
                 let pageObj = CategoryViewController()
                 let selectedCategory = ADMIN_VIEW_MODEL.adminModel?.result.category[selectedIndex]
+                pageObj.selectedcatName = ADMIN_VIEW_MODEL.adminModel?.result.category[selectedIndex].categoryName ?? ""
                 pageObj.CategoryDetails = CategoryDetailsModel(Category_id: "\(selectedCategory?.categoryId ?? 0)", subcategory_id: "", child_category_id: "")
                 
                 if "\(selectedCategory?.categoryId ?? 0)" == FILTER_DATA.Category_id {

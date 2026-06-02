@@ -112,9 +112,9 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
     var bannerView1:GADBannerView!
     
     var selectedSearchType = ""
-    
+    var savedPlayerIndex: IndexPath?
     var newOffset = 0
-    
+    var isReturningFromLogin = false
     override func viewDidLoad() {
         super.viewDidLoad()
         Backview.layer.cornerRadius = Backview.frame.width / 2
@@ -127,16 +127,7 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
             print("bottomPadding:\(self.bottomPadding)")
         }
     }
-    override func viewWillAppear(_ animated: Bool) {
-        self.updateTheme(page: "present")
-        self.updateStatusbarBackground()
-        self.navigationController?.isNavigationBarHidden = true
-        self.tabBarController?.tabBar.isHidden = true
-        self.collectionView.isPagingEnabled = true
-        self.loadFilterData()
-        self.startTimer()
-    }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         self.updateStatusbarBackground()
         self.navigationController?.isNavigationBarHidden = true
@@ -144,14 +135,36 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
     override func viewDidLayoutSubviews() {
         
     }
+    override func viewWillAppear(_ animated: Bool) {
+        self.updateTheme(page: "present")
+        self.updateStatusbarBackground()
+        self.navigationController?.isNavigationBarHidden = true
+        self.tabBarController?.tabBar.isHidden = true
+        self.collectionView.isPagingEnabled = true
+        
+        if isReturningFromLogin {
+            isReturningFromLogin = false
+            self.startTimer()
+            // ✅ restore scroll position
+            if let index = savedPlayerIndex {
+                DispatchQueue.main.async {
+                    self.collectionView.scrollToItem(at: index, at: .centeredVertically, animated: false)
+                }
+            }
+            return
+        }
+        
+        self.loadFilterData()
+        self.startTimer()
+    }
     override func viewWillDisappear(_ animated: Bool) {
         self.updateTheme(page: "present")
-        //        self.updateStatusbarBackground()
         self.updateStatusbarBackgroundnew(Color: UIColor(named: "appcolor")!)
         self.navigationController?.isNavigationBarHidden = false
         self.stopAllPlayer(true)
         self.isPlayVideo = false
         NotificationCenter.default.removeObserver(self)
+        savedPlayerIndex = currentPlayerIndex  // ✅ save current position
     }
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return self.updateStatusBarStyle()
@@ -863,6 +876,7 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
     }
     
     func loadInitialVC() {
+        isReturningFromLogin = true
         let vc = InitialViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.isFromList = true
@@ -1065,159 +1079,172 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
     
     @objc func chatButtonAct(_ sender: UIButton) {
         let playerData = self.storyModel[sender.tag]
-        self.viewModels.getProfileData(user_id: UserDefaultModule.shared.getUserData()?.user_id ?? "", user_name: "",profile_id: "", onSuccess: { (success) in
-            print(success)
-            if success {
-                if let profileData = self.viewModels.profileModel?.result {
-                    self.profileData = profileData
-                    if self.profileData?.verification.mobNo == false{
-                        self.showAlerts()
-                    }else{
-                        if UserDefaultModule.shared.getUserData()?.user_id ?? "" != "" {
-                            if (UserDefaultModule.shared.getUserData()?.user_id ?? "") == (playerData.sellerId ?? "") {
-                                let pageObj = InsightViewController()
-                                pageObj.isfromtype = "story"
-                                pageObj.itemDatavideo = playerData
-                                self.navigationController?.pushViewController(pageObj, animated: true)
-                            }
-                            else {
-                                self.view.endEditing(true)
-                                Utility.shared.startAnimation(viewController: self)
-                                self.itemdetailsmodel.getChatIdAct(sender_id: (UserDefaultModule.shared.getUserData()?.user_id ?? ""), receiver_id: (playerData.sellerId ?? ""), onSuccess: { (success) in
-                                    Utility.shared.stopAnimation(viewController: self)
-                                    
-                                    if success {
-                                        let pageObj = ChatViewController()
-                                        pageObj.receiverId = playerData.sellerId ?? ""
-                                        pageObj.isFromItemDetails = true
-                                        pageObj.chatId = (self.itemdetailsmodel.itemChatModel?.chatId ?? "")
-                                        pageObj.itemDetailsvideo = playerData
-                                        pageObj.isfromtype = "story"
-                                        self.navigationController?.pushViewController(pageObj, animated: true)
+        if UserDefaultModule.shared.getUserData()?.user_id ?? "" != "" {
+            self.viewModels.getProfileData(user_id: UserDefaultModule.shared.getUserData()?.user_id ?? "", user_name: "",profile_id: "", onSuccess: { (success) in
+                print(success)
+                if success {
+                    if let profileData = self.viewModels.profileModel?.result {
+                        self.profileData = profileData
+                        if self.profileData?.verification.mobNo == false{
+                            self.showAlerts()
+                        }else{
+                            if UserDefaultModule.shared.getUserData()?.user_id ?? "" != "" {
+                                if (UserDefaultModule.shared.getUserData()?.user_id ?? "") == (playerData.sellerId ?? "") {
+                                    let pageObj = InsightViewController()
+                                    pageObj.isfromtype = "story"
+                                    pageObj.itemDatavideo = playerData
+                                    self.navigationController?.pushViewController(pageObj, animated: true)
+                                }
+                                else {
+                                    self.view.endEditing(true)
+                                    Utility.shared.startAnimation(viewController: self)
+                                    self.itemdetailsmodel.getChatIdAct(sender_id: (UserDefaultModule.shared.getUserData()?.user_id ?? ""), receiver_id: (playerData.sellerId ?? ""), onSuccess: { (success) in
+                                        Utility.shared.stopAnimation(viewController: self)
+                                        
+                                        if success {
+                                            let pageObj = ChatViewController()
+                                            pageObj.receiverId = playerData.sellerId ?? ""
+                                            pageObj.isFromItemDetails = true
+                                            pageObj.chatId = (self.itemdetailsmodel.itemChatModel?.chatId ?? "")
+                                            pageObj.itemDetailsvideo = playerData
+                                            pageObj.isfromtype = "story"
+                                            self.navigationController?.pushViewController(pageObj, animated: true)
+                                        }
+                                    }) { (failure) in
+                                        Utility.shared.stopAnimation(viewController: self)
                                     }
-                                }) { (failure) in
-                                    Utility.shared.stopAnimation(viewController: self)
                                 }
                             }
-                        }
-                        else {
-                            self.loadInitialVC()
+                            else {
+                                self.loadInitialVC()
+                            }
+                            
                         }
                         
                     }
-                    
                 }
+            }) { (failure) in
             }
-        }) { (failure) in
+        }else{
+            self.loadInitialVC()
         }
+       
         
     }
     @objc func MakebtnTapped(_ sender: UIButton) {
         let playerData = self.storyModel[sender.tag]
-        self.viewModels.getProfileData(user_id: UserDefaultModule.shared.getUserData()?.user_id ?? "", user_name: "",profile_id: "", onSuccess: { (success) in
-            print(success)
-            if success {
-                if let profileData = self.viewModels.profileModel?.result {
-                    self.profileData = profileData
-                    if self.profileData?.verification.mobNo == false{
-                        self.showAlerts()
-                    }else{
-                        if UserDefaultModule.shared.getUserData()?.user_id ?? "" != ""{
-                            let pageObj = ExchangeOfferViewController()
-                            pageObj.itemDetailsvideo = playerData
-                            pageObj.isfromtype = "story"
-                            pageObj.modalPresentationStyle = .overCurrentContext
-                            pageObj.modalTransitionStyle = .crossDissolve
-                            self.navigationController?.present(pageObj, animated: true, completion: nil)
-                        }
-                        else {
-                            self.loadInitialVC()
+        if UserDefaultModule.shared.getUserData()?.user_id ?? "" != "" {
+            self.viewModels.getProfileData(user_id: UserDefaultModule.shared.getUserData()?.user_id ?? "", user_name: "",profile_id: "", onSuccess: { (success) in
+                print(success)
+                if success {
+                    if let profileData = self.viewModels.profileModel?.result {
+                        self.profileData = profileData
+                        if self.profileData?.verification.mobNo == false{
+                            self.showAlerts()
+                        }else{
+                            if UserDefaultModule.shared.getUserData()?.user_id ?? "" != ""{
+                                let pageObj = ExchangeOfferViewController()
+                                pageObj.itemDetailsvideo = playerData
+                                pageObj.isfromtype = "story"
+                                pageObj.modalPresentationStyle = .overCurrentContext
+                                pageObj.modalTransitionStyle = .crossDissolve
+                                self.navigationController?.present(pageObj, animated: true, completion: nil)
+                            }
+                            else {
+                                self.loadInitialVC()
+                            }
                         }
                     }
                 }
+            }) { (failure) in
             }
-        }) { (failure) in
+        }else{
+            self.loadInitialVC()
         }
     }
     
     @objc func buyNowAct(_ sender: UIButton) {
         let playerData = self.storyModel[sender.tag]
-        if (UserDefaultModule.shared.getUserData()?.user_id ?? "") == (playerData.sellerId ?? "") {
-            if (playerData.itemStatus ?? "") == "sold" {
-                self.soldItemAct("\(playerData.id ?? 0)", value: "0",tag:playerData)
-            }
-            else {
-                if (playerData.promotionType ?? "") == "Normal" {
-                    let pageObj = CreatePromotionViewController()
-                    pageObj.itemID = "\(playerData.id ?? 0)"
-                    self.navigationController?.pushViewController(pageObj, animated: true)
+        if UserDefaultModule.shared.getUserData()?.user_id ?? "" != "" {
+            if (UserDefaultModule.shared.getUserData()?.user_id ?? "") == (playerData.sellerId ?? "") {
+                if (playerData.itemStatus ?? "") == "sold" {
+                    self.soldItemAct("\(playerData.id ?? 0)", value: "0",tag:playerData)
                 }
                 else {
-                    let pageObj = MyPromotionDetailViewController()
-                    pageObj.isFromItemDetails = true
-                    pageObj.itemDetailsvideo = playerData
-                    pageObj.isfromtype = "story"
-                    self.navigationController?.pushViewController(pageObj, animated: true)
+                    if (playerData.promotionType ?? "") == "Normal" {
+                        let pageObj = CreatePromotionViewController()
+                        pageObj.itemID = "\(playerData.id ?? 0)"
+                        self.navigationController?.pushViewController(pageObj, animated: true)
+                    }
+                    else {
+                        let pageObj = MyPromotionDetailViewController()
+                        pageObj.isFromItemDetails = true
+                        pageObj.itemDetailsvideo = playerData
+                        pageObj.isfromtype = "story"
+                        self.navigationController?.pushViewController(pageObj, animated: true)
+                    }
                 }
             }
-        }
-        else {
-            if (UserDefaultModule.shared.getUserData()?.user_id ?? "") != "" {
-                if BUYNOW_MODEL_FLAG && (playerData.itemApprove ?? "") == "1" {
-                    Utility.shared.startAnimation(viewController: self)
-                    self.viewModels.getProfileData(user_id: UserDefaultModule.shared.getUserData()?.user_id ?? "", user_name: "",profile_id: "", onSuccess: { (success) in
-                        print(success)
-                        if success {
-                            Utility.shared.stopAnimation(viewController: self)
-                            if let profileData = self.viewModels.profileModel?.result {
-                                self.profileData = profileData
-                                if self.profileData?.verification.mobNo == false{
-                                    self.showAlerts()
-                                }else{
-                                    let addressModel = AddressViewModel()
-                                    addressModel.getShippingAddressAct(user_id: (UserDefaultModule.shared.getUserData()?.user_id ?? ""), item_id: "\(playerData.id ?? 0)", onSuccess: { (success) in
-                                        Utility.shared.stopAnimation(viewController: self)
-                                        if !success {
-                                            let pageObj = AddressViewController()
-                                            pageObj.itemDetailsvideo = playerData
-                                            pageObj.isfromtype = "story"
-                                            pageObj.viewType = 1
-                                            self.navigationController?.pushViewController(pageObj, animated: true)
-                                        }
-                                        else {
-                                            if addressModel.addressListModel?.result.count ?? 0 == 1 {
-                                                let pageObj = BuyNowViewController()
-                                                pageObj.isfromtype = "story"
-                                                pageObj.addressDetails = addressModel.addressListModel?.result.first
+            else {
+                if (UserDefaultModule.shared.getUserData()?.user_id ?? "") != "" {
+                    if BUYNOW_MODEL_FLAG && (playerData.itemApprove ?? "") == "1" {
+                        Utility.shared.startAnimation(viewController: self)
+                        self.viewModels.getProfileData(user_id: UserDefaultModule.shared.getUserData()?.user_id ?? "", user_name: "",profile_id: "", onSuccess: { (success) in
+                            print(success)
+                            if success {
+                                Utility.shared.stopAnimation(viewController: self)
+                                if let profileData = self.viewModels.profileModel?.result {
+                                    self.profileData = profileData
+                                    if self.profileData?.verification.mobNo == false{
+                                        self.showAlerts()
+                                    }else{
+                                        let addressModel = AddressViewModel()
+                                        addressModel.getShippingAddressAct(user_id: (UserDefaultModule.shared.getUserData()?.user_id ?? ""), item_id: "\(playerData.id ?? 0)", onSuccess: { (success) in
+                                            Utility.shared.stopAnimation(viewController: self)
+                                            if !success {
+                                                let pageObj = AddressViewController()
                                                 pageObj.itemDetailsvideo = playerData
+                                                pageObj.isfromtype = "story"
+                                                pageObj.viewType = 1
                                                 self.navigationController?.pushViewController(pageObj, animated: true)
                                             }
                                             else {
-                                                let pageObj = AddressListViewController()
-                                                pageObj.isfromtype = "story"
-                                                pageObj.itemDetailsvideo = playerData
-                                                pageObj.isFromItemDetails = true
-                                                self.navigationController?.pushViewController(pageObj, animated: true)
+                                                if addressModel.addressListModel?.result.count ?? 0 == 1 {
+                                                    let pageObj = BuyNowViewController()
+                                                    pageObj.isfromtype = "story"
+                                                    pageObj.addressDetails = addressModel.addressListModel?.result.first
+                                                    pageObj.itemDetailsvideo = playerData
+                                                    self.navigationController?.pushViewController(pageObj, animated: true)
+                                                }
+                                                else {
+                                                    let pageObj = AddressListViewController()
+                                                    pageObj.isfromtype = "story"
+                                                    pageObj.itemDetailsvideo = playerData
+                                                    pageObj.isFromItemDetails = true
+                                                    self.navigationController?.pushViewController(pageObj, animated: true)
+                                                }
                                             }
+                                        }) { (failure) in
+                                            Utility.shared.stopAnimation(viewController: self)
                                         }
-                                    }) { (failure) in
-                                        Utility.shared.stopAnimation(viewController: self)
+                                        
+                                        
                                     }
                                     
-                                    
                                 }
-                                
                             }
+                        }) { (failure) in
                         }
-                    }) { (failure) in
+                        
+                        
                     }
-                    
-                    
+                }
+                else {
+                    self.loadInitialVC()
                 }
             }
-            else {
-                self.loadInitialVC()
-            }
+        }else{
+            self.loadInitialVC()
         }
     }
     @objc func CallbtnAct(_ sender: UIButton) {
@@ -1299,7 +1326,6 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
                 }
             }))
         }
-        
         else {
             if (playerData.exchangeBuy ?? "") == "1" && EXCHANGE_MODEL_FLAG {
                 alert.addAction(UIAlertAction(title: getLanguage["create_exchange"], style: .default, handler: { (UIAlertAction) in

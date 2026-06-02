@@ -124,6 +124,31 @@ class CountrySearchVC: UIViewController,UITextFieldDelegate {
             self.viewModel.getselectedcountrylist(country_code: self.selectedcountrycode, country_name: self.selectedcountryname, onSuccess: { (success)  in
                 Utility.shared.stopAnimation(viewController: self)
                 UserDefaultModule.shared.setAppFirst(true)
+                var langCode = self.viewModel.getselectedCountrylist.country_code.lowercased()
+                var langname = ""
+                // Czech fix
+                if langCode == "cz" {
+                    langCode = "cs"
+                    langname = "Czech"
+                }
+                else if langCode == "pl" {
+                    langCode = "pl"
+                    langname = "Polish"
+                }
+                else if langCode == "sk" {
+                    langCode = "sk"
+                    langname = "Slovakia"
+                }
+                else {
+                    langCode = "en"
+                    langname = "English"
+                }
+                
+                DEFAULT_LANGUAGE_CODE = langCode
+                UserDefaults.standard.set([DEFAULT_LANGUAGE_CODE], forKey: "AppleLanguages")
+                UserDefaultModule.shared.setAppLanguage(language: langname)
+                Utility.shared.configureLanguage()
+                UserDefaults.standard.synchronize()
                 debugPrint("country_name-->\(self.viewModel.getselectedCountrylist.country_name)")
                 UserDefaultModule.shared.setCountrycode(code:self.viewModel.getselectedCountrylist.country_code )
                 UserDefaultModule.shared.setCountryname(country:self.viewModel.getselectedCountrylist.country_name)

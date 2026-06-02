@@ -7,12 +7,15 @@
 //
 
 import UIKit
-import FirebaseUI
+//import FirebaseUI
 import PhoneNumberKit
 import FBSDKLoginKit
 import FBSDKCoreKit
 import SwiftyJSON
 import Photos
+import FirebaseAuth
+import FirebaseAuthUI
+import FirebasePhoneAuthUI
 
 class EditProfileViewController: UIViewController, customLocationDelegate, PayStackPaymentDelegate,PHPhotoLibraryChangeObserver {
     func backaction(isfrom: String) {
@@ -307,8 +310,26 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
         }
         else if indexPath.section == 2 && indexPath.row == 3 {
             UINavigationBar.appearance().tintColor = UIColor(named: "whitecolor")
-            let phoneProvider = FUIAuth.defaultAuthUI()?.providers.first as! FUIPhoneAuth
-            phoneProvider.signIn(withPresenting: self, phoneNumber: nil)
+            guard let authUI = FUIAuth.defaultAuthUI() else { return }
+            if UserDefaultModule.shared.getcountrycode()  ??  "CZ" == "CZ"{
+                let phoneProvider = FUIPhoneAuth(
+                    authUI: authUI,
+                    whitelistedCountries: ["CZ","SK"]
+                )
+                print("Msmdmf",UserDefaultModule.shared.getcountrycode()  ??  "IN")
+                phoneProvider.defaultCountryCode = UserDefaultModule.shared.getcountrycode()  ??  "IN"
+                authUI.providers = [phoneProvider]
+                phoneProvider.signIn(withPresenting: self, phoneNumber: nil)
+            }else{
+                let phoneProvider = FUIPhoneAuth(
+                    authUI: authUI,
+                    whitelistedCountries: [UserDefaultModule.shared.getcountrycode()  ??  "IN"]
+                )
+                print("Msmdmf",UserDefaultModule.shared.getcountrycode()  ??  "IN")
+                phoneProvider.defaultCountryCode = UserDefaultModule.shared.getcountrycode()  ??  "IN"
+                authUI.providers = [phoneProvider]
+                phoneProvider.signIn(withPresenting: self, phoneNumber: nil)
+            }
         }
         else if indexPath.section == 2 && indexPath.row == 4 {
             if (self.profileData?.verification.facebook == false){
@@ -369,51 +390,35 @@ extension EditProfileViewController: ImageDelegate {
 }
 extension EditProfileViewController {
     func locationAct(city: String, state: String, country: String,countryCode: String, lat: String, long: String, location: String) {
-        self.profileData?.location = location
+        print("location1",location)
+        print("city1",city)
+        print("state1",state)
+        print("country1",country)
+        let fullLocation = [city, state, country]
+            .filter { !$0.isEmpty }
+            .joined(separator: ", ")
+        self.profileData?.location = fullLocation
         self.profileData?.city = city
         self.profileData?.state = state
         self.profileData?.country = country
         self.tableView.reloadData()
     }
 }
-extension EditProfileViewController: FUIAuthDelegate {
-    func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
-        print(error?.localizedDescription ?? "")
-        if error == nil {
-            print(authDataResult?.user.phoneNumber ?? "")
-            let phonenumber = authDataResult?.user.phoneNumber ?? ""
-            let phoneNumberKit = PhoneNumberKit()
-            do {
-                let phoneNumbers = try phoneNumberKit.parse(authDataResult?.user.phoneNumber ?? "")
-                if (self.profileData?.mobileNo ?? "") != "\(phoneNumbers.countryCode)\(phoneNumbers.nationalNumber)" {
-                    self.profileData?.mobileNo = "\(phoneNumbers.countryCode)\(phoneNumbers.nationalNumber)"
-                    if (self.profileData?.userImg ?? "").contains("/logo/") {
-                        self.profileData?.userImg = ""
-                    }
-                    self.viewModel.editProfileData(user_id: UserDefaultModule.shared.getUserData()?.user_id ?? "", email: self.profileData?.email ?? "", full_name: self.profileData?.fullName ?? "", first_name: "", last_name: "", mobile_no: self.profileData?.mobileNo ?? "", isFromFB: 2, show_mobile_no: self.profileData?.showMobileNo ?? false, user_img: self.profileData?.userImg ?? "", fb_profileurl: "", facebook_id: self.profileData?.facebookId ?? "", fb_phone: "", country_name: self.profileData?.country ?? "", city_name: self.profileData?.city ?? "", state_name: self.profileData?.state ?? "", onSuccess: { (success) in
-                        Utility.shared.stopAnimation(viewController: self)
-                        if !success {
-                            let alert = UIAlertController(title: nil, message: self.viewModel.tosModel?.message ?? "", preferredStyle: .alert)
-                            alert.addAction(UIAlertAction(title: getLanguage["ok"] ?? "", style: .default, handler: { (UIAlertAction) in
-                                if success {
-                                    self.navigationController?.popViewController(animated: true)
-                                }
-                            }))
-                            self.present(alert, animated: true, completion: nil)
-                        }
-                        else {
-                            self.loadData()
-                        }
-                    }) { (failure) in
-                        Utility.shared.stopAnimation(viewController: self)
-                    }
-                    self.profileData?.verification.mobNo = true
-                    self.tableView.reloadData()
-                }
-            }
-            catch {
-//                cc
-//                    self.viewModel.editProfileData(user_id: UserDefaultModule.shared.getUserData()?.user_id ?? "", email: self.profileData?.email ?? "", full_name: self.profileData?.fullName ?? "", first_name: "", last_name: "", mobile_no:phonenumber, isFromFB: 2, show_mobile_no: self.profileData?.showMobileNo ?? false, user_img: self.profileData?.userImg ?? "", fb_profileurl: "", facebook_id: self.profileData?.facebookId ?? "", fb_phone: "", country_name: self.profileData?.country ?? "", city_name: self.profileData?.city ?? "", state_name: self.profileData?.state ?? "", onSuccess: { (success) in
+//extension EditProfileViewController: FUIAuthDelegate {
+//    @nonobjc func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
+//        print(error?.localizedDescription ?? "")
+//        if error == nil {
+//            print(authDataResult?.user.phoneNumber ?? "")
+//            let phonenumber = authDataResult?.user.phoneNumber ?? ""
+//            let phoneNumberKit = PhoneNumberKit()
+//            do {
+//                let phoneNumbers = try phoneNumberKit.parse(authDataResult?.user.phoneNumber ?? "")
+//                if (self.profileData?.mobileNo ?? "") != "\(phoneNumbers.countryCode)\(phoneNumbers.nationalNumber)" {
+//                    self.profileData?.mobileNo = "\(phoneNumbers.countryCode)\(phoneNumbers.nationalNumber)"
+//                    if (self.profileData?.userImg ?? "").contains("/logo/") {
+//                        self.profileData?.userImg = ""
+//                    }
+//                    self.viewModel.editProfileData(user_id: UserDefaultModule.shared.getUserData()?.user_id ?? "", email: self.profileData?.email ?? "", full_name: self.profileData?.fullName ?? "", first_name: "", last_name: "", mobile_no: self.profileData?.mobileNo ?? "", isFromFB: 2, show_mobile_no: self.profileData?.showMobileNo ?? false, user_img: self.profileData?.userImg ?? "", fb_profileurl: "", facebook_id: self.profileData?.facebookId ?? "", fb_phone: "", country_name: self.profileData?.country ?? "", city_name: self.profileData?.city ?? "", state_name: self.profileData?.state ?? "", onSuccess: { (success) in
 //                        Utility.shared.stopAnimation(viewController: self)
 //                        if !success {
 //                            let alert = UIAlertController(title: nil, message: self.viewModel.tosModel?.message ?? "", preferredStyle: .alert)
@@ -433,18 +438,96 @@ extension EditProfileViewController: FUIAuthDelegate {
 //                    self.profileData?.verification.mobNo = true
 //                    self.tableView.reloadData()
 //                }
-                
-                print("Generic parser error")
+//            }
+//            catch {
+////                cc
+////                    self.viewModel.editProfileData(user_id: UserDefaultModule.shared.getUserData()?.user_id ?? "", email: self.profileData?.email ?? "", full_name: self.profileData?.fullName ?? "", first_name: "", last_name: "", mobile_no:phonenumber, isFromFB: 2, show_mobile_no: self.profileData?.showMobileNo ?? false, user_img: self.profileData?.userImg ?? "", fb_profileurl: "", facebook_id: self.profileData?.facebookId ?? "", fb_phone: "", country_name: self.profileData?.country ?? "", city_name: self.profileData?.city ?? "", state_name: self.profileData?.state ?? "", onSuccess: { (success) in
+////                        Utility.shared.stopAnimation(viewController: self)
+////                        if !success {
+////                            let alert = UIAlertController(title: nil, message: self.viewModel.tosModel?.message ?? "", preferredStyle: .alert)
+////                            alert.addAction(UIAlertAction(title: getLanguage["ok"] ?? "", style: .default, handler: { (UIAlertAction) in
+////                                if success {
+////                                    self.navigationController?.popViewController(animated: true)
+////                                }
+////                            }))
+////                            self.present(alert, animated: true, completion: nil)
+////                        }
+////                        else {
+////                            self.loadData()
+////                        }
+////                    }) { (failure) in
+////                        Utility.shared.stopAnimation(viewController: self)
+////                    }
+////                    self.profileData?.verification.mobNo = true
+////                    self.tableView.reloadData()
+////                }
+//                
+//                print("Generic parser error")
+//            }
+//        }
+//        else {
+//        }
+//    }
+//    
+//    func authUI(_ authUI: FUIAuth, didFinish operation: FUIAccountSettingsOperationType, error: Error?) {
+//        print(error?.localizedDescription ?? "")
+//    }
+//    
+//}
+extension EditProfileViewController: FUIAuthDelegate {
+    func authUI(_ authUI: FUIAuth, didSignInWith user: User?, error: Error?) {
+        print(error?.localizedDescription ?? "")
+        if error == nil {
+            let phonenumber = user?.phoneNumber ?? ""
+            print(phonenumber)
+            let phoneNumberKit = PhoneNumberKit()
+            do {
+                let phoneNumbers = try phoneNumberKit.parse(phonenumber)
+                if (self.profileData?.mobileNo ?? "") != "\(phoneNumbers.countryCode)\(phoneNumbers.nationalNumber)" {
+                    self.profileData?.mobileNo = "\(phoneNumbers.countryCode)\(phoneNumbers.nationalNumber)"
+                    if (self.profileData?.userImg ?? "").contains("/logo/") {
+                        self.profileData?.userImg = ""
+                    }
+                    self.viewModel.editProfileData(
+                        user_id: UserDefaultModule.shared.getUserData()?.user_id ?? "",
+                        email: self.profileData?.email ?? "",
+                        full_name: self.profileData?.fullName ?? "",
+                        first_name: "",
+                        last_name: "",
+                        mobile_no: self.profileData?.mobileNo ?? "",
+                        isFromFB: 2,
+                        show_mobile_no: self.profileData?.showMobileNo ?? false,
+                        user_img: self.profileData?.userImg ?? "",
+                        fb_profileurl: "",
+                        facebook_id: self.profileData?.facebookId ?? "",
+                        fb_phone: "",
+                        country_name: self.profileData?.country ?? "",
+                        city_name: self.profileData?.city ?? "",
+                        state_name: self.profileData?.state ?? "",
+                        onSuccess: { (success) in
+                            Utility.shared.stopAnimation(viewController: self)
+                            if !success {
+                                let alert = UIAlertController(title: nil, message: self.viewModel.tosModel?.message ?? "", preferredStyle: .alert)
+                                alert.addAction(UIAlertAction(title: getLanguage["ok"] ?? "", style: .default, handler: nil))
+                                self.present(alert, animated: true, completion: nil)
+                            } else {
+                                self.loadData()
+                            }
+                        }) { (failure) in
+                            Utility.shared.stopAnimation(viewController: self)
+                        }
+                    self.profileData?.verification.mobNo = true
+                    self.tableView.reloadData()
+                }
+            } catch {
+                print("Phone number parse error")
             }
         }
-        else {
-        }
     }
-    
+
     func authUI(_ authUI: FUIAuth, didFinish operation: FUIAccountSettingsOperationType, error: Error?) {
         print(error?.localizedDescription ?? "")
     }
-    
 }
 extension EditProfileViewController {
   

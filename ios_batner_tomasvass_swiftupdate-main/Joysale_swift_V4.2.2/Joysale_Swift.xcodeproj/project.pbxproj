@@ -278,8 +278,6 @@
 		407FDDA824A7665C000B4D32 /* StripeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 407FDDA624A7665C000B4D32 /* StripeViewController.xib */; };
 		4084C84A248E07C700857BBA /* Proxima Nova Bold.OTF in Resources */ = {isa = PBXBuildFile; fileRef = 4084C848248E07C700857BBA /* Proxima Nova Bold.OTF */; };
 		4084C84B248E07C700857BBA /* Proxima Nova Regular.OTF in Resources */ = {isa = PBXBuildFile; fileRef = 4084C849248E07C700857BBA /* Proxima Nova Regular.OTF */; };
-		4084C850248E0A3F00857BBA /* English.json in Resources */ = {isa = PBXBuildFile; fileRef = 4084C84D248E0A3F00857BBA /* English.json */; };
-		4084C851248E0A3F00857BBA /* French.json in Resources */ = {isa = PBXBuildFile; fileRef = 4084C84E248E0A3F00857BBA /* French.json */; };
 		40AEC48B24AB842E004C74BD /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40AEC48A24AB842E004C74BD /* ChatModel.swift */; };
 		40B5D62A2493850400C89443 /* GetItemsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40B5D6292493850400C89443 /* GetItemsModel.swift */; };
 		40BE189E24B9DB4B007A68DD /* FollowAndReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BE189C24B9DB4B007A68DD /* FollowAndReviewViewController.swift */; };
@@ -437,10 +435,12 @@
 		B6F5773D2D81871F00BD4AEF /* ThemeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6F577392D81871F00BD4AEF /* ThemeViewController.xib */; };
 		B6F577402D81BA9E00BD4AEF /* NewCatogorycell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F5773E2D81BA9E00BD4AEF /* NewCatogorycell.swift */; };
 		B6F577412D81BA9E00BD4AEF /* NewCatogorycell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6F5773F2D81BA9E00BD4AEF /* NewCatogorycell.xib */; };
-		D00C094A28DD7A460025BDFD /* Arabic.json in Resources */ = {isa = PBXBuildFile; fileRef = D00C094928DD7A460025BDFD /* Arabic.json */; };
+		B6FE1A882FAC76B400F080FA /* Czech.json in Resources */ = {isa = PBXBuildFile; fileRef = B6FE1A832FAC76B400F080FA /* Czech.json */; };
+		B6FE1A892FAC76B400F080FA /* Polish.json in Resources */ = {isa = PBXBuildFile; fileRef = B6FE1A852FAC76B400F080FA /* Polish.json */; };
+		B6FE1A8A2FAC76B400F080FA /* English.json in Resources */ = {isa = PBXBuildFile; fileRef = B6FE1A842FAC76B400F080FA /* English.json */; };
+		B6FE1A8B2FAC76B400F080FA /* Slovakia.json in Resources */ = {isa = PBXBuildFile; fileRef = B6FE1A862FAC76B400F080FA /* Slovakia.json */; };
 		DF68E8752A790BDA00771527 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF68E8732A790BDA00771527 /* InitialViewController.swift */; };
 		DF68E8762A790BDA00771527 /* InitialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF68E8742A790BDA00771527 /* InitialViewController.xib */; };
-		DF884B942A53E39F00089B07 /* Czech.json in Resources */ = {isa = PBXBuildFile; fileRef = DF884B932A53E39F00089B07 /* Czech.json */; };
 		ED7DEAD42DD31DCB007E93A6 /* DescriptionPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7DEAD12DD31DCB007E93A6 /* DescriptionPopupVC.swift */; };
 		ED7DEAD52DD31DCB007E93A6 /* DescriptionPopupVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED7DEAD22DD31DCB007E93A6 /* DescriptionPopupVC.xib */; };
 		ED8EF6BC2DCF850200EB62AC /* Carbon_Kit_Swift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ED8EF6BA2DCF850200EB62AC /* Carbon_Kit_Swift.xcdatamodeld */; };
@@ -771,8 +771,6 @@
 		407FDDA624A7665C000B4D32 /* StripeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StripeViewController.xib; sourceTree = "<group>"; };
 		4084C848248E07C700857BBA /* Proxima Nova Bold.OTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Proxima Nova Bold.OTF"; sourceTree = "<group>"; };
 		4084C849248E07C700857BBA /* Proxima Nova Regular.OTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Proxima Nova Regular.OTF"; sourceTree = "<group>"; };
-		4084C84D248E0A3F00857BBA /* English.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = English.json; sourceTree = "<group>"; };
-		4084C84E248E0A3F00857BBA /* French.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = French.json; sourceTree = "<group>"; };
 		40AEC48A24AB842E004C74BD /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		40B5D6292493850400C89443 /* GetItemsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetItemsModel.swift; sourceTree = "<group>"; };
 		40BE189C24B9DB4B007A68DD /* FollowAndReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowAndReviewViewController.swift; sourceTree = "<group>"; };
@@ -936,10 +934,12 @@
 		B6F577392D81871F00BD4AEF /* ThemeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ThemeViewController.xib; sourceTree = "<group>"; };
 		B6F5773E2D81BA9E00BD4AEF /* NewCatogorycell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCatogorycell.swift; sourceTree = "<group>"; };
 		B6F5773F2D81BA9E00BD4AEF /* NewCatogorycell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewCatogorycell.xib; sourceTree = "<group>"; };
-		D00C094928DD7A460025BDFD /* Arabic.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Arabic.json; sourceTree = "<group>"; };
+		B6FE1A832FAC76B400F080FA /* Czech.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Czech.json; sourceTree = "<group>"; };
+		B6FE1A842FAC76B400F080FA /* English.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = English.json; sourceTree = "<group>"; };
+		B6FE1A852FAC76B400F080FA /* Polish.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Polish.json; sourceTree = "<group>"; };
+		B6FE1A862FAC76B400F080FA /* Slovakia.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Slovakia.json; sourceTree = "<group>"; };
 		DF68E8732A790BDA00771527 /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		DF68E8742A790BDA00771527 /* InitialViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InitialViewController.xib; sourceTree = "<group>"; };
-		DF884B932A53E39F00089B07 /* Czech.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Czech.json; sourceTree = "<group>"; };
 		ED7DEAD12DD31DCB007E93A6 /* DescriptionPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionPopupVC.swift; sourceTree = "<group>"; };
 		ED7DEAD22DD31DCB007E93A6 /* DescriptionPopupVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DescriptionPopupVC.xib; sourceTree = "<group>"; };
 		ED8EF6BB2DCF850200EB62AC /* Carbon_Kit_Swift.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Carbon_Kit_Swift.xcdatamodel; sourceTree = "<group>"; };
@@ -2121,9 +2121,9 @@
 		40584BDF248B802600E0243B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B6FE1A872FAC76B400F080FA /* ios translate 2026 */,
 				40584BE5248B807000E0243B /* Assets */,
 				40584BE0248B803300E0243B /* ColorAssets */,
-				40584BE4248B805E00E0243B /* Languages */,
 				40584BE3248B805400E0243B /* Fonts */,
 			);
 			path = Resources;
@@ -2144,17 +2144,6 @@
 				4084C849248E07C700857BBA /* Proxima Nova Regular.OTF */,
 			);
 			path = Fonts;
-			sourceTree = "<group>";
-		};
-		40584BE4248B805E00E0243B /* Languages */ = {
-			isa = PBXGroup;
-			children = (
-				DF884B932A53E39F00089B07 /* Czech.json */,
-				4084C84D248E0A3F00857BBA /* English.json */,
-				4084C84E248E0A3F00857BBA /* French.json */,
-				D00C094928DD7A460025BDFD /* Arabic.json */,
-			);
-			path = Languages;
 			sourceTree = "<group>";
 		};
 		40584BE5248B807000E0243B /* Assets */ = {
@@ -3246,6 +3235,17 @@
 			path = ThemeTableViewCell;
 			sourceTree = "<group>";
 		};
+		B6FE1A872FAC76B400F080FA /* ios translate 2026 */ = {
+			isa = PBXGroup;
+			children = (
+				B6FE1A832FAC76B400F080FA /* Czech.json */,
+				B6FE1A842FAC76B400F080FA /* English.json */,
+				B6FE1A852FAC76B400F080FA /* Polish.json */,
+				B6FE1A862FAC76B400F080FA /* Slovakia.json */,
+			);
+			path = "ios translate 2026";
+			sourceTree = "<group>";
+		};
 		D1617A7F6C9AC07035A22022 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -3440,9 +3440,7 @@
 				407FDDA824A7665C000B4D32 /* StripeViewController.xib in Resources */,
 				B61D5B812D79714500F5EDD3 /* CountryPickerView.xib in Resources */,
 				B6F5773D2D81871F00BD4AEF /* ThemeViewController.xib in Resources */,
-				DF884B942A53E39F00089B07 /* Czech.json in Resources */,
 				B69E2FE82D9130C100567B32 /* profile_animate.json in Resources */,
-				D00C094A28DD7A460025BDFD /* Arabic.json in Resources */,
 				403CFF9524C0229900DFD34C /* NotificationTableViewCell.xib in Resources */,
 				40584BE2248B804700E0243B /* Color.xcassets in Resources */,
 				B610E77A2EBDC4C70000BF9E /* PreAdcellTableViewCell.xib in Resources */,
@@ -3467,7 +3465,6 @@
 				40318E1424C6CD7F005A3BC4 /* InsightViewController.xib in Resources */,
 				40381C5624C5A17000884ED2 /* MyPromotionSubViewController.xib in Resources */,
 				406027A92492294400719206 /* ProfileHeaderTableViewCell.xib in Resources */,
-				4084C851248E0A3F00857BBA /* French.json in Resources */,
 				403CADD924BF496600147132 /* LanguageTableViewCell.xib in Resources */,
 				40381C5B24C5B71000884ED2 /* MyPromotionDetailViewController.xib in Resources */,
 				189DB02E2754C425003948D6 /* BroadcastSetupUIInfo.plist in Resources */,
@@ -3480,6 +3477,10 @@
 				189DB04D2754C425003948D6 /* CallViewController.xib in Resources */,
 				407B14AF24C0902F00B21103 /* AddBannerViewController.xib in Resources */,
 				40381C6024C5D65D00884ED2 /* PromotionDetailTableViewCell.xib in Resources */,
+				B6FE1A882FAC76B400F080FA /* Czech.json in Resources */,
+				B6FE1A892FAC76B400F080FA /* Polish.json in Resources */,
+				B6FE1A8A2FAC76B400F080FA /* English.json in Resources */,
+				B6FE1A8B2FAC76B400F080FA /* Slovakia.json in Resources */,
 				B6F5773B2D81871F00BD4AEF /* ThemeTableViewCell.xib in Resources */,
 				99AFDF842587658C00AF7CFF /* FollowAndReviewTableCell.xib in Resources */,
 				B6A13EC82DA8F15D00B96762 /* StoryAllCollectionCell.xib.zip in Resources */,
@@ -3492,7 +3493,6 @@
 				189DB01E2754C425003948D6 /* ic_call_end_black_24dp.png in Resources */,
 				189DB0462754C425003948D6 /* RingTone.mp3 in Resources */,
 				4038162524977F7E00722F22 /* HomeFilterCollectionViewCell.xib in Resources */,
-				4084C850248E0A3F00857BBA /* English.json in Resources */,
 				403E9ECF2493547300E122BA /* HomeHeaderCollectionViewCell.xib in Resources */,
 				40BE189F24B9DB4B007A68DD /* FollowAndReviewViewController.xib in Resources */,
 				B69E2FEB2D9130C100567B32 /* promotion_animate.json in Resources */,
@@ -4026,7 +4026,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8;
+				MARKETING_VERSION = 1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.app.batner;
 				PRODUCT_NAME = Batner;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4059,7 +4059,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8;
+				MARKETING_VERSION = 1.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.app.batner;
 				PRODUCT_NAME = Batner;
 				PROVISIONING_PROFILE_SPECIFIER = "";

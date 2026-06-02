@@ -12,8 +12,11 @@ import FBSDKCoreKit
 import SwiftyJSON
 import AuthenticationServices
 import GoogleSignIn
-import FirebaseUI
+//import FirebaseUI
 import PhoneNumberKit
+import FirebaseAuth
+import FirebaseAuthUI
+import FirebasePhoneAuthUI
 class InitialViewController: UIViewController{
     @IBOutlet weak var mobileButton: UIButton!
     @IBOutlet weak var mobileView: UIView!
@@ -123,12 +126,39 @@ class InitialViewController: UIViewController{
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return self.updateStatusBarStyle()
     }
+//    @IBAction func mobileLoginAct(_ sender: UIButton) {
+//            UINavigationBar.appearance().tintColor = UIColor(named: "whitecolor")
+//            let phoneProvider = FUIAuth.defaultAuthUI()?.providers.first as! FUIPhoneAuth
+//            phoneProvider.defaultCountryCode  = UserDefaultModule.shared.getcountrycode()  ??  "IN"
+//             phoneProvider.whitelistedCountries = ["IN"]
+//            phoneProvider.signIn(withPresenting: self, phoneNumber: nil)
+//        
+//        
+//        }
     @IBAction func mobileLoginAct(_ sender: UIButton) {
         UINavigationBar.appearance().tintColor = UIColor(named: "whitecolor")
-        let phoneProvider = FUIAuth.defaultAuthUI()?.providers.first as! FUIPhoneAuth
-        phoneProvider.signIn(withPresenting: self, phoneNumber: nil)
+        guard let authUI = FUIAuth.defaultAuthUI() else { return }
+        if UserDefaultModule.shared.getcountrycode()  ??  "CZ" == "CZ"{
+            let phoneProvider = FUIPhoneAuth(
+                authUI: authUI,
+                whitelistedCountries: ["CZ","SK"]
+            )
+            print("Msmdmf",UserDefaultModule.shared.getcountrycode()  ??  "IN")
+            phoneProvider.defaultCountryCode = UserDefaultModule.shared.getcountrycode()  ??  "IN"
+            authUI.providers = [phoneProvider]
+            phoneProvider.signIn(withPresenting: self, phoneNumber: nil)
+        }else{
+            let phoneProvider = FUIPhoneAuth(
+                authUI: authUI,
+                whitelistedCountries: [UserDefaultModule.shared.getcountrycode()  ??  "IN"]
+            )
+            print("Msmdmf",UserDefaultModule.shared.getcountrycode()  ??  "IN")
+            phoneProvider.defaultCountryCode = UserDefaultModule.shared.getcountrycode()  ??  "IN"
+            authUI.providers = [phoneProvider]
+            phoneProvider.signIn(withPresenting: self, phoneNumber: nil)
+        }
     }
-    @IBAction func authenticationButtonAct(_ sender: UIButton) {
+        @IBAction func authenticationButtonAct(_ sender: UIButton) {
         if sender == loginButton {
             let pageObj = LoginViewController()
             pageObj.modalPresentationStyle = .fullScreen
@@ -283,41 +313,72 @@ extension InitialViewController: ASAuthorizationControllerDelegate {
 //
 //}
 
+//extension InitialViewController: FUIAuthDelegate {
+//    @nonobjc func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
+//        
+//        
+//        print(error?.localizedDescription ?? "")
+//        if authDataResult?.user != nil{
+//            if authDataResult?.user.phoneNumber != nil{
+//                let phoneNumberKit = PhoneNumberKit()
+//                do {
+//                    let phoneNumbers = try phoneNumberKit.parse(authDataResult?.user.phoneNumber ?? "")
+//                    print("Phone Number -->\(String(describing: (authDataResult?.user.phoneNumber)))")
+//                    self.viewModel.MobileLogin(phone: "\(phoneNumbers.countryCode)\(phoneNumbers.nationalNumber)", onSuccess: { (success) in
+//                        Utility.shared.stopAnimation(viewController: self)
+//                        if success {
+//                            self.delegate.initVC(initialView: TabbarController())
+//                        }
+//                        else {
+//                            //let alert = UIAlertController(title: "message", message: getLanguage[self.viewModel.loginModel?.message ?? "kindly signup your mobile number"] ?? "kindly signup your mobile number" , preferredStyle: .alert)
+//                            let alert = UIAlertController(title: nil, message: getLanguage["new_message"],preferredStyle: .alert)
+//                            //                            alert.message = (self.viewModel.loginModel?.message ?? "")
+//                            alert.addAction(UIAlertAction(title: getLanguage["ok"] ?? "", style: .cancel, handler: { (UIAlertAction) in
+//                            }))
+//                            self.present(alert, animated: true, completion: nil)
+//                        }
+//                    }) { (failure) in
+//                        Utility.shared.stopAnimation(viewController: self)
+//                    }                }
+//                catch {
+//                    print("Generic parser error")
+//                }
+//                
+//            }
+//        }
+//    }
+//    
+//    func authUI(_ authUI: FUIAuth, didFinish operation: FUIAccountSettingsOperationType, error: Error?) {
+//        print(error?.localizedDescription ?? "")
+//    }
+//}
+
 extension InitialViewController: FUIAuthDelegate {
-    func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
-        
-        
+    func authUI(_ authUI: FUIAuth, didSignInWith user: User?, error: Error?) {
         print(error?.localizedDescription ?? "")
-        if authDataResult?.user != nil{
-            if authDataResult?.user.phoneNumber != nil{
-                let phoneNumberKit = PhoneNumberKit()
-                do {
-                    let phoneNumbers = try phoneNumberKit.parse(authDataResult?.user.phoneNumber ?? "")
-                    print("Phone Number -->\(String(describing: (authDataResult?.user.phoneNumber)))")
-                    self.viewModel.MobileLogin(phone: "\(phoneNumbers.countryCode)\(phoneNumbers.nationalNumber)", onSuccess: { (success) in
-                        Utility.shared.stopAnimation(viewController: self)
-                        if success {
-                            self.delegate.initVC(initialView: TabbarController())
-                        }
-                        else {
-                            //let alert = UIAlertController(title: "message", message: getLanguage[self.viewModel.loginModel?.message ?? "kindly signup your mobile number"] ?? "kindly signup your mobile number" , preferredStyle: .alert)
-                            let alert = UIAlertController(title: nil, message: getLanguage["new_message"],preferredStyle: .alert)
-                            //                            alert.message = (self.viewModel.loginModel?.message ?? "")
-                            alert.addAction(UIAlertAction(title: getLanguage["ok"] ?? "", style: .cancel, handler: { (UIAlertAction) in
-                            }))
-                            self.present(alert, animated: true, completion: nil)
-                        }
-                    }) { (failure) in
-                        Utility.shared.stopAnimation(viewController: self)
-                    }                }
-                catch {
-                    print("Generic parser error")
+        if let user = user, let phoneNumber = user.phoneNumber {
+            let phoneNumberKit = PhoneNumberKit()
+            do {
+                let phoneNumbers = try phoneNumberKit.parse(phoneNumber)
+                print("Phone Number --> \(phoneNumber)")
+                self.viewModel.MobileLogin(phone: "\(phoneNumbers.countryCode)\(phoneNumbers.nationalNumber)", onSuccess: { (success) in
+                    Utility.shared.stopAnimation(viewController: self)
+                    if success {
+                        self.delegate.initVC(initialView: TabbarController())
+                    } else {
+                        let alert = UIAlertController(title: nil, message: getLanguage["new_message"], preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: getLanguage["ok"] ?? "", style: .cancel, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }) { (failure) in
+                    Utility.shared.stopAnimation(viewController: self)
                 }
-                
+            } catch {
+                print("Generic parser error")
             }
         }
     }
-    
+
     func authUI(_ authUI: FUIAuth, didFinish operation: FUIAccountSettingsOperationType, error: Error?) {
         print(error?.localizedDescription ?? "")
     }

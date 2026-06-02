@@ -379,6 +379,10 @@
              updateValue.range.append(FilterRangeModel(max_value: self.rightTextField.text!, id: filterData?.id ?? "", min_value: self.rightTextField.text!))
              
              ADD_EDIT_ITEM_MODEL.filters = Utility.shared.filterDictToString(updateValue)
+         }   else if section == 8 && textField == rightTextField {
+             // Location field validation
+              let locationText = textField.text
+             ADD_EDIT_ITEM_MODEL.address = locationText ?? ""
          }
          else if section == 11 && textField == rightTextField {
              ADD_EDIT_ITEM_MODEL.shipping_cost = textField.text!

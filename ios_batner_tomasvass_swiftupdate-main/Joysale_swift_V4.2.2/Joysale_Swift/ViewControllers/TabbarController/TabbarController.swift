@@ -148,8 +148,6 @@ class TabbarController: UITabBarController, UITabBarControllerDelegate {
                     pageObj.profileData = self.viewModels.profileModel?.result
                     self.navigationController?.pushViewController(pageObj, animated: true)
                 }
-                
-//                alertController.dismiss(animated: true, completion: nil)
                 self.tabBar.isUserInteractionEnabled = true
             }
 

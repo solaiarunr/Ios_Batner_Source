@@ -5,7 +5,7 @@
 //  Created by Hitasoft on 06/06/20.
 //  Copyright © 2020 Hitasoft. All rights reserved.
 //
-
+//solaiii
 import Foundation
 import UIKit
 let APP_NAME = "Batner"
@@ -46,6 +46,7 @@ var REST_AUTH: [String : String] = ["api_username": "batner", "api_password": "0
 let MAP_URL = "https://maps.google.com/maps/api/staticmap?center="
 
 var DEVICE_MODEs = ""
+var PRODUCT_SITE_URL = (UserDefaultModule.shared.getbaseurlonly()?.appending("api/")) ?? "https://batner.com/api/"
 
 
 let DYNAMIC_LINK = "https://batner.page.link" // create it from firebase dynamic link section
@@ -179,7 +180,7 @@ let VIDEO_THUMB_PATH = "/media/stream_thumbs/"
 //MARK: Woovly Clone API's
 let GET_HOME_HEADERS = "gethomeheaders"
 let GET_SUB_HEADERS = "getinnerheaders"
-var PRODUCT_SITE_URL = SITE_URL
+//var PRODUCT_SITE_URL = SITE_URL
 let PRODUCT_LIST_API = "hts_myproducts"
 let APP_DEFAULT_API = "hts_appdefaults"
 let USER_INFO_API = "hts_getuserinfo"
@@ -189,6 +190,8 @@ let HTS_VIDEOS = "hts_videos"
 let UPLOAD_API = "hts_uploadstream"
 let VIDEO_PATH = "/media/streams/"
 let HTS_MY_VIDEOS = "hts_myvideos"
+
+
 
 
 //customwork

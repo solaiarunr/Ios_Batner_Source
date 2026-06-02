@@ -57,7 +57,7 @@ class EditProfileTableViewCell: UITableViewCell {
         self.ViewStack.isUserInteractionEnabled = true
         self.stripeTextView.isUserInteractionEnabled = true
         self.stripeTextView.isSelectable = true
-        let fullText = "✅ Upon registration, I agreed that transactions are at the buyer's and seller's own risk. Our platform verifies each user via phone number. When using the Buy Now button, reviews can be utilized, and the button is secured through Stripe, ensuring safe payments. However, BATNER holds no responsibility, as it is only a platform. View Terms & Policy"
+        let fullText = getLanguage["Uponregistration"] ?? ""
 
         let attributedString = NSMutableAttributedString(string: fullText)
         let linkText = "View Terms & Policy"

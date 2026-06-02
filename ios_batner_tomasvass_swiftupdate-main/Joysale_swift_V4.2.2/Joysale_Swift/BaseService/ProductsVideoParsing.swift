@@ -69,6 +69,9 @@ class ProductsVideoParsing {
     
     public func getDetails(subURl: String, onSuccess success: @escaping (JSON) -> Void, onFailure failure: @escaping (_ error: Error?) -> Void)
     {
+    
+        let PRODUCT_SITE_URL = (UserDefaultModule.shared.getbaseurlonly()?.appending("api/")) ?? "https://batner.com/api/"
+        
         let BaseUrl = URL(string: PRODUCT_SITE_URL+subURl)
         print("BASE URL + subURL : \(PRODUCT_SITE_URL+subURl)")
         
@@ -100,6 +103,8 @@ class ProductsVideoParsing {
     
     public func postDetails(subURl: String,params: Params, onSuccess success: @escaping (JSON) -> Void, onFailure failure: @escaping (_ error: Error?) -> Void)
     {
+        var PRODUCT_SITE_URL = (UserDefaultModule.shared.getbaseurlonly()?.appending("api/")) ?? "https://batner.com/api/"
+
         var parameters = params
         parameters.merge(REST_AUTH){(_, new) in new}
         let BaseUrl = URL(string: PRODUCT_SITE_URL+subURl)

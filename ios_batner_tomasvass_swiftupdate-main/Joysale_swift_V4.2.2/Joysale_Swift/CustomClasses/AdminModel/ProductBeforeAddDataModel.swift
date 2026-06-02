@@ -13,6 +13,7 @@ class ProductBeforeAddDataModel {
 
     var result : ProductResultModel!
     var status : Bool!
+   
 
     init(fromJson json: JSON!){
         if json.isEmpty{
@@ -23,11 +24,12 @@ class ProductBeforeAddDataModel {
             result = ProductResultModel(fromJson: resultJson)
         }
         status = json["status"].boolValue
+      
     }
 }
 
 class ProductResultModel {
-
+    var stripeverifystatus : String!
     var category : [ProductCategoryModel]!
     var country : [ProductCountryModel]!
     var currency : [ProductCurrencyModel]!
@@ -41,6 +43,7 @@ class ProductResultModel {
         if json.isEmpty{
             return
         }
+        stripeverifystatus = json["stripeverifystatus"].stringValue
         category = [ProductCategoryModel]()
         let categoryArray = json["category"].arrayValue
         for categoryJson in categoryArray{

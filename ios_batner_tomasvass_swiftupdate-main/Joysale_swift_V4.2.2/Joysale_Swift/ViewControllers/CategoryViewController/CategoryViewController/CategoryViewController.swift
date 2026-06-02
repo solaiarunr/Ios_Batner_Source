@@ -37,6 +37,7 @@ class CategoryViewController: UIViewController {
     var isFromFilter = true
     var adminResult: AdminResultModel!
     var bannerView1: GADBannerView!
+    var selectedcatName = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,7 +75,9 @@ class CategoryViewController: UIViewController {
             self.tableView.isHidden = false
             self.searchView.isHidden = false
             if self.subCategory.count > (self.subCategoryIndex ?? 0) {
-                self.navigationController?.customNavigationBarView(title: (self.subCategory[subCategoryIndex ?? 0].subName ?? ""), fColor: "whitecolor", fontName: UIFont(name: APP_FONT_REGULAR, size: 20), vc: self)
+//                self.navigationController?.customNavigationBarView(title: (self.subCategory[subCategoryIndex ?? 0].subName ?? ""), fColor: "whitecolor", fontName: UIFont(name: APP_FONT_REGULAR, size: 20), vc: self)
+                
+                                self.navigationController?.customNavigationBarView(title: selectedcatName, fColor: "whitecolor", fontName: UIFont(name: APP_FONT_REGULAR, size: 20), vc: self)
             }
         }
         else {
@@ -127,7 +130,7 @@ class CategoryViewController: UIViewController {
             group.leave()
         }
         group.enter()
-        ADMIN_VIEW_MODEL.productBeforeAddData(onSuccess: { (success) in
+        ADMIN_VIEW_MODEL.productBeforeAddData(user_id:UserDefaultModule.shared.getUserData()?.user_id ?? "",onSuccess: { (success) in
             group.leave()
         }) { (failure) in
             group.leave()
@@ -164,6 +167,7 @@ class CategoryViewController: UIViewController {
             // Filter out categories where categoryId == 0
             self.adminResult = result
             self.adminResult.category = self.adminResult.category.filter { $0.categoryId != 0 }
+            
             
             // Check if Category_id is empty and set it to the first categoryId
             if (self.CategoryDetails.Category_id ?? "0") == "" {
@@ -294,12 +298,13 @@ extension CategoryViewController: UICollectionViewDelegate, UICollectionViewData
         self.CategoryDetails.Category_id = "\(self.adminResult.category[indexPath.row].categoryId ?? 0)"
         self.CategoryDetails.subcategory_id = ""
         self.CategoryDetails.child_category_id = ""
-
             if (self.adminResult.category[indexPath.row].subcategory.count ?? 0) > 0 {
                 if self.categoryViewType == 0 {
                     let pageObj = CategoryViewController()
                     pageObj.CategoryDetails = self.CategoryDetails
+                    print("ghbhhj:",self.CategoryDetails)
                     pageObj.subCategory = self.subCategory
+                    pageObj.selectedcatName = self.adminResult.category[indexPath.row].categoryName
                     pageObj.delegate = self
                     pageObj.categoryViewType = 2
                     self.categoryIndex = indexPath.row

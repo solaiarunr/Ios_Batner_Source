@@ -144,7 +144,6 @@ class MapViewController: UIViewController {
             
             // Extract values
             let name = selectedItem["name"] as? String ?? ""
-            
             var latitude = ""
             var longitude = ""
             var state = ""
@@ -173,6 +172,7 @@ class MapViewController: UIViewController {
             }
             
             // Assign values
+            self.city = name
             self.lat = latitude
             self.long = longitude
             self.state = state
@@ -542,29 +542,46 @@ class MapViewController: UIViewController {
             present(alert, animated: true)
             return
         }
-        let currentCountry = UserDefaultModule.shared.getcountryname()?.lowercased() ?? ""
-        print("self.countrytest",self.country)
-        print("self.currentCountrytest",currentCountry)
-        if self.country.lowercased() == currentCountry {
-            print("self.locationStringchk1",self.locationString)
-            print("self.locationStringchk2",self.city)
-            print("self.locationStringchk3",self.state)
-            print("self.locationStringchk4",self.country)
-            print("self.locationStringchk5",self.lat)
-            print("self.locationStringchk6",self.long)
-            DispatchQueue.main.async  { [self] in
-                self.delegate?.locationAct(city: city, state: state, country: country, countryCode: countryCode, lat: lat, long: long, location: locationString)
+
+        let currentCountry = normalizeCountry(UserDefaultModule.shared.getcountryname() ?? "")
+        let selectedCountry = normalizeCountry(self.country)
+        print("currentCountry",currentCountry)
+        print("selectedCountry",selectedCountry)
+
+        if currentCountry == selectedCountry {
+            DispatchQueue.main.async { [self] in
+                self.delegate?.locationAct(
+                    city: city,
+                    state: state,
+                    country: country,
+                    countryCode: countryCode,
+                    lat: lat,
+                    long: long,
+                    location: locationString
+                )
             }
             navigationController?.popViewController(animated: true)
         } else {
-            let alert = UIAlertController(title: nil, message: "Please select a location from your country (\(currentCountry))", preferredStyle: .alert)
+            let alert = UIAlertController(
+                title: nil,
+                message: "Please select a location from your country (\(currentCountry))",
+                preferredStyle: .alert
+            )
             alert.addAction(UIAlertAction(title: "OK", style: .cancel))
             present(alert, animated: true)
         }
     }
     
     
-    
+    func normalizeCountry(_ country: String) -> String {
+        let value = country.lowercased()
+        
+        if value == "česko" || value == "czechia" {
+            return "czechia"
+        }
+        
+        return value
+    }
     
     @IBAction func removeLocationTapped(_ sender: Any) {
         self.locationString = UserDefaultModule.shared.getcountryname() ?? "worldwide"
