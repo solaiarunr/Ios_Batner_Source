@@ -59,7 +59,7 @@ class AddProductViewController: UIViewController, ImageDelegate, customLocationD
     var galleryType = ""
     var video_id = ""
     var stream_thumb = ""
-
+    var isPosting = false
     var imagePicker: ImagePicker!
     
 var thumb  = ""
@@ -284,6 +284,10 @@ var thumb  = ""
         alert.view.tintColor = UIColor(named: "DefaultBoxClr")
     }
     @IBAction func postbuttonAct(_ sender: UIButton) {
+        // Prevent double tap
+               if isPosting {
+                   return
+               }
         var message = ""
         var isValid = false
         let filterMessage = self.checkFilterData()
@@ -348,6 +352,13 @@ var thumb  = ""
         }
         
         if isValid {
+            // SET FLAG HERE
+                       isPosting = true
+
+                       // Disable button
+                       self.postButton.isUserInteractionEnabled = false
+                       self.postButton.alpha = 0.5
+            
             let group = DispatchGroup()
 
             if ADD_EDIT_ITEM_MODEL.country_id == "" {
@@ -400,6 +411,7 @@ var thumb  = ""
             }
 
             group.notify(queue: .main) {
+                self.postButton.isUserInteractionEnabled = false
                 if self.isskip == "image" {
                     self.uploadImageToCamerViaServer()
                 } else {
@@ -412,10 +424,20 @@ var thumb  = ""
             alert.addAction(UIAlertAction(title: getLanguage["ok"] ?? "", style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
             alert.view.tintColor = UIColor(named: "DefaultBoxClr")
-        }
+        }   
     }
     
-    
+    func enablePostButton() {
+
+           DispatchQueue.main.async {
+
+               self.isPosting = false
+
+               self.postButton.isUserInteractionEnabled = true
+
+               self.postButton.alpha = 1.0
+           }
+       }
     
     func uploadImageToCamerViaServer() {
         self.activityLoader.startAnimating()

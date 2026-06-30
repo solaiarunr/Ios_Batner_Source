@@ -86,7 +86,7 @@ class AuthenticationViewModel {
         
         var parameter: [String: Any] = ["email":email, "full_name": full_name, "password":password, "user_name": user_name]
         
-        parameter["phone"] = phone
+       // parameter["phone"] = phone
         
         if is_location {
             parameter["country_name"] = country_name

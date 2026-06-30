@@ -9,7 +9,7 @@
 import UIKit
 import MXSegmentedPager
 
-class CreatePromotionViewController: MXSegmentedPagerController,PromotionLoadDelegate {
+class CreatePromotionViewController: MXSegmentedPagerController,PromotionLoadDelegate, MXPagerViewDelegate {
     func promotionPageLoaded() {
         print("promotionPageLoadedpass")
         Buttonstate = false
@@ -32,9 +32,11 @@ class CreatePromotionViewController: MXSegmentedPagerController,PromotionLoadDel
     var isTabBar = false
     let delegate = UIApplication.shared.delegate as! AppDelegate
     var Buttonstate = true
+    var profilemodel : ProfileResultModel!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configUI()
+        
     }
     
     override var preferredStatusBarStyle : UIStatusBarStyle {
@@ -110,7 +112,7 @@ class CreatePromotionViewController: MXSegmentedPagerController,PromotionLoadDel
         segmentedPager.segmentedControl.selectedTextColor = (UIColor(named: "AppThemeColorNew") ?? .white)
         segmentedPager.segmentedControl.indicator.lineView.backgroundColor = (UIColor(named: "AppThemeColorNew") ?? .white)
         segmentedPager.parallaxHeader.height = 0
-        
+        segmentedPager.pager.delegate = self
         if UserDefaultModule.shared.getAppLanguage().capitalized == "Arabic" {
             self.segmentedPager.segmentedControl.transform = CGAffineTransform(scaleX: -1, y: 1)
             self.segmentedPager.pager.transform = CGAffineTransform(scaleX: -1, y: 1)
@@ -135,8 +137,19 @@ class CreatePromotionViewController: MXSegmentedPagerController,PromotionLoadDel
         let vc = promotionArr[index]
         vc.itemID = self.itemID
         vc.Prodelegate = self
+        vc.profilemodel = profilemodel
         vc.view.tag = index
         return vc
     }
-}
+    
+    func pagerView(_ pagerView: MXPagerView, willMoveToPage page: UIView, at index: Int) {
+           print("Will move to page: \(index)")
+       }
 
+       func pagerView(_ pagerView: MXPagerView, didMoveToPage page: UIView, at index: Int) {
+           print("Did move to page: \(index)")
+           promotionArr[index].pageDidChange(index: index)
+
+       }
+    
+}

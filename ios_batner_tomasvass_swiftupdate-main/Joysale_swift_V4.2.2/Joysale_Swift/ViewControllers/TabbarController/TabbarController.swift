@@ -187,12 +187,19 @@ class TabbarController: UITabBarController, UITabBarControllerDelegate {
             if success {
                 if let profileData = self.viewModels.profileModel?.result {
                     self.profileData = profileData
-                    if self.profileData?.verification.mobNo == false{
+//                    if self.profileData?.verification.mobNo == false{
+//                        self.showAlerts()
+//                    }else{
+                    let canProceed = (self.profileData?.can_access == true) ||
+                                     (self.profileData?.verification.mobNo == true)
+
+                    if !canProceed {
                         self.showAlerts()
-                    }else{
+                        return
+                    }
                         self.tabBar.isUserInteractionEnabled = true
                         self.selectedIndex = 2
-                    }
+                   // }
                     
                 }
             }

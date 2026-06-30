@@ -129,6 +129,7 @@ class ProfileViewController: UIViewController, CountryCodeDelegate {
                      if BUYNOW_MODEL_FLAG {
                        self.profileArr.append("addressbook")
                     }
+                    self.profileArr.append("credit")
                     self.profileArr.append("help")
                     self.profileArr.append("Invite friends")
                     self.profileArr.append("PremiumFeatures")
@@ -321,12 +322,18 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 
             case "delete_account":
                 cell.arrowImageView.image = #imageLiteral(resourceName: "Delete_icon")
+            case "credit":
+                if self.viewModel.profileModel?.result.credit_balance != "0" {
+                    cell.notificationButton.isHidden = false
+                    cell.notificationButton.setTitle("\(self.viewModel.profileModel?.result.credit_balance ?? "0")Kč", for: .normal)
+                } else {
+                    cell.notificationButton.isHidden = true
+                }
+
 
             default:
                 cell.arrowImageView.image = #imageLiteral(resourceName: "InArrowImg")
             }
-
-            
             return cell
         }
     }
@@ -430,6 +437,11 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         else if self.profileArr[indexPath.section] == "help" {
             let pageObj = HelpViewController()
             pageObj.viewType = "help"
+            self.delegate.navigationController.pushViewController(pageObj, animated: true)
+        }
+        else if self.profileArr[indexPath.section] == "credit" {
+            let pageObj = CreditsVC()
+            pageObj.referral_code_locked = self.viewModel.profileModel?.result.referral_code_locked ?? false
             self.delegate.navigationController.pushViewController(pageObj, animated: true)
         }
         else if self.profileArr[indexPath.section] == "logout" {

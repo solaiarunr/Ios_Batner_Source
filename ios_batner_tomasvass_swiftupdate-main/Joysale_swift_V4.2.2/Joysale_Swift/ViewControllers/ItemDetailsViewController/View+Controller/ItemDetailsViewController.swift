@@ -614,9 +614,16 @@ class ItemDetailsViewController: UIViewController,UITextViewDelegate,MoreDelegat
                             if success {
                                 if let profileData = self.viewModels.profileModel?.result {
                                     self.profileData = profileData
-                                    if self.profileData?.verification.mobNo == false{
+//                                    if self.profileData?.verification.mobNo == false{
+//                                        self.showAlerts()
+//                                    }else{
+                                    let canProceed = (self.profileData?.can_access == true) ||
+                                                     (self.profileData?.verification.mobNo == true)
+
+                                    if !canProceed {
                                         self.showAlerts()
-                                    }else{
+                                        return
+                                    }
                                         if UserDefaultModule.shared.getUserData()?.user_id ?? "" != ""{
                                             let pageObj = ExchangeOfferViewController()
                                             pageObj.itemDetails = self.itemDetails
@@ -627,7 +634,7 @@ class ItemDetailsViewController: UIViewController,UITextViewDelegate,MoreDelegat
                                         else {
                                             self.loadInitialVC()
                                         }
-                                    }
+                                  //  }
                                 }
                             }
                         }) { (failure) in
@@ -641,16 +648,23 @@ class ItemDetailsViewController: UIViewController,UITextViewDelegate,MoreDelegat
                             if success {
                                 if let profileData = self.viewModels.profileModel?.result {
                                     self.profileData = profileData
-                                    if self.profileData?.verification.mobNo == false{
+//                                    if self.profileData?.verification.mobNo == false{
+//                                        self.showAlerts()
+//                                    }else{
+                                    let canProceed = (self.profileData?.can_access == true) ||
+                                                     (self.profileData?.verification.mobNo == true)
+
+                                    if !canProceed {
                                         self.showAlerts()
-                                    }else{
+                                        return
+                                    }
                                         if UserDefaultModule.shared.getUserData()?.user_id ?? "" != "" {
                                             self.exchangeAct()
                                         }
                                         else {
                                             self.loadInitialVC()
                                         }
-                                    }
+                                  //  }
                                 }
                             }
                         }) { (failure) in
@@ -757,13 +771,20 @@ class ItemDetailsViewController: UIViewController,UITextViewDelegate,MoreDelegat
                 if success {
                     if let profileData = self.viewModels.profileModel?.result {
                         self.profileData = profileData
-                        if self.profileData?.verification.mobNo == false{
+//                        if self.profileData?.verification.mobNo == false{
+//                            self.showAlerts()
+//                        }else{
+                        let canProceed = (self.profileData?.can_access == true) ||
+                                         (self.profileData?.verification.mobNo == true)
+
+                        if !canProceed {
                             self.showAlerts()
-                        }else{
+                            return
+                        }
                             let pageObj = ExchangeViewController()
                             pageObj.itemDetails = self.itemDetails
                             self.navigationController?.pushViewController(pageObj, animated: true)
-                        }
+                       // }
                         
                     }
                 }
@@ -1248,14 +1269,21 @@ class ItemDetailsViewController: UIViewController,UITextViewDelegate,MoreDelegat
             if success {
                 if let profileData = self.viewModels.profileModel?.result {
                     self.profileData = profileData
-                    if self.profileData?.verification.mobNo == false{
+//                    if self.profileData?.verification.mobNo == false{
+//                        self.showAlerts()
+//                    }else{
+                    let canProceed = (self.profileData?.can_access == true) ||
+                                     (self.profileData?.verification.mobNo == true)
+
+                    if !canProceed {
                         self.showAlerts()
-                    }else{
+                        return
+                    }
                         let pageObj = CommentViewController()
                         pageObj.itemVC = self
                         pageObj.itemModel = self.itemDetails
                         self.navigationController?.pushViewController(pageObj, animated: true)
-                    }
+                   // }
                     
                 }
             }
@@ -1324,9 +1352,16 @@ class ItemDetailsViewController: UIViewController,UITextViewDelegate,MoreDelegat
                         if success {
                             if let profileData = self.viewModels.profileModel?.result {
                                 self.profileData = profileData
-                                if self.profileData?.verification.mobNo == false{
+//                                if self.profileData?.verification.mobNo == false{
+//                                    self.showAlerts()
+//                                }else{
+                                let canProceed = (self.profileData?.can_access == true) ||
+                                                 (self.profileData?.verification.mobNo == true)
+
+                                if !canProceed {
                                     self.showAlerts()
-                                }else{
+                                    return
+                                }
                                     if UserDefaultModule.shared.getUserData()?.user_id ?? "" != ""{
                                         let pageObj = ExchangeOfferViewController()
                                         pageObj.itemDetails = self.itemDetails
@@ -1337,7 +1372,7 @@ class ItemDetailsViewController: UIViewController,UITextViewDelegate,MoreDelegat
                                     else {
                                         self.loadInitialVC()
                                     }
-                                }
+                              //  }
                             }
                         }
                     }) { (failure) in
@@ -1442,9 +1477,15 @@ class ItemDetailsViewController: UIViewController,UITextViewDelegate,MoreDelegat
                          Utility.shared.stopAnimation(viewController: self)
                          if let profileData = self.viewModels.profileModel?.result {
                              self.profileData = profileData
-                             if self.profileData?.verification.mobNo == false{
+//                             if self.profileData?.verification.mobNo == false{
+//                                 self.showAlerts()
+//                             }else{
+                             let canProceed = (self.profileData?.can_access == true) ||
+                                              (self.profileData?.verification.mobNo == true)
+                             if !canProceed {
                                  self.showAlerts()
-                             }else{
+                                 return
+                             }
                                  Utility.shared.stopAnimation(viewController: self)
                                  let addressModel = AddressViewModel()
                                  addressModel.getShippingAddressAct(user_id: (UserDefaultModule.shared.getUserData()?.user_id ?? ""), item_id: "\(self.itemDetails?.id ?? 0)", onSuccess: { (success) in
@@ -1472,7 +1513,7 @@ class ItemDetailsViewController: UIViewController,UITextViewDelegate,MoreDelegat
                                  }) { (failure) in
                                  Utility.shared.stopAnimation(viewController: self)
                                  }
-                             }
+                            // }
                          }
                      }
                  }) { (failure) in
@@ -1495,9 +1536,16 @@ class ItemDetailsViewController: UIViewController,UITextViewDelegate,MoreDelegat
             if success {
                 if let profileData = self.viewModels.profileModel?.result {
                     self.profileData = profileData
-                    if self.profileData?.verification.mobNo == false{
+//                    if self.profileData?.verification.mobNo == false{
+//                        self.showAlerts()
+//                    }else{
+                    let canProceed = (self.profileData?.can_access == true) ||
+                                     (self.profileData?.verification.mobNo == true)
+
+                    if !canProceed {
                         self.showAlerts()
-                    }else{
+                        return
+                    }
                         if UserDefaultModule.shared.getUserData()?.user_id ?? "" != "" {
                             if (UserDefaultModule.shared.getUserData()?.user_id ?? "") == (self.itemDetails?.sellerId ?? "") {
                                 let pageObj = InsightViewController()
@@ -1527,7 +1575,7 @@ class ItemDetailsViewController: UIViewController,UITextViewDelegate,MoreDelegat
                             self.loadInitialVC()
                         }
                         
-                    }
+                 //   }
                     
                 }
             }
@@ -1747,14 +1795,21 @@ extension ItemDetailsViewController: UITableViewDelegate, UITableViewDataSource,
             if success {
                 if let profileData = self.viewModels.profileModel?.result {
                     self.profileData = profileData
-                    if self.profileData?.verification.mobNo == false{
+//                    if self.profileData?.verification.mobNo == false{
+//                        self.showAlerts()
+//                    }else{
+                    let canProceed = (self.profileData?.can_access == true) ||
+                                     (self.profileData?.verification.mobNo == true)
+
+                    if !canProceed {
                         self.showAlerts()
-                    }else{
+                        return
+                    }
                         let pageObj = CommentViewController()
                         pageObj.itemVC = self
                         pageObj.itemModel = self.itemDetails
                         self.navigationController?.pushViewController(pageObj, animated: true)
-                    }
+                 //   }
                     
                 }
             }

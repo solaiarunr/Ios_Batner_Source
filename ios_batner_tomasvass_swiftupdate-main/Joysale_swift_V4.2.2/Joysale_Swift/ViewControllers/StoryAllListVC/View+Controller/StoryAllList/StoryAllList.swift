@@ -827,9 +827,16 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
                             if success {
                                 if let profileData = self.viewModels.profileModel?.result {
                                     self.profileData = profileData
-                                    if self.profileData?.verification.mobNo == false{
+                                    let canProceed = (self.profileData?.can_access == true) ||
+                                                     (self.profileData?.verification.mobNo == true)
+
+                                    if !canProceed {
                                         self.showAlerts()
-                                    }else{
+                                        return
+                                    }
+//                                    if self.profileData?.verification.mobNo == false{
+//                                        self.showAlerts()
+//                                    }else{
                                         if let itemModel = chatViewModel.itemModel?.result.items.first {
                                             itemDetails = itemModel
                                             let pageObj = CommentViewController()
@@ -840,7 +847,7 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
                                             self.navigationController?.pushViewController(pageObj, animated: true)
                                         }
                                         
-                                    }
+                                 //   }
                                     
                                 }
                             }
@@ -1085,10 +1092,17 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
                 if success {
                     if let profileData = self.viewModels.profileModel?.result {
                         self.profileData = profileData
-                        if self.profileData?.verification.mobNo == false{
+                        let canProceed = (self.profileData?.can_access == true) ||
+                                         (self.profileData?.verification.mobNo == true)
+
+                        if !canProceed {
                             self.showAlerts()
-                        }else{
-                            if UserDefaultModule.shared.getUserData()?.user_id ?? "" != "" {
+                            return
+                        }
+//                        if self.profileData?.verification.mobNo == false{
+//                            self.showAlerts()
+//                        }else{
+                        if UserDefaultModule.shared.getUserData()?.user_id ?? "" != "" {
                                 if (UserDefaultModule.shared.getUserData()?.user_id ?? "") == (playerData.sellerId ?? "") {
                                     let pageObj = InsightViewController()
                                     pageObj.isfromtype = "story"
@@ -1119,8 +1133,7 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
                                 self.loadInitialVC()
                             }
                             
-                        }
-                        
+                       // }
                     }
                 }
             }) { (failure) in
@@ -1139,9 +1152,16 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
                 if success {
                     if let profileData = self.viewModels.profileModel?.result {
                         self.profileData = profileData
-                        if self.profileData?.verification.mobNo == false{
+                        let canProceed = (self.profileData?.can_access == true) ||
+                                         (self.profileData?.verification.mobNo == true)
+
+                        if !canProceed {
                             self.showAlerts()
-                        }else{
+                            return
+                        }
+//                        if self.profileData?.verification.mobNo == false{
+//                            self.showAlerts()
+//                      //  }else{
                             if UserDefaultModule.shared.getUserData()?.user_id ?? "" != ""{
                                 let pageObj = ExchangeOfferViewController()
                                 pageObj.itemDetailsvideo = playerData
@@ -1153,7 +1173,7 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
                             else {
                                 self.loadInitialVC()
                             }
-                        }
+                      //  }
                     }
                 }
             }) { (failure) in
@@ -1171,18 +1191,29 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
                     self.soldItemAct("\(playerData.id ?? 0)", value: "0",tag:playerData)
                 }
                 else {
-                    if (playerData.promotionType ?? "") == "Normal" {
-                        let pageObj = CreatePromotionViewController()
-                        pageObj.itemID = "\(playerData.id ?? 0)"
-                        self.navigationController?.pushViewController(pageObj, animated: true)
+                    Utility.shared.startAnimation(viewController: self)
+                    self.viewModels.getProfileData(user_id: UserDefaultModule.shared.getUserData()?.user_id ?? "", user_name: "",profile_id: "", onSuccess: { (success) in
+                        print(success)
+                        if success {
+                            Utility.shared.stopAnimation(viewController: self)
+                            if (playerData.promotionType ?? "") == "Normal" {
+                                let pageObj = CreatePromotionViewController()
+                                pageObj.profilemodel = self.viewModels.profileModel?.result
+                                pageObj.itemID = "\(playerData.id ?? 0)"
+                                self.navigationController?.pushViewController(pageObj, animated: true)
+                            }
+                            else {
+                                let pageObj = MyPromotionDetailViewController()
+                                pageObj.isFromItemDetails = true
+                                pageObj.itemDetailsvideo = playerData
+                                pageObj.isfromtype = "story"
+                                self.navigationController?.pushViewController(pageObj, animated: true)
+                            }
+                        }
+                    }) { (failure) in
                     }
-                    else {
-                        let pageObj = MyPromotionDetailViewController()
-                        pageObj.isFromItemDetails = true
-                        pageObj.itemDetailsvideo = playerData
-                        pageObj.isfromtype = "story"
-                        self.navigationController?.pushViewController(pageObj, animated: true)
-                    }
+
+                   
                 }
             }
             else {
@@ -1195,9 +1226,16 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
                                 Utility.shared.stopAnimation(viewController: self)
                                 if let profileData = self.viewModels.profileModel?.result {
                                     self.profileData = profileData
-                                    if self.profileData?.verification.mobNo == false{
+                                    let canProceed = (self.profileData?.can_access == true) ||
+                                                     (self.profileData?.verification.mobNo == true)
+
+                                    if !canProceed {
                                         self.showAlerts()
-                                    }else{
+                                        return
+                                    }
+//                                    if self.profileData?.verification.mobNo == false{
+//                                        self.showAlerts()
+//                                    }else{
                                         let addressModel = AddressViewModel()
                                         addressModel.getShippingAddressAct(user_id: (UserDefaultModule.shared.getUserData()?.user_id ?? ""), item_id: "\(playerData.id ?? 0)", onSuccess: { (success) in
                                             Utility.shared.stopAnimation(viewController: self)
@@ -1229,7 +1267,7 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
                                         }
                                         
                                         
-                                    }
+                                   // }
                                     
                                 }
                             }
@@ -1268,12 +1306,19 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
                 if success {
                     if let profileData = self.viewModels.profileModel?.result {
                         self.profileData = profileData
-                        if self.profileData?.verification.mobNo == false{
+                        let canProceed = (self.profileData?.can_access == true) ||
+                                         (self.profileData?.verification.mobNo == true)
+
+                        if !canProceed {
                             self.showAlerts()
-                        }else{
+                            return
+                        }
+//                        if self.profileData?.verification.mobNo == false{
+//                            self.showAlerts()
+//                        }else{
                             self.exchangeAct(tag:ExchageplayerData)
                             
-                        }
+                        //}
                         
                     }
                 }
@@ -1334,16 +1379,23 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
                         if success {
                             if let profileData = self.viewModels.profileModel?.result {
                                 self.profileData = profileData
-                                if self.profileData?.verification.mobNo == false{
+                                let canProceed = (self.profileData?.can_access == true) ||
+                                                 (self.profileData?.verification.mobNo == true)
+
+                                if !canProceed {
                                     self.showAlerts()
-                                }else{
+                                    return
+                                }
+//                                if self.profileData?.verification.mobNo == false{
+//                                    self.showAlerts()
+//                                }else{
                                     if UserDefaultModule.shared.getUserData()?.user_id ?? "" != "" {
                                         self.exchangeAct(tag: playerData)
                                     }
                                     else {
                                         self.loadInitialVC()
                                     }
-                                }
+                               // }
                             }
                         }
                     }) { (failure) in

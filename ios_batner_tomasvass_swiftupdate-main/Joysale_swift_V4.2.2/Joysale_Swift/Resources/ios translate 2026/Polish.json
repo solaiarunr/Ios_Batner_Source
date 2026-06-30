@@ -831,5 +831,7 @@
     "termsalert": "Każda transakcja między Kupującym a Sprzedającym odbywa się na ich własne ryzyko. Batner jest jedynie platformą. Regulamin i warunki",
     "Pleaseclickthecheckboxup": "Proszę zaznaczyć pole wyboru przed rejestracją",
     "Uponregistration": "✅ Rejestrując się, zgadzam się, że transakcje odbywają się na własne ryzyko kupującego i sprzedającego. Nasza platforma weryfikuje każdego użytkownika za pomocą numeru telefonu. Korzystając z przycisku „Kup teraz”, można używać opinii, a przycisk jest zabezpieczony przez Stripe, co zapewnia bezpieczne płatności. BATNER nie ponosi jednak żadnej odpowiedzialności, ponieważ jest jedynie platformą. Zobacz Regulamin i Politykę",
-    "TermsConditions": "Regulamin i warunki"
+    "TermsConditions": "Regulamin i warunki",
+    "Smswalltitle": "Bezpieczny Batner zaczyna się od Ciebie",
+    "Smswalldes": "Wierzymy, że Batner to miejsce pełne prawdziwych ludzi. Dlatego dajemy zielone światło tylko zweryfikowanym numerom telefonów. W ten sposób unikniesz fałszywych kont, zagranicznych botów i oszustów. Razem zadbajmy o czystość i bezpieczeństwo społeczności!"
 }

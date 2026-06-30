@@ -64,7 +64,7 @@ extension LanguageViewController: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LanguageTableViewCell") as! LanguageTableViewCell
-        cell.titleLabel.text = (getLanguage[self.languageArray[indexPath.section]] ?? "").capitalized
+        cell.titleLabel.text = (getLanguage[self.languageArray[indexPath.section].lowercased()] ?? "").capitalized
         cell.checkImageView.isHidden = true
         if UserDefaultModule.shared.getAppLanguage().lowercased() == self.languageArray[indexPath.section] {
             cell.checkImageView.isHidden = false

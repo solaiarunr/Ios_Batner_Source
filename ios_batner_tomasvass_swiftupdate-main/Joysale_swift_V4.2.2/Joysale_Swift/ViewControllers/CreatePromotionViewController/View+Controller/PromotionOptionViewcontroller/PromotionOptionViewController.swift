@@ -288,7 +288,17 @@ class PromotionOptionViewController: UIViewController {
     @IBOutlet weak var activityLoader: NVActivityIndicatorView!
     @IBOutlet weak var payButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var paymentpopview: UIView!
+    @IBOutlet weak var stripeview: UIView!
+    @IBOutlet weak var creditsview: UIView!
+    @IBOutlet weak var stripeLable: UILabel!
+    @IBOutlet weak var creditslable: UILabel!
+    
+    
+    
+    
     var viewModel = PromotionViewModel()
+    var creditviewModel = CreditsViewModel()
     var selectedTag: Int?
     var itemID = ""
     var products: [Product] = []
@@ -297,8 +307,11 @@ class PromotionOptionViewController: UIViewController {
     let delegate = UIApplication.shared.delegate as! AppDelegate
     weak var Prodelegate: PromotionLoadDelegate?
     var selectedPrice = ""
+    var selectedAPIPrice = ""
     var selectedCurrencySymbol = ""
     var selectedCurrency = ""
+    var isproceedwithcredits = false
+    var profilemodel : ProfileResultModel!
     override func viewDidLoad() {
         super.viewDidLoad()
         configUI()
@@ -320,6 +333,7 @@ class PromotionOptionViewController: UIViewController {
 
         self.payButton.backgroundColor = UIColor(named: "AppThemeColorNew") ?? .white
         self.payButton.cornerMiniumRadius()
+        
         self.payButton.config(color: UIColor(named: "whitecolor"),
                               font: UIFont(name: APP_FONT_REGULAR, size: 15),
                               align: .center,
@@ -380,7 +394,36 @@ class PromotionOptionViewController: UIViewController {
         print("Valid promotions:", validPromotions.map { $0.ios_id })
     }
     
-    
+    func pageDidChange(index: Int) {
+
+        if index == 0 {
+            print("Advertisement selected")
+        } else {
+            print("Urgent selected")
+            guard let urgentProduct = self.viewModel.getPromotionModel?.result.otherPromotions.first(where: { $0.ios_id == "com.app.urgentpromoplan" }) else {
+                print("❌ Urgent product not loaded")
+                return
+            }
+
+            // ✅ SET SELECTED PRICE FOR URGENT PLAN
+            self.selectedAPIPrice = "\(urgentProduct.price ?? "")"
+            let apiprice = Double(self.selectedAPIPrice) ?? 0.0
+            let cb = Double(self.profilemodel.credit_balance) ?? 0.0
+              if apiprice <= cb{
+                self.isproceedwithcredits = true
+                self.payButton.config(color: UIColor(named: "whitecolor"),
+                                      font: UIFont(name: APP_FONT_REGULAR, size: 15),
+                                      align: .center,
+                                      title: "pay_with_credits")
+            }else{
+                self.isproceedwithcredits = false
+                self.payButton.config(color: UIColor(named: "whitecolor"),
+                                      font: UIFont(name: APP_FONT_REGULAR, size: 15),
+                                      align: .center,
+                                      title: "pay_and_promote")
+            }
+        }
+    }
 
 
     func showAlert(title: String?, message: String) {
@@ -426,6 +469,14 @@ class PromotionOptionViewController: UIViewController {
     
     @IBAction func payButtonAct(_ sender: UIButton) {
         // 🔴 URGENT PLAN
+        let boosttype = view.tag == 0 ? "top" : "urgent"
+        var promotionID = "0"
+        if let selectedCell = self.selectedTag,
+           selectedCell < validPromotions.count {
+            // FIXED → use validPromotions instead of otherPromotions
+            promotionID = "\(validPromotions[selectedCell].id ?? 0)"
+            print("Correct Promotion ID:", promotionID)
+        }
         if self.view.tag == 1 {
             guard let urgentProduct = products.first(where: { $0.id == "com.app.urgentpromoplan" }) else {
                 print("❌ Urgent product not loaded")
@@ -433,8 +484,20 @@ class PromotionOptionViewController: UIViewController {
             }
 
             // ✅ SET SELECTED PRICE FOR URGENT PLAN
-            self.selectedPrice = "\(urgentProduct.price)"
-            
+          //  self.selectedPrice = "\(urgentProduct.price)"
+//            if self.selectedAPIPrice <= self.profilemodel.credit_balance{
+//                self.isproceedwithcredits = true
+//                self.payButton.config(color: UIColor(named: "whitecolor"),
+//                                      font: UIFont(name: APP_FONT_REGULAR, size: 15),
+//                                      align: .center,
+//                                      title: "pay_with_credits")
+//            }else{
+//                self.isproceedwithcredits = false
+//                self.payButton.config(color: UIColor(named: "whitecolor"),
+//                                      font: UIFont(name: APP_FONT_REGULAR, size: 15),
+//                                      align: .center,
+//                                      title: "pay_and_promote")
+//            }
             let currencyCode = urgentProduct.priceFormatStyle.currencyCode
             
             let formatter = NumberFormatter()
@@ -443,8 +506,56 @@ class PromotionOptionViewController: UIViewController {
             
             self.selectedCurrencySymbol = formatter.currencySymbol     // ₹ / $
             self.selectedCurrency = currencyCode                       // INR / USD
-
-            handlePurchase(for: urgentProduct)
+            if self.isproceedwithcredits{
+                let alert = UIAlertController(
+                    title: getLanguage["alert"] ?? "Alert",
+                    message: getLanguage["ur_alert"] ?? "",
+                    preferredStyle: .alert
+                )
+                
+                alert.addAction(UIAlertAction(title: getLanguage["yes"] ?? "yes", style: .default, handler: { _ in
+                    self.activityLoader.startAnimating()
+                    self.view.isUserInteractionEnabled = false
+                    self.creditviewModel.BoostitemApi(user_id: UserDefaultModule.shared.getUserData()?.user_id ?? "", item_id: self.itemID, boost_type: boosttype, promotion_id: promotionID, onSuccess: { (success) in
+                        self.activityLoader.stopAnimating()
+                        if !success {
+                            print("sucesscredit")
+                            let alert = UIAlertController(title: nil, message: self.creditviewModel.boostitemModel?.message, preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: getLanguage["ok"] ?? "", style: .cancel, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
+                           
+                        }
+                        else {
+                            self.view.isUserInteractionEnabled = true
+                            let alert = UIAlertController(
+                                title: getLanguage["Success"] ?? "Success",
+                                message: self.creditviewModel.boostitemModel?.message,
+                                preferredStyle: .alert
+                            )
+                            
+                            alert.addAction(UIAlertAction(title: getLanguage["ok"] ?? "OK", style: .default, handler: { _ in
+                                let pageObj = ViewProfileViewController()
+                                pageObj.userId = UserDefaultModule.shared.getUserData()?.user_id ?? ""
+                                pageObj.isTabBar = true
+                                ADD_EDIT_ITEM_MODEL = AddEditViewModel()
+                                self.delegate.navigationController.pushViewController(pageObj, animated: true)
+                            }))
+                            
+                            self.present(alert, animated: true)
+                        }
+                       
+                    }, onFailure: {(failure) in
+                        self.activityLoader.stopAnimating()
+                        self.view.isUserInteractionEnabled = true
+                    })
+                }))
+                let okAction = UIAlertAction(title: getLanguage["cancel"] ?? "", style: .cancel, handler: nil)
+                alert.addAction(okAction)
+                self.present(alert, animated: true)
+               
+            }else{
+                handlePurchase(for: urgentProduct)
+            }
             return
         }
 
@@ -467,11 +578,68 @@ class PromotionOptionViewController: UIViewController {
             showAlert(title: nil, message: "Selected promotion not available. Please try again.")
             return
         }
-
-        handlePurchase(for: product)
+       
+        if self.isproceedwithcredits{
+            let alert = UIAlertController(
+                title: getLanguage["alert"] ?? "Alert",
+                message: getLanguage["ad_alert"] ?? "",
+                preferredStyle: .alert
+            )
+            
+            alert.addAction(UIAlertAction(title: getLanguage["yes"] ?? "yes", style: .default, handler: { _ in
+                self.activityLoader.startAnimating()
+                self.view.isUserInteractionEnabled = false
+                self.creditviewModel.BoostitemApi(user_id: UserDefaultModule.shared.getUserData()?.user_id ?? "", item_id: self.itemID, boost_type: boosttype, promotion_id: promotionID, onSuccess: { (success) in
+                    self.activityLoader.stopAnimating()
+                    if !success {
+                        print("sucesscredit")
+                        let alert = UIAlertController(title: nil, message: self.creditviewModel.boostitemModel?.message, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: getLanguage["ok"] ?? "", style: .cancel, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                       
+                    }
+                    else {
+                        self.view.isUserInteractionEnabled = true
+                        let alert = UIAlertController(
+                            title: getLanguage["Success"] ?? "Success",
+                            message: self.creditviewModel.boostitemModel?.message,
+                            preferredStyle: .alert
+                        )
+                        
+                        alert.addAction(UIAlertAction(title: getLanguage["ok"] ?? "OK", style: .default, handler: { _ in
+                            let pageObj = ViewProfileViewController()
+                            pageObj.userId = UserDefaultModule.shared.getUserData()?.user_id ?? ""
+                            pageObj.isTabBar = true
+                            ADD_EDIT_ITEM_MODEL = AddEditViewModel()
+                            self.delegate.navigationController.pushViewController(pageObj, animated: true)
+                        }))
+                        
+                        self.present(alert, animated: true)
+                    }
+                   
+                }, onFailure: {(failure) in
+                    self.activityLoader.stopAnimating()
+                    self.view.isUserInteractionEnabled = true
+                })
+            }))
+            let okAction = UIAlertAction(title: getLanguage["cancel"] ?? "", style: .cancel, handler: nil)
+            alert.addAction(okAction)
+            self.present(alert, animated: true)
+            
+         
+        }
+        else{
+            handlePurchase(for: product)
+        }
     }
 
-
+    @IBAction func stripeact(_ sender: Any) {
+    }
+    
+    
+    @IBAction func creditsact(_ sender: Any) {
+    }
+    
 
     func payAct(type: String, token: String) {
         let cSymbol = (self.viewModel.getPromotionModel?.result.currencyCode ?? "").trimmingCharacters(in: .whitespaces)
@@ -493,22 +661,22 @@ class PromotionOptionViewController: UIViewController {
               }
           }
       
-        self.activityLoader.startAnimating()
-        self.view.isUserInteractionEnabled = false
-        
-
-        print("Promid",promotionID)
-        print("tokaen",token)
-        
-        self.viewModel.processingPayment(
-            user_id: (UserDefaultModule.shared.getUserData()?.user_id ?? ""),
-            item_id: self.itemID,
-            promotion_id: promotionID,
-            currency_code: self.selectedCurrency,
-            pay_nonce: token,
-            payment_type: type,ios_id:token,price:self.selectedPrice,currency_symbol:self.selectedCurrencySymbol,
-            onSuccess: { _ in
-               
+            self.activityLoader.startAnimating()
+            self.view.isUserInteractionEnabled = false
+            
+            
+            print("Promid",promotionID)
+            print("tokaen",token)
+            
+            self.viewModel.processingPayment(
+                user_id: (UserDefaultModule.shared.getUserData()?.user_id ?? ""),
+                item_id: self.itemID,
+                promotion_id: promotionID,
+                currency_code: self.selectedCurrency,
+                pay_nonce: token,
+                payment_type: type,ios_id:token,price:self.selectedPrice,currency_symbol:self.selectedCurrencySymbol,
+                onSuccess: { _ in
+                    
                     self.activityLoader.stopAnimating()
                     self.view.isUserInteractionEnabled = true
                     let alert = UIAlertController(
@@ -516,7 +684,7 @@ class PromotionOptionViewController: UIViewController {
                         message: "Promotion applied!",
                         preferredStyle: .alert
                     )
-
+                    
                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
                         let pageObj = ViewProfileViewController()
                         pageObj.userId = UserDefaultModule.shared.getUserData()?.user_id ?? ""
@@ -524,16 +692,16 @@ class PromotionOptionViewController: UIViewController {
                         ADD_EDIT_ITEM_MODEL = AddEditViewModel()
                         self.delegate.navigationController.pushViewController(pageObj, animated: true)
                     }))
-
+                    
                     self.present(alert, animated: true)
-               
-            },
-            onFailure: { _ in
-                self.activityLoader.stopAnimating()
-                self.view.isUserInteractionEnabled = true
-            }
-        )
-
+                    
+                },
+                onFailure: { _ in
+                    self.activityLoader.stopAnimating()
+                    self.view.isUserInteractionEnabled = true
+                }
+            )
+        
     }
 }
 
@@ -614,6 +782,23 @@ extension PromotionOptionViewController: UITableViewDelegate, UITableViewDataSou
         if let product = products.first(where: { $0.id == promotion.ios_id }) {
 
             self.selectedPrice = "\(product.price)"
+            self.selectedAPIPrice = "\(promotion.price ?? "")"
+            print("apiprice:\(selectedAPIPrice)   cb:\(self.profilemodel.credit_balance ?? "")")
+            let apiprice = Double(self.selectedAPIPrice) ?? 0.0
+            let cb = Double(self.profilemodel.credit_balance) ?? 0.0
+            if apiprice <= cb{
+                self.isproceedwithcredits = true
+                self.payButton.config(color: UIColor(named: "whitecolor"),
+                                      font: UIFont(name: APP_FONT_REGULAR, size: 15),
+                                      align: .center,
+                                      title: "pay_with_credits")
+            }else{
+                self.isproceedwithcredits = false
+                self.payButton.config(color: UIColor(named: "whitecolor"),
+                                      font: UIFont(name: APP_FONT_REGULAR, size: 15),
+                                      align: .center,
+                                      title: "pay_and_promote")
+            }
 
             let code = product.priceFormatStyle.currencyCode
 

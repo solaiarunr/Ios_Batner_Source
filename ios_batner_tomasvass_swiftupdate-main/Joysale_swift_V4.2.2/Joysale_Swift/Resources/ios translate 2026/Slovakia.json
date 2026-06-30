@@ -831,5 +831,7 @@
     "termsalert": "Akákoľvek transakcia medzi kupujúcim a predávajúcim je na ich vlastné riziko. Batner je iba platforma. Zmluvné podmienky",
     "Pleaseclickthecheckboxup": "Pred registráciou prosím zaškrtnite políčko",
     "Uponregistration": "✅ Registráciou súhlasím s tým, že transakcie prebiehajú na vlastné riziko kupujúceho a predávajúceho. Naša platforma overuje každého používateľa pomocou telefónneho čísla. Pri použití tlačidla „Kúpiť teraz“ je možné využívať recenzie a tlačidlo je zabezpečené cez Stripe, čo zaisťuje bezpečné platby. BATNER však nenesie žiadnu zodpovednosť, pretože je iba platformou. Zobraziť podmienky a zásady",
-    "TermsConditions": "Zmluvné podmienky"
+    "TermsConditions": "Zmluvné podmienky",
+    "Smswalltitle": "Bezpečný Batner začína u vás",
+    "Smswalldes": "Veríme, že Batner je plný skutočných ľudí. Preto dávame zelenú iba overeným telefónnym číslam. Takto sa môžete vyhnúť falošným účtom, zahraničným botom a podvodníkom. Udržujme komunitu spoločne čistú a bezpečnú!"
 }

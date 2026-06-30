@@ -118,6 +118,9 @@ class ProfileResultModel{
     var mobileNo : String!
     var rating : String!
     var ratingUserCount : String!
+    var credit_balance : String!
+    var can_access : Bool!
+    var referral_code_locked : Bool!
     var showMobileNo : Bool!
     var state : String!
     var stripeDetails : StripeDetailModel!
@@ -141,6 +144,9 @@ class ProfileResultModel{
         mobileNo = json["mobile_no"].stringValue.replacingOccurrences(of: "+", with: "")
         rating = json["rating"].stringValue
         ratingUserCount = json["rating_user_count"].stringValue
+        credit_balance = json["credit_balance"].stringValue
+        can_access = json["can_access"].boolValue
+        referral_code_locked = json["referral_code_locked"].boolValue
         showMobileNo = json["show_mobile_no"].boolValue
         state = json["state"].stringValue
         let stripeDetailsJson = json["stripe_details"]

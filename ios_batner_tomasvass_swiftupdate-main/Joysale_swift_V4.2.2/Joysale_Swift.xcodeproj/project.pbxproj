@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -944,6 +944,10 @@
 		ED7DEAD22DD31DCB007E93A6 /* DescriptionPopupVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DescriptionPopupVC.xib; sourceTree = "<group>"; };
 		ED8EF6BB2DCF850200EB62AC /* Carbon_Kit_Swift.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Carbon_Kit_Swift.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		D83E49052FEE49C100823E1A /* CreditsVC */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CreditsVC; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		40C2B0A0248A7CA40035A1C2 /* Frameworks */ = {
@@ -2463,6 +2467,7 @@
 		4084C841248E041C00857BBA /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				D83E49052FEE49C100823E1A /* CreditsVC */,
 				B6C83E342E826B2E00EBC5A1 /* IAPManager.swift */,
 				B6F164BF2ED444FA00257207 /* SubManager.swift */,
 				B660D7ED2E6061D1002A4B58 /* PaystackVc */,
@@ -3293,6 +3298,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				D83E49052FEE49C100823E1A /* CreditsVC */,
 			);
 			name = Joysale_Swift;
 			productName = Joysale_Swift;

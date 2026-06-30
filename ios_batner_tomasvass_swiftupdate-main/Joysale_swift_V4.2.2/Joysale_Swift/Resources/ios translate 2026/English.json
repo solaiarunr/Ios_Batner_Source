@@ -835,7 +835,9 @@
     "termsalert":"Any transaction between the Buyer and the Seller is at their own risk. Batner is a platform only. Terms & Conditions",
     "Pleaseclickthecheckboxup":"Please click the checkbox to before sign up",
    "Uponregistration":"✅ Upon registration, I agreed that transactions are at the buyer’s and seller’s own risk. Our platform verifies each user via phone number. When using the “Buy Now” button, reviews can be utilized, and the button is secured through Stripe, ensuring safe payments. However, BATNER holds no responsibility, as it is only a platform. View Terms & Policy",
-   "TermsConditions":"Terms & Conditions"
+   "TermsConditions":"Terms & Conditions",
+   "Smswalltitle": "Safe Batner starts with you",
+   "Smswalldes": "We believe that Batner is full of real people. That's why we only give the green light to verified phone numbers. This way you can avoid fake accounts, foreign bots and scammers. Let's keep the community clean and safe together!"
     
 
 }

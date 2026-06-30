@@ -46,6 +46,7 @@ class SignupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(indicatorView)
+        self.mobileStackView.isHidden = true
         self.configUI()
         // Do any additional setup after loading the view.
     }
@@ -224,7 +225,7 @@ class SignupViewController: UIViewController {
                 return
             }
             if self.updateErrorData(self.emailTextField) && self.updateErrorData(self.userNameTextfield) && self.updateErrorData(self.fullNameTextField) && self.updateErrorData(self.passwordTextField) && self.updateErrorData(self.confirmPasswordTextField)
-                && self.updateErrorData(self.mobileTextField){
+                /*&& self.updateErrorData(self.mobileTextField)*/{
                 var set = CharacterSet()
                 set.insert(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ0123456789")
                 let encodedPassword = self.passwordTextField.text?.addingPercentEncoding(withAllowedCharacters: set) ?? ""

@@ -209,4 +209,10 @@ let PremiumStatusApi = "checkpremiumstatus"
 let PremiumlistApi = "getpremiumlist"
 let Activepremiumplan = "activepremiumplan"
 
+//refferal and promo code
+let getcredits_api = "getcredits"
+let applycode_api = "applycode"
+let changecode_api = "changecode"
+let boostitem_api = "boostitem"
+
 

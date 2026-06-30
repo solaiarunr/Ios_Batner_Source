@@ -372,6 +372,7 @@ class HomeViewController: UIViewController, customLocationDelegate {
             else {
                 
                 if self.viewModel.getItemModel?.result != nil {
+                    print("self.viewModel.getItemModel!.result.items:\(self.viewModel.getItemModel!.result.items)")
                     self.itemModel += self.viewModel.getItemModel!.result.items
                     if (self.viewModel.getItemModel?.ads.count ?? 0) > 0 {
                         self.promotionTags = self.convertIntoJSONString(arrayObject: (self.viewModel.getItemModel?.ads ?? [String]())) ?? ""
@@ -510,6 +511,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
             else {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCollectionViewCell", for: indexPath) as! ImageCollectionViewCell
+                print("count::\(self.itemModel.count)\nself.itemModel::\(self.itemModel) ")
                 if self.itemModel.count > indexPath.row{
                     cell.loadData(self.itemModel[indexPath.row])
                 }

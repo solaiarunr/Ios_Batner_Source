@@ -338,6 +338,9 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
         }
         else if indexPath.section == 2 && indexPath.row == 6 {
             let pageObj = LanguageViewController()
+            let appLanguage = UserDefaultModule.shared.getAppLanguage()
+            print("appLanguage:\(appLanguage)")
+            pageObj.languageArray = [appLanguage]
             self.navigationController?.pushViewController(pageObj, animated: true)
         }  else if indexPath.section == 2 && indexPath.row == 7 {
             let pageObj = ThemeViewController()

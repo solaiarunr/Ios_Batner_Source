@@ -23,6 +23,7 @@ class EditProfileTableViewCell: UITableViewCell {
     @IBOutlet weak var ViewStack: UIStackView!
     
     @IBOutlet weak var stripeTextView: LinkOnlyTextView!
+    var stripestring = NSMutableAttributedString()
     override func awakeFromNib() {
         super.awakeFromNib()
         self.configUI()
@@ -76,7 +77,7 @@ class EditProfileTableViewCell: UITableViewCell {
             .underlineStyle: NSUnderlineStyle.single.rawValue,
             .font: UIFont(name: APP_FONT_BOLD, size: 12) ?? UIFont.boldSystemFont(ofSize: 12)
         ]
-
+        stripestring = attributedString
         stripeTextView.attributedText = attributedString
         stripeTextView.textContainer.lineBreakMode = .byWordWrapping
         stripeTextView.textContainer.widthTracksTextView = true
@@ -166,6 +167,7 @@ class EditProfileTableViewCell: UITableViewCell {
                         self.titleLabel.text = (getLanguage["manage_stripe"] ?? "")
                         self.NewSellLbl.isHidden = false
                         self.ViewStack.isHidden = false
+                        stripeTextView.attributedText = stripestring
                         self.ViewStack.isUserInteractionEnabled = true
                         self.stripeTextView.isUserInteractionEnabled = true
                         self.stripeTextView.isSelectable = true
@@ -204,17 +206,55 @@ class EditProfileTableViewCell: UITableViewCell {
                  }
                 else if index.row == 3 {
                     self.titleLabel.text = (getLanguage["Phone"] ?? "").capitalized
-                    if profileData.mobileNo.contains("+") {
-                        self.descLabel.text = profileData.mobileNo
+                    self.descLabel.isHidden = true
+                    self.ViewStack.isHidden = false
+                    let canProceed = (profileData.can_access == true) ||
+                    (profileData.verification.mobNo == true)
+                    if !canProceed {
+                        self.descLabel.isHidden = false
+                        self.ViewStack.isHidden = true
+                        if profileData.mobileNo.contains("+") {
+                             self.descLabel.text = profileData.mobileNo
+                         }
+                         else {
+                             self.descLabel.text = "+\(profileData.mobileNo ?? "")"
+                         }
+                         if (profileData.mobileNo == ""){
+                             self.descLabel.text = getLanguage["link_your_account"] ?? ""
+                         }
+                        self.verifyLabel.text = (profileData.mobileNo != "") ? (getLanguage["verified"] ?? "") : (getLanguage["unverified"] ?? "")
+                         self.verifyButton.setImage((profileData.mobileNo != "") ? #imageLiteral(resourceName: "tick-green") : #imageLiteral(resourceName: "cancel-1"), for: .normal)
+                        return
                     }
-                    else {
-                        self.descLabel.text = "+\(profileData.mobileNo ?? "")"
-                    }
-                    if (profileData.mobileNo == ""){
-                        self.descLabel.text = getLanguage["link_your_account"] ?? ""
-                    }
-                   self.verifyLabel.text = (profileData.mobileNo != "") ? (getLanguage["verified"] ?? "") : (getLanguage["unverified"] ?? "")
-                    self.verifyButton.setImage((profileData.mobileNo != "") ? #imageLiteral(resourceName: "tick-green") : #imageLiteral(resourceName: "cancel-1"), for: .normal)
+                    let title = getLanguage["Smswalltitle"] ?? "Bezpečný Batner začíná u tebe"
+                    let body = getLanguage["Smswalldes"] ?? "Zakládáme si na tom, aby byl Batner plný reálných lidí. Proto dáváme zelenou pouze ověřeným českým telefonním číslům. Vyhneš se tak fake účtům, zahraničním botům a podvodníkům. Pojďme společně udržet komunitu čistou a bezpečnou!"
+                    
+
+                    let attributedText = NSMutableAttributedString(
+                        string: "\(title)\n",
+                        attributes: [
+                            .font: UIFont.boldSystemFont(ofSize: stripeTextView.font?.pointSize ?? 12),
+                            .foregroundColor: UIColor(named: "AppTextColor") ?? .white
+                        ]
+                    )
+
+                    attributedText.append(
+                        NSAttributedString(
+                            string: body,
+                            attributes: [
+                                .foregroundColor: UIColor(named: "AppTextColor") ?? .white
+                            ]
+                        )
+                    )
+
+                    stripeTextView.attributedText = attributedText
+                 //   stripeTextView.text = "Bezpečný Batner začíná u tebe \nZakládáme si na tom, aby byl Batner plný reálných lidí. Proto dáváme zelenou pouze ověřeným českým telefonním číslům.\nVyhneš se tak fake účtům, zahraničním botům a podvodníkům. Pojďme společně udržet komunitu čistou a bezpečnou!"
+                    self.ViewStack.isUserInteractionEnabled = true
+                    self.stripeTextView.isUserInteractionEnabled = true
+                    self.stripeTextView.isSelectable = true
+                    self.verifyLabel.text = ""
+                    self.verifyButton.isHidden = true
+                  
                 }
                 else if index.row == 4 {
                     self.titleLabel.text = (getLanguage["Facebook"] ?? "").capitalized

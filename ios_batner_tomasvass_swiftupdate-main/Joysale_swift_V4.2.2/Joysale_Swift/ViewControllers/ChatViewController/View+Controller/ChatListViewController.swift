@@ -193,16 +193,22 @@ import GoogleMobileAds
              if success {
                  if let profileData = self.viewModels.profileModel?.result{
                      self.profileData = profileData
-                     if self.profileData?.verification.mobNo == false{
+//                     if self.profileData?.verification.mobNo == false{
+//                         self.showAlerts()
+//                     }else{
+                     let canProceed = (self.profileData?.can_access == true) ||
+                                      (self.profileData?.verification.mobNo == true)
+                     if !canProceed {
                          self.showAlerts()
-                     }else{
+                         return
+                     }
                            DispatchQueue.main.async {
                              let pageObj = ChatViewController()
                              pageObj.receiverId = "\(self.chatListArray[indexPath.section].userId ?? 0)"
                              pageObj.chatId = "\(self.chatListArray[indexPath.section].chatId ?? 0)"
                              self.navigationController?.pushViewController(pageObj, animated: true)
                          }
-                     }
+                  //   }
                      
                  }
              }
