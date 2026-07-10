@@ -69,7 +69,7 @@ class CreditsVC: UIViewController {
         self.balbtn.cornerMiniumRadius(10)
         self.promobtn.backgroundColor = UIColor(named: "AppThemeColorNew")
         self.promobtn.config(color: UIColor(named: "appblackcolor"), font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .center, title: "")
-        self.promobtn.setTitle("345xk", for: .normal)
+        self.promobtn.setTitle(getLanguage["change"], for: .normal)
         self.promobtn.cornerMiniumRadius(10)
         self.copybtn.backgroundColor = UIColor(named: "AppThemeColorNew")
         self.copybtn.config(color: UIColor(named: "appblackcolor"), font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .center, title: "copy_the_link")
@@ -125,7 +125,7 @@ class CreditsVC: UIViewController {
                     self.changecodeview.isHidden = true
                     self.promohint.text = "🔒 \(getLanguage["changecode_alert"] ?? "")"
                 }
-                let alert = UIAlertController(title: nil, message: self.viewModel.promoModel?.message, preferredStyle: .alert)
+                let alert = UIAlertController(title: nil, message: self.viewModel.ChangecodeModel?.message, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: getLanguage["ok"] ?? "", style: .cancel, handler: nil))
                 self.present(alert, animated: true, completion: nil)
                 group.leave()

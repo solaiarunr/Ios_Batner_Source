@@ -820,7 +820,7 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
             var itemDetails : ItemModel?
             let chatViewModel = ChatViewModel()
             if UserDefaultModule.shared.getUserData()?.user_id != nil{
-                chatViewModel.searchItemData(item_id: self.storyModel[sender.tag].products ?? "0", user_id: (UserDefaultModule.shared.getUserData()?.user_id ?? ""), onSuccess: { (success) in
+                chatViewModel.searchItemData(item_id: "\(self.storyModel[sender.tag].id ?? 0)", user_id: (UserDefaultModule.shared.getUserData()?.user_id ?? ""), onSuccess: { (success) in
                     if success {
                         self.viewModels.getProfileData(user_id: UserDefaultModule.shared.getUserData()?.user_id ?? "", user_name: "",profile_id: "", onSuccess: { (success) in
                             print(success)

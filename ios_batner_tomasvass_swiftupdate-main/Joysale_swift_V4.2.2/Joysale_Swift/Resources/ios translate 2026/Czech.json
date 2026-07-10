@@ -143,6 +143,7 @@
     "skip": "Přeskočit",
     "email": "Email",
     "password": "Heslo",
+    "promo_codetitle": "Máš promo kód? Zadej ho zde.",
     "forgetpassword": "Zapomenuté heslo",
     "or": "nebo",
     "signup_not_member": "Ještě nemáš účet? Zaregistruj se",
@@ -855,4 +856,6 @@
     "pay_with_credits": "Zaplatit Kreditem",
     "ad_alert": "Jste si jisti, že chcete pokračovat s reklamou?",
     "ur_alert": "Jste si jisti, že chcete pokračovat s naléhavou propagací?",
+    "email_title": "Potvrď svůj e-mail, abys mohl/a pokračovat.",
+    "email_des": "Poslali jsme ti ověřovací odkaz na tvůj e-mail. Klikni na odkaz a aktivuj svůj účet.",
 }

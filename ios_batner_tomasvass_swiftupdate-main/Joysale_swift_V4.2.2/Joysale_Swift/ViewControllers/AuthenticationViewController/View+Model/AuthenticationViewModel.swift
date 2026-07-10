@@ -97,6 +97,7 @@ class AuthenticationViewModel {
             print(response)
             let rootClass = SignupModel.init(fromJson: response)
             self.signupModel = rootClass
+            UserDefaultModule.shared.setAccessToken(token1: rootClass.token)
             success(self.signupModel?.status ?? false)
         }) { (error) in
             failure(error?.localizedDescription ?? "")

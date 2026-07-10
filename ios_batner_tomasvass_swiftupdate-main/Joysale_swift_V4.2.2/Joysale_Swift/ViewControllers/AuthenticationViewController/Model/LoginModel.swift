@@ -63,12 +63,16 @@ class LoginModel: Codable {
 class SignupModel {
 
     var message : String!
+    var user_id : String!
+    var token : String!
     var status : Bool!
     init(fromJson json: JSON!){
         if json.isEmpty{
             return
         }
         message = json["message"].string ?? json["result"].stringValue
+        user_id = json["user_id"].stringValue
+        token = json["access_token"].stringValue
         status = json["status"].boolValue
     }
 }

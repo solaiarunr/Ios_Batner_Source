@@ -65,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         UserDefaults.standard.set(APP_RTC_URL, forKey: "web_rtc_web")
         window = UIWindow(frame: UIScreen.main.bounds)
-        SITE_URL = UserDefaultModule.shared.getbaseurl() ?? "https://batner.com/api/"
+        SITE_URL = UserDefaultModule.shared.getbaseurl() ?? "https://batner.cz/api/"
 //        FULL_WIDTH = self.window?.frame.width ?? UIScreen.main.bounds.width
 //        FULL_HEIGHT = self.window?.frame.height ?? UIScreen.main.bounds.height
         NetStatus.shared.startMonitoring()

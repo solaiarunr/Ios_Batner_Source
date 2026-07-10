@@ -12,6 +12,10 @@ class CreditHistoryVC: UIViewController {
     
     @IBOutlet weak var translbl: UILabel!
     @IBOutlet weak var tableview: UITableView!
+    @IBOutlet weak var noview: UIView!
+    @IBOutlet weak var nolbl: UILabel!
+    
+    
     var historymodel = [CreditResultModel]()
     
 
@@ -47,6 +51,14 @@ class CreditHistoryVC: UIViewController {
         self.navigationController?.customRightBarButtonView(title: "", fColor: "whitecolor", fontName: UIFont(name: APP_FONT_REGULAR, size: 18), imageName: "detail_back", isLeft: true, vc: self, transparantView: false)
         self.translbl.config(color: UIColor(named: "appblackcolor"), font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .left, text: "")
         self.tableview.register(UINib(nibName: "Credithistorycell", bundle: nil), forCellReuseIdentifier: "Credithistorycell")
+        self.nolbl.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .center, text: "no_credit")
+        if self.historymodel.count > 0{
+            self.tableview.isHidden = false
+            self.noview.isHidden = true
+        }else{
+            self.tableview.isHidden = true
+            self.noview.isHidden = false
+        }
     }
     
 

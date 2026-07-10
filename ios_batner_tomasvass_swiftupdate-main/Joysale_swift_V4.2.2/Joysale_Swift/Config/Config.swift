@@ -28,7 +28,8 @@ let GOOGLE_URL = "https://maps.google.com/maps/api/geocode/json?sensor=false"
 
 var BASE_URL = "https://batner.com/"
 var chatURL = "https://batner.com:2087"
-var APP_RTC_URL = "http://152.44.43.72:8080"
+//var APP_RTC_URL = "http://152.44.43.72:8080"
+var APP_RTC_URL = "https://batner.cz/apprtc/"
 
 
 
@@ -46,7 +47,7 @@ var REST_AUTH: [String : String] = ["api_username": "batner", "api_password": "0
 let MAP_URL = "https://maps.google.com/maps/api/staticmap?center="
 
 var DEVICE_MODEs = ""
-var PRODUCT_SITE_URL = (UserDefaultModule.shared.getbaseurlonly()?.appending("api/")) ?? "https://batner.com/api/"
+var PRODUCT_SITE_URL = (UserDefaultModule.shared.getbaseurlonly()?.appending("api/")) ?? "https://batner.cz/api/"
 
 
 let DYNAMIC_LINK = "https://batner.page.link" // create it from firebase dynamic link section

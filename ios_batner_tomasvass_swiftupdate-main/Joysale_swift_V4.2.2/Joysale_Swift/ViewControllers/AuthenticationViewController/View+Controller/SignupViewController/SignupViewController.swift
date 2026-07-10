@@ -38,7 +38,12 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var termsBtn: UIButton!
     @IBOutlet weak var termsLbl: UILabel!
     @IBOutlet weak var termsLblbtn: UIButton!
+    
+    @IBOutlet weak var referaltitle: UILabel!
+    @IBOutlet weak var referaltxt: FloatingTF!
+    
     var viewModel = AuthenticationViewModel()
+    var creditviewModel = CreditsViewModel()
     let delegate = UIApplication.shared.delegate as! AppDelegate
     let authUI = FUIAuth.defaultAuthUI()
     var mobileNo = ""
@@ -63,7 +68,9 @@ class SignupViewController: UIViewController {
         self.emailTextField.config(color: UIColor(named: "AppTextColor"), align: .left, placeHolder: "", font: UIFont(name: APP_FONT_REGULAR, size: 14))
         self.emailTitleLabel.config(color: UIColor(named: "SignSignupTextColorNew"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align: .left, text: "email")
         self.passwordTextField.config(color: UIColor(named: "AppTextColor"), align: .left, placeHolder: "", font: UIFont(name: APP_FONT_REGULAR, size: 14))
+        self.referaltxt.config(color: UIColor(named: "AppTextColor"), align: .left, placeHolder: "", font: UIFont(name: APP_FONT_REGULAR, size: 14))
         self.passwordTitleLabel.config(color: UIColor(named: "SignSignupTextColorNew"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align: .left, text: "password")
+        self.referaltitle.config(color: UIColor(named: "SignSignupTextColorNew"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align: .left, text: "promo_codetitle")
         self.confirmPasswordTextField.config(color: UIColor(named: "AppTextColor"), align: .left, placeHolder: "", font: UIFont(name: APP_FONT_REGULAR, size: 14))
         self.confirmPasswordTitleLabel.config(color: UIColor(named: "SignSignupTextColorNew"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align: .left, text: "confirmpassword")
         self.userNameTextfield.config(color: UIColor(named: "AppTextColor"), align: .left, placeHolder: "", font: UIFont(name: APP_FONT_REGULAR, size: 14))
@@ -234,36 +241,111 @@ class SignupViewController: UIViewController {
                 if (self.delegate.currentLocation?.country ?? "") != "" {
                     location_val = true
                 }
-                Utility.shared.startAnimation(viewController: self)
-                self.viewModel.signUp(email: self.emailTextField.text!, user_name: self.userNameTextfield.text!, full_name: self.fullNameTextField.text!, password: encodedPassword, country_name: (self.delegate.currentLocation?.country ?? "") , state_name: (self.delegate.currentLocation?.subAdministrativeArea ?? ""), city_name: (self.delegate.currentLocation?.locality ?? ""), is_location: location_val, phone: self.mobileNo, onSuccess: { (success) in
-                    Utility.shared.stopAnimation(viewController: self)
-                    let alert = UIAlertController(title: "", message: getLanguage[self.viewModel.signupModel?.message ?? ""] ?? (self.viewModel.signupModel?.message.capitalized ?? ""), preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: getLanguage["ok"] ?? "", style: .cancel, handler: { (UIAlertAction) in
-                        self.configUI()
-                        if success {
-                            DispatchQueue.main.async {
-                                let pageObj = LoginViewController()
-                                pageObj.isFromSignup = true
-                                pageObj.modalPresentationStyle = .fullScreen
-                                self.present(pageObj, animated: true, completion: nil)
+//
+                    Utility.shared.startAnimation(viewController: self)
+                    self.viewModel.signUp(email: self.emailTextField.text!, user_name: self.userNameTextfield.text!, full_name: self.fullNameTextField.text!, password: encodedPassword, country_name: (self.delegate.currentLocation?.country ?? "") , state_name: (self.delegate.currentLocation?.subAdministrativeArea ?? ""), city_name: (self.delegate.currentLocation?.locality ?? ""), is_location: location_val, phone: self.mobileNo, onSuccess: { (success) in
+                        Utility.shared.stopAnimation(viewController: self)
+                        if self.referaltxt.text != ""{
+                        Utility.shared.startAnimation(viewController: self)
+                        self.creditviewModel.applycodeApi(user_id: self.viewModel.signupModel?.user_id ?? "", code: self.referaltxt.text ?? "", onSuccess: { (success1) in
+                            if !success1 {
+                                Utility.shared.stopAnimation(viewController: self)
+                                let alert = EmailVerificationAlertView()
+
+                                alert.onOkTapped = {
+                                    self.configUI()
+                                    if success {
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3)  {
+                                            let pageObj = LoginViewController()
+                                            pageObj.isFromSignup = true
+                                            pageObj.modalPresentationStyle = .fullScreen
+                                            self.present(pageObj, animated: true, completion: nil)
+                                        }
+                                    }
+                                    else {
+                                        if (self.viewModel.signupModel?.message ?? "") == "Email already exists" {
+                                            self.emailTextField.becomeFirstResponder()
+                                            self.emailTextField.text = ""
+                                        }
+                                        else if (self.viewModel.signupModel?.message ?? "") == "Username already exists" {
+                                            self.userNameTextfield.becomeFirstResponder()
+                                            self.userNameTextfield.text = ""
+                                        }
+                                    }
+                                }
+                                alert.show(in: self.view)
+                            }else{
+                                Utility.shared.stopAnimation(viewController: self)
+                                let alert = UIAlertController(title: "", message: getLanguage[self.creditviewModel.promoModel?.message ?? ""] ?? (self.creditviewModel.promoModel?.message.capitalized ?? ""), preferredStyle: .alert)
+                                alert.addAction(UIAlertAction(title: getLanguage["ok"] ?? "", style: .cancel, handler: { (UIAlertAction) in
+                                   
+                                }))
+                                self.present(alert, animated: true, completion: nil)
                             }
+                            
+                        }, onFailure: { (failure) in
+                            Utility.shared.stopAnimation(viewController: self)
+                        })
+                       
+                        }else{
+                          //  Utility.shared.startAnimation(viewController: self)
+                            let alert = EmailVerificationAlertView()
+
+                            alert.onOkTapped = {
+                                print("OK tapped")
+                                self.configUI()
+                                if success {
+                                    DispatchQueue.main.async {
+                                        let pageObj = LoginViewController()
+                                        pageObj.isFromSignup = true
+                                        pageObj.modalPresentationStyle = .fullScreen
+                                        self.present(pageObj, animated: true, completion: nil)
+                                    }
+                                }
+                                else {
+                                    if (self.viewModel.signupModel?.message ?? "") == "Email already exists" {
+                                        self.emailTextField.becomeFirstResponder()
+                                        self.emailTextField.text = ""
+                                    }
+                                    else if (self.viewModel.signupModel?.message ?? "") == "Username already exists" {
+                                        self.userNameTextfield.becomeFirstResponder()
+                                        self.userNameTextfield.text = ""
+                                    }
+                                }
+
+                            }
+
+                            alert.show(in: self.view)
+//                            let alert = UIAlertController(title: "", message: getLanguage[self.viewModel.signupModel?.message ?? ""] ?? (self.viewModel.signupModel?.message.capitalized ?? ""), preferredStyle: .alert)
+//                            alert.addAction(UIAlertAction(title: getLanguage["ok"] ?? "", style: .cancel, handler: { (UIAlertAction) in
+//                                self.configUI()
+//                                if success {
+//                                    DispatchQueue.main.async {
+//                                        let pageObj = LoginViewController()
+//                                        pageObj.isFromSignup = true
+//                                        pageObj.modalPresentationStyle = .fullScreen
+//                                        self.present(pageObj, animated: true, completion: nil)
+//                                    }
+//                                }
+//                                else {
+//                                    if (self.viewModel.signupModel?.message ?? "") == "Email already exists" {
+//                                        self.emailTextField.becomeFirstResponder()
+//                                        self.emailTextField.text = ""
+//                                    }
+//                                    else if (self.viewModel.signupModel?.message ?? "") == "Username already exists" {
+//                                        self.userNameTextfield.becomeFirstResponder()
+//                                        self.userNameTextfield.text = ""
+//                                    }
+//                                }
+//                            }))
+//                            self.present(alert, animated: true, completion: nil)
+
                         }
-                        else {
-                            if (self.viewModel.signupModel?.message ?? "") == "Email already exists" {
-                                self.emailTextField.becomeFirstResponder()
-                                self.emailTextField.text = ""
-                            }
-                            else if (self.viewModel.signupModel?.message ?? "") == "Username already exists" {
-                                self.userNameTextfield.becomeFirstResponder()
-                                self.userNameTextfield.text = ""
-                            }
-                        }
-                    }))
-                    self.present(alert, animated: true, completion: nil)
-                    
-                }) { (failure) in
-                    Utility.shared.stopAnimation(viewController: self)
-                }
+                        
+                    }) { (failure) in
+                        Utility.shared.stopAnimation(viewController: self)
+                    }
+              //  }
             }
         }
     }
@@ -490,5 +572,161 @@ extension SignupViewController: FUIAuthDelegate {
 
     func authUI(_ authUI: FUIAuth, didFinish operation: FUIAccountSettingsOperationType, error: Error?) {
         print(error?.localizedDescription ?? "")
+    }
+}
+
+
+class EmailVerificationAlertView: UIView {
+
+    // MARK: - Callbacks
+    var onOkTapped: (() -> Void)?
+
+    // MARK: - Background
+    private let dimView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.45)
+        return view
+    }()
+
+    // MARK: - Alert Container
+    private let containerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 22
+        view.clipsToBounds = true
+        return view
+    }()
+
+    // MARK: - Icon
+    private let iconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "envelope.fill")
+        imageView.tintColor = .lightGray
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
+    // MARK: - Title
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = getLanguage["email_title"] ?? ""
+        label.font = .boldSystemFont(ofSize: 18)
+        label.textColor = .darkGray
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
+    }()
+
+    // MARK: - Message
+    private let messageLabel: UILabel = {
+        let label = UILabel()
+        label.text = getLanguage["email_des"] ?? ""
+        label.font = .systemFont(ofSize: 16)
+        label.textColor = .darkGray
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
+    }()
+
+    // MARK: - Button
+    private lazy var okButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle(getLanguage["ok"] ?? "", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = UIColor(red: 122/255, green: 195/255, blue: 0, alpha: 1)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 20)
+        button.layer.cornerRadius = 10
+        button.isUserInteractionEnabled = true
+        button.addTarget(self, action: #selector(okPressed), for: .touchUpInside)
+        return button
+    }()
+
+    // MARK: - Init
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupUI()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupUI()
+    }
+
+    // MARK: - Setup
+    private func setupUI() {
+
+        frame = UIScreen.main.bounds
+
+        addSubview(dimView)
+        addSubview(containerView)
+
+        dimView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            dimView.topAnchor.constraint(equalTo: topAnchor),
+            dimView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            dimView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            dimView.trailingAnchor.constraint(equalTo: trailingAnchor),
+
+            containerView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            containerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
+        ])
+
+        [iconImageView, titleLabel, messageLabel, okButton].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            containerView.addSubview($0)
+        }
+
+        NSLayoutConstraint.activate([
+
+            iconImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 40),
+            iconImageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            iconImageView.widthAnchor.constraint(equalToConstant: 60),
+            iconImageView.heightAnchor.constraint(equalToConstant: 60),
+
+            titleLabel.topAnchor.constraint(equalTo: iconImageView.bottomAnchor, constant: 30),
+            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 24),
+            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -24),
+
+            messageLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 18),
+            messageLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            messageLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
+
+            okButton.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 35),
+            okButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            okButton.widthAnchor.constraint(equalToConstant: 160),
+            okButton.heightAnchor.constraint(equalToConstant: 54),
+            okButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -30)
+        ])
+    }
+
+    @objc
+    private func okPressed() {
+        dismiss()
+        onOkTapped?()
+    }
+
+    // MARK: - Show
+    func show(in parent: UIView) {
+        alpha = 0
+        parent.addSubview(self)
+
+        containerView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+
+        UIView.animate(withDuration: 0.3) {
+            self.alpha = 1
+            self.containerView.transform = .identity
+        }
+    }
+
+    // MARK: - Hide
+    func dismiss() {
+        UIView.animate(withDuration: 0.25, animations: {
+            self.alpha = 0
+        }) { _ in
+            self.removeFromSuperview()
+        }
     }
 }

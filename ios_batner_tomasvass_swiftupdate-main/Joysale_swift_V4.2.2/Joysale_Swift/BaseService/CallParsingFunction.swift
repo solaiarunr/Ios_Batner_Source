@@ -24,7 +24,7 @@ class CallParsingFunction {
         let BaseUrl = SITE_URL+subURl
         var headers:HTTPHeaders? = nil
         if UserDefaultModule.shared.getAccessToken() != nil {
-            headers = self.getHeaders()
+            headers = self.getHeaders1()
             print("headerforauth:\(UserDefaultModule.shared.getAccessToken() ?? "")")
         }
         
@@ -439,6 +439,14 @@ class CallParsingFunction {
     func getHeaders() -> HTTPHeaders {
         let headers: HTTPHeaders = [
             "Authorization": (UserDefaultModule.shared.getAccessToken())! as String,
+            "Content-Type": "application/x-www-form-urlencoded"
+        ]
+        return headers
+    }
+    
+    func getHeaders1() -> HTTPHeaders {
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \((UserDefaultModule.shared.getAccessToken())! as String)",
             "Content-Type": "application/x-www-form-urlencoded"
         ]
         return headers

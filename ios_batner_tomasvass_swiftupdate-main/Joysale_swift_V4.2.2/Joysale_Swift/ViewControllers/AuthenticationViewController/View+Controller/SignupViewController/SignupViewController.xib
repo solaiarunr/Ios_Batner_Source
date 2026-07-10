@@ -30,6 +30,8 @@
                 <outlet property="mobileTitleLabel" destination="1vX-aG-DPa" id="VYW-MQ-PJt"/>
                 <outlet property="passwordTextField" destination="Kec-Pc-WAU" id="aH6-Xf-GK8"/>
                 <outlet property="passwordTitleLabel" destination="YXe-je-EBj" id="mqF-UE-zAU"/>
+                <outlet property="referaltitle" destination="rpD-6n-Nh9" id="bSb-Yq-3af"/>
+                <outlet property="referaltxt" destination="Nsg-yA-fgw" id="5ht-sH-qWw"/>
                 <outlet property="signupButton" destination="puF-GR-PjJ" id="4ZO-4t-vk3"/>
                 <outlet property="stackViewBottomConst" destination="yn3-Xp-tvv" id="gaQ-Cc-Mad"/>
                 <outlet property="termsBtn" destination="S3w-El-8ld" id="SQH-Yg-X3T"/>
@@ -68,7 +70,7 @@
                     <rect key="frame" x="0.0" y="146" width="414" height="687"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="lMX-EQ-bWh">
-                            <rect key="frame" x="20" y="15" width="374" height="827.5"/>
+                            <rect key="frame" x="20" y="15" width="374" height="902.5"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fte-iT-IFF">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="17"/>
@@ -292,8 +294,37 @@
                                         </label>
                                     </subviews>
                                 </stackView>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="H2Q-mL-yCd">
+                                    <rect key="frame" x="0.0" y="652.5" width="374" height="60"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rpD-6n-Nh9">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <textField opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Nsg-yA-fgw" customClass="FloatingTF" customModule="Batner" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="22.5" width="374" height="35"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="35" id="gzt-9T-FpX"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="17"/>
+                                            <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                            <connections>
+                                                <outlet property="delegate" destination="-1" id="MoY-Ux-k67"/>
+                                            </connections>
+                                        </textField>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d92-Ha-Iow">
+                                            <rect key="frame" x="0.0" y="59.5" width="374" height="0.5"/>
+                                            <color key="backgroundColor" name="linegraycolor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="0.5" id="sgU-ZI-CGT"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                </stackView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mya-9i-TRT">
-                                    <rect key="frame" x="0.0" y="652.5" width="374" height="55"/>
+                                    <rect key="frame" x="0.0" y="727.5" width="374" height="55"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S3w-El-8ld">
                                             <rect key="frame" x="5" y="17.5" width="20" height="20"/>
@@ -352,7 +383,7 @@
                                     </constraints>
                                 </view>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="puF-GR-PjJ">
-                                    <rect key="frame" x="0.0" y="722.5" width="374" height="45"/>
+                                    <rect key="frame" x="0.0" y="797.5" width="374" height="45"/>
                                     <color key="backgroundColor" name="AppThemeColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="45" id="Me6-Lf-W6c"/>
@@ -363,7 +394,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QwB-J4-g3L">
-                                    <rect key="frame" x="0.0" y="782.5" width="374" height="45"/>
+                                    <rect key="frame" x="0.0" y="857.5" width="374" height="45"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="45" id="CCp-z2-mKP"/>
                                     </constraints>
