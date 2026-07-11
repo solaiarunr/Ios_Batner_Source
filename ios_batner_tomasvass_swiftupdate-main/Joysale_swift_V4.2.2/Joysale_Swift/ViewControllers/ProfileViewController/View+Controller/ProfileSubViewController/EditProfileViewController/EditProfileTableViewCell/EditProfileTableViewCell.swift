@@ -42,6 +42,7 @@ class EditProfileTableViewCell: UITableViewCell {
         self.titleLabel.config(color: UIColor(named: "ThemeTextColor"), font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .left, text: "")
         self.nextButton.tintColor = UIColor(named: "ThemeTextColor")
         self.descLabel.config(color: UIColor(named: "AppTextColor"), font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .left, text: "")
+        self.descLabel.numberOfLines = 0
         self.textField.config(color: UIColor(named: "AppTextColor"), align: .left, placeHolder: "", font: UIFont(name: APP_FONT_REGULAR, size: 15))
         self.switchButton.semanticContentAttribute = .forceLeftToRight
         self.ViewStack.layer.borderColor = UIColor(named: "AppThemeColorNew")?.cgColor
@@ -206,56 +207,74 @@ class EditProfileTableViewCell: UITableViewCell {
                  }
                 else if index.row == 3 {
                     self.titleLabel.text = (getLanguage["Phone"] ?? "").capitalized
-                    self.descLabel.isHidden = true
-                    self.ViewStack.isHidden = false
-                    let canProceed = (profileData.can_access == true) ||
-                    (profileData.verification.mobNo == true)
-                    if !canProceed {
+
+                    if profileData.verification.mobNo {
+
+                        // Phone verified
                         self.descLabel.isHidden = false
                         self.ViewStack.isHidden = true
+                        self.verifyButton.isHidden = false
+
                         if profileData.mobileNo.contains("+") {
-                             self.descLabel.text = profileData.mobileNo
-                         }
-                         else {
-                             self.descLabel.text = "+\(profileData.mobileNo ?? "")"
-                         }
-                         if (profileData.mobileNo == ""){
-                             self.descLabel.text = getLanguage["link_your_account"] ?? ""
-                         }
-                        self.verifyLabel.text = (profileData.mobileNo != "") ? (getLanguage["verified"] ?? "") : (getLanguage["unverified"] ?? "")
-                         self.verifyButton.setImage((profileData.mobileNo != "") ? #imageLiteral(resourceName: "tick-green") : #imageLiteral(resourceName: "cancel-1"), for: .normal)
-                        return
-                    }
-                    let title = getLanguage["Smswalltitle"] ?? "Bezpečný Batner začíná u tebe"
-                    let body = getLanguage["Smswalldes"] ?? "Zakládáme si na tom, aby byl Batner plný reálných lidí. Proto dáváme zelenou pouze ověřeným českým telefonním číslům. Vyhneš se tak fake účtům, zahraničním botům a podvodníkům. Pojďme společně udržet komunitu čistou a bezpečnou!"
-                    
+                            self.descLabel.text = profileData.mobileNo
+                        } else {
+                            self.descLabel.text = "+\(profileData.mobileNo ?? "")"
+                        }
 
-                    let attributedText = NSMutableAttributedString(
-                        string: "\(title)\n",
-                        attributes: [
-                            .font: UIFont.boldSystemFont(ofSize: stripeTextView.font?.pointSize ?? 12),
-                            .foregroundColor: UIColor(named: "AppTextColor") ?? .white
-                        ]
-                    )
+                        self.verifyLabel.text = getLanguage["verified"] ?? ""
+                        self.verifyButton.setImage(#imageLiteral(resourceName: "tick-green"), for: .normal)
 
-                    attributedText.append(
-                        NSAttributedString(
-                            string: body,
+                    } else if profileData.can_access {
+
+                        // Phone not verified, waiting for admin approval
+                        self.descLabel.isHidden = false
+                        self.ViewStack.isHidden = false
+                        self.verifyButton.isHidden = true
+                        self.verifyLabel.text = ""
+
+                        self.descLabel.config(
+                            color: UIColor(named: "AppTextColor"),
+                            font: UIFont(name: APP_FONT_REGULAR, size: 13),
+                            align: .left,
+                            text: getLanguage["few_days"] ?? "Your phone number will be verified within few days"
+                        )
+
+                        let title = getLanguage["Smswalltitle"] ?? "Bezpečný Batner začíná u tebe"
+                        let body = getLanguage["Smswalldes"] ?? "Zakládáme si na tom, aby byl Batner plný reálných lidí. Proto dáváme zelenou pouze ověřeným českým telefonním číslům. Vyhneš se tak fake účtům, zahraničním botům a podvodníkům. Pojďme společně udržet komunitu čistou a bezpečnou!"
+
+                        let attributedText = NSMutableAttributedString(
+                            string: "\(title)\n",
                             attributes: [
+                                .font: UIFont.boldSystemFont(ofSize: stripeTextView.font?.pointSize ?? 12),
                                 .foregroundColor: UIColor(named: "AppTextColor") ?? .white
                             ]
                         )
-                    )
 
-                    stripeTextView.attributedText = attributedText
-                 //   stripeTextView.text = "Bezpečný Batner začíná u tebe \nZakládáme si na tom, aby byl Batner plný reálných lidí. Proto dáváme zelenou pouze ověřeným českým telefonním číslům.\nVyhneš se tak fake účtům, zahraničním botům a podvodníkům. Pojďme společně udržet komunitu čistou a bezpečnou!"
-                    self.ViewStack.isUserInteractionEnabled = true
-                    self.stripeTextView.isUserInteractionEnabled = true
-                    self.stripeTextView.isSelectable = true
-                    self.verifyLabel.text = ""
-                    self.verifyButton.isHidden = true
-                  
-                }
+                        attributedText.append(
+                            NSAttributedString(
+                                string: body,
+                                attributes: [
+                                    .foregroundColor: UIColor(named: "AppTextColor") ?? .white
+                                ]
+                            )
+                        )
+
+                        self.stripeTextView.attributedText = attributedText
+                        self.ViewStack.isUserInteractionEnabled = true
+                        self.stripeTextView.isUserInteractionEnabled = true
+                        self.stripeTextView.isSelectable = true
+
+                    } else {
+
+                        // Phone not verified and no access
+                        self.descLabel.isHidden = false
+                        self.ViewStack.isHidden = true
+                        self.verifyButton.isHidden = false
+
+                        self.descLabel.text = getLanguage["link_your_account"] ?? ""
+                        self.verifyLabel.text = getLanguage["unverified"] ?? ""
+                        self.verifyButton.setImage(#imageLiteral(resourceName: "cancel-1"), for: .normal)
+                    }                }
                 else if index.row == 4 {
                     self.titleLabel.text = (getLanguage["Facebook"] ?? "").capitalized
                     if (profileData.verification.facebook == false){

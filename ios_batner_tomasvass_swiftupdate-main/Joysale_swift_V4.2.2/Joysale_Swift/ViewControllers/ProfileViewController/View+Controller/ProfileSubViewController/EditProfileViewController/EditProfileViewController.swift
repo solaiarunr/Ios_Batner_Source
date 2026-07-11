@@ -309,26 +309,52 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
             
         }
         else if indexPath.section == 2 && indexPath.row == 3 {
-            UINavigationBar.appearance().tintColor = UIColor(named: "whitecolor")
-            guard let authUI = FUIAuth.defaultAuthUI() else { return }
-            if UserDefaultModule.shared.getcountrycode()  ??  "CZ" == "CZ"{
-                let phoneProvider = FUIPhoneAuth(
-                    authUI: authUI,
-                    whitelistedCountries: ["CZ","SK"]
-                )
-                print("Msmdmf",UserDefaultModule.shared.getcountrycode()  ??  "IN")
-                phoneProvider.defaultCountryCode = UserDefaultModule.shared.getcountrycode()  ??  "IN"
-                authUI.providers = [phoneProvider]
-                phoneProvider.signIn(withPresenting: self, phoneNumber: nil)
+            if self.profileData?.can_access == false{
+                UINavigationBar.appearance().tintColor = UIColor(named: "whitecolor")
+                guard let authUI = FUIAuth.defaultAuthUI() else { return }
+                if UserDefaultModule.shared.getcountrycode()  ??  "CZ" == "CZ"{
+                    let phoneProvider = FUIPhoneAuth(
+                        authUI: authUI,
+                        whitelistedCountries: ["CZ","SK"]
+                    )
+                    print("Msmdmf",UserDefaultModule.shared.getcountrycode()  ??  "IN")
+                    phoneProvider.defaultCountryCode = UserDefaultModule.shared.getcountrycode()  ??  "IN"
+                    authUI.providers = [phoneProvider]
+                    phoneProvider.signIn(withPresenting: self, phoneNumber: nil)
+                }else{
+                    let phoneProvider = FUIPhoneAuth(
+                        authUI: authUI,
+                        whitelistedCountries: [UserDefaultModule.shared.getcountrycode()  ??  "IN"]
+                    )
+                    print("Msmdmf",UserDefaultModule.shared.getcountrycode()  ??  "IN")
+                    phoneProvider.defaultCountryCode = UserDefaultModule.shared.getcountrycode()  ??  "IN"
+                    authUI.providers = [phoneProvider]
+                    phoneProvider.signIn(withPresenting: self, phoneNumber: nil)
+                }
             }else{
-                let phoneProvider = FUIPhoneAuth(
-                    authUI: authUI,
-                    whitelistedCountries: [UserDefaultModule.shared.getcountrycode()  ??  "IN"]
-                )
-                print("Msmdmf",UserDefaultModule.shared.getcountrycode()  ??  "IN")
-                phoneProvider.defaultCountryCode = UserDefaultModule.shared.getcountrycode()  ??  "IN"
-                authUI.providers = [phoneProvider]
-                phoneProvider.signIn(withPresenting: self, phoneNumber: nil)
+                if self.profileData?.can_access == true && self.profileData?.verification.mobNo == true{
+                    UINavigationBar.appearance().tintColor = UIColor(named: "whitecolor")
+                    guard let authUI = FUIAuth.defaultAuthUI() else { return }
+                    if UserDefaultModule.shared.getcountrycode()  ??  "CZ" == "CZ"{
+                        let phoneProvider = FUIPhoneAuth(
+                            authUI: authUI,
+                            whitelistedCountries: ["CZ","SK"]
+                        )
+                        print("Msmdmf",UserDefaultModule.shared.getcountrycode()  ??  "IN")
+                        phoneProvider.defaultCountryCode = UserDefaultModule.shared.getcountrycode()  ??  "IN"
+                        authUI.providers = [phoneProvider]
+                        phoneProvider.signIn(withPresenting: self, phoneNumber: nil)
+                    }else{
+                        let phoneProvider = FUIPhoneAuth(
+                            authUI: authUI,
+                            whitelistedCountries: [UserDefaultModule.shared.getcountrycode()  ??  "IN"]
+                        )
+                        print("Msmdmf",UserDefaultModule.shared.getcountrycode()  ??  "IN")
+                        phoneProvider.defaultCountryCode = UserDefaultModule.shared.getcountrycode()  ??  "IN"
+                        authUI.providers = [phoneProvider]
+                        phoneProvider.signIn(withPresenting: self, phoneNumber: nil)
+                    }
+                }
             }
         }
         else if indexPath.section == 2 && indexPath.row == 4 {
@@ -485,7 +511,7 @@ extension EditProfileViewController: FUIAuthDelegate {
             print(phonenumber)
             let phoneNumberKit = PhoneNumberKit()
             do {
-                let phoneNumbers = try phoneNumberKit.parse(phonenumber)
+                let phoneNumbers = try phoneNumberKit.parse(phonenumber, ignoreType: true)
                 if (self.profileData?.mobileNo ?? "") != "\(phoneNumbers.countryCode)\(phoneNumbers.nationalNumber)" {
                     self.profileData?.mobileNo = "\(phoneNumbers.countryCode)\(phoneNumbers.nationalNumber)"
                     if (self.profileData?.userImg ?? "").contains("/logo/") {
@@ -513,17 +539,21 @@ extension EditProfileViewController: FUIAuthDelegate {
                                 let alert = UIAlertController(title: nil, message: self.viewModel.tosModel?.message ?? "", preferredStyle: .alert)
                                 alert.addAction(UIAlertAction(title: getLanguage["ok"] ?? "", style: .default, handler: nil))
                                 self.present(alert, animated: true, completion: nil)
+                                self.profileData?.mobileNo = ""
+                                self.profileData?.verification.mobNo = false
+                                
                             } else {
                                 self.loadData()
+                                self.profileData?.verification.mobNo = true
                             }
                         }) { (failure) in
                             Utility.shared.stopAnimation(viewController: self)
                         }
-                    self.profileData?.verification.mobNo = true
+                    
                     self.tableView.reloadData()
                 }
             } catch {
-                print("Phone number parse error")
+                print("Phone number parse error\(error)")
             }
         }
     }

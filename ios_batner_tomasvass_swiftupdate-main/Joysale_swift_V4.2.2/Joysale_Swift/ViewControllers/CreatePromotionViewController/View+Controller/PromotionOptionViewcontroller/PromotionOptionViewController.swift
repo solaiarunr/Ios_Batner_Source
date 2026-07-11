@@ -312,6 +312,7 @@ class PromotionOptionViewController: UIViewController {
     var selectedCurrency = ""
     var isproceedwithcredits = false
     var profilemodel : ProfileResultModel!
+    var viewModels = ProfileViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
         configUI()
@@ -343,18 +344,27 @@ class PromotionOptionViewController: UIViewController {
     func loadData() {
         self.activityLoader.startAnimating()
         self.view.isUserInteractionEnabled = false
-        self.viewModel.getPromotionData(onSuccess: { _ in
-            self.adIds =
-                self.viewModel.getPromotionModel?.result.otherPromotions
-                    .compactMap { $0.ios_id } ?? []
-            self.loadProducts()
-            self.tableView.reloadData()
-            self.activityLoader.stopAnimating()
-            self.view.isUserInteractionEnabled = true
-        }) { _ in
-            self.activityLoader.stopAnimating()
-            self.view.isUserInteractionEnabled = true
+        self.viewModels.getProfileData(user_id: UserDefaultModule.shared.getUserData()?.user_id ?? "", user_name: "",profile_id: "", onSuccess: { (success) in
+            print(success)
+            if success {
+                self.profilemodel = self.viewModels.profileModel?.result
+                self.viewModel.getPromotionData(onSuccess: { _ in
+                    self.adIds =
+                        self.viewModel.getPromotionModel?.result.otherPromotions
+                            .compactMap { $0.ios_id } ?? []
+                    self.loadProducts()
+                    self.tableView.reloadData()
+                    self.activityLoader.stopAnimating()
+                    self.view.isUserInteractionEnabled = true
+                }) { _ in
+                    self.activityLoader.stopAnimating()
+                    self.view.isUserInteractionEnabled = true
+                }
+            }
+        }) { (failure) in
         }
+
+       
     }
     func loadProducts() {
         Task {
@@ -783,10 +793,11 @@ extension PromotionOptionViewController: UITableViewDelegate, UITableViewDataSou
 
             self.selectedPrice = "\(product.price)"
             self.selectedAPIPrice = "\(promotion.price ?? "")"
-            print("apiprice:\(selectedAPIPrice)   cb:\(self.profilemodel.credit_balance ?? "")")
-            let apiprice = Double(self.selectedAPIPrice) ?? 0.0
-            let cb = Double(self.profilemodel.credit_balance) ?? 0.0
-            if apiprice <= cb{
+           // print("apiprice:\(selectedAPIPrice)   cb:\(self.profilemodel.credit_balance ?? "")")
+            let apiPrice = Double(self.selectedAPIPrice) ?? 0.0
+            let creditBalance = Double(self.profilemodel?.credit_balance ?? "") ?? 0.0
+            
+            if apiPrice <= creditBalance{
                 self.isproceedwithcredits = true
                 self.payButton.config(color: UIColor(named: "whitecolor"),
                                       font: UIFont(name: APP_FONT_REGULAR, size: 15),
