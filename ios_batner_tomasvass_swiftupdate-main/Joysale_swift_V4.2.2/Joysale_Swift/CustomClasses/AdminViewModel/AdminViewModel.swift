@@ -50,12 +50,16 @@ class AdminViewModel {
                 
             }
             if rootClass.status {
-//                if rootClass.result.siteMaintenance == "enable" {
-//                    self.delegate.initVC(initialView: SiteMaintananceViewController())
-//                }
-//                else {
+                #if DEBUG
+                success(self.adminModel?.status ?? false)
+                #else
+                if rootClass.result.siteMaintenance == "enable" {
+                    self.delegate.initVC(initialView: SiteMaintananceViewController())
+                }
+                else {
                     success(self.adminModel?.status ?? false)
-             //   }
+                }
+                #endif
             }
             else{
                 success(self.adminModel?.status ?? false)

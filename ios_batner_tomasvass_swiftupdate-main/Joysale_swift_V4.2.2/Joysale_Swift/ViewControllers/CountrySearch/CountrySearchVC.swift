@@ -128,8 +128,14 @@ class CountrySearchVC: UIViewController,UITextFieldDelegate {
                 var langname = ""
                 // Czech fix
                 if langCode == "cz" {
+                    #if DEBUG
+                    langCode = "en"
+                    langname = "English"
+                    #else
                     langCode = "cs"
                     langname = "Czech"
+                    #endif
+                    
                 }
                 else if langCode == "pl" {
                     langCode = "pl"
