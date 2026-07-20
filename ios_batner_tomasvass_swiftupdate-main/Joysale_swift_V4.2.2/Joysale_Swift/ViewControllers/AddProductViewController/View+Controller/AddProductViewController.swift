@@ -39,6 +39,7 @@ class AddProductViewController: UIViewController, ImageDelegate, customLocationD
     var isEditFlag = false
     var itemModel: ItemModel?
     var filterData = [ProductFilterModel]()
+    var viewModels = ProfileViewModel()
     let dropDown = DropDown()
     var isskip = ""
     var selectedCategory: ProductCategoryModel?
@@ -61,6 +62,7 @@ class AddProductViewController: UIViewController, ImageDelegate, customLocationD
     var stream_thumb = ""
     var isPosting = false
     var imagePicker: ImagePicker!
+    var profilemodel : ProfileResultModel!
     
 var thumb  = ""
     override func viewDidLoad() {
@@ -222,13 +224,22 @@ var thumb  = ""
     }
     func loadData() {
         DispatchQueue.main.async {
-            ADMIN_VIEW_MODEL.productBeforeAddData(lang_code: "en",user_id:UserDefaultModule.shared.getUserData()?.user_id ?? "", onSuccess: { (success) in
-                if (ADMIN_VIEW_MODEL.productBeforeModel?.status ?? false) {
-    //                ADD_EDIT_ITEM_MODEL.currency = "\(ADMIN_VIEW_MODEL.productBeforeModel?.result.currency.first?.symbol ?? "")"
-    //                self.tableView.reloadData()
+            self.viewModels.getProfileData(user_id: UserDefaultModule.shared.getUserData()?.user_id ?? "", user_name: "",profile_id: "", onSuccess: { (success) in
+                print(success)
+                if success {
+                    self.profilemodel = self.viewModels.profileModel?.result
+                    ADMIN_VIEW_MODEL.productBeforeAddData(lang_code: "en",user_id:UserDefaultModule.shared.getUserData()?.user_id ?? "", onSuccess: { (success) in
+                        if (ADMIN_VIEW_MODEL.productBeforeModel?.status ?? false) {
+            //                ADD_EDIT_ITEM_MODEL.currency = "\(ADMIN_VIEW_MODEL.productBeforeModel?.result.currency.first?.symbol ?? "")"
+            //                self.tableView.reloadData()
+                        }
+                    }) { (failure) in
+                    }
                 }
             }) { (failure) in
             }
+
+         
         }
     }
     func loadFilterData() {
@@ -1188,8 +1199,9 @@ extension AddProductViewController: UITableViewDelegate, UITableViewDataSource {
 //            ADD_EDIT_ITEM_MODEL.make_offer = offerVal
         }
         else if section == 11 {
-            print("dde",ADMIN_VIEW_MODEL.productBeforeModel?.result.stripeverifystatus)
-            if ADMIN_VIEW_MODEL.productBeforeModel?.result.stripeverifystatus == "true"{
+            print("dde::",self.profilemodel.stripe_onboarding_complete ?? "false")
+            //if ADMIN_VIEW_MODEL.productBeforeModel?.result.stripeverifystatus == "true"{
+            if self.profilemodel.stripe_onboarding_complete ?? "false" == "true"{
                 ADD_EDIT_ITEM_MODEL.instant_buy = sender.isOn
             }else{
                 let alert = UIAlertController(title: nil, message: "You should verify stripe to use this feature", preferredStyle: .alert)

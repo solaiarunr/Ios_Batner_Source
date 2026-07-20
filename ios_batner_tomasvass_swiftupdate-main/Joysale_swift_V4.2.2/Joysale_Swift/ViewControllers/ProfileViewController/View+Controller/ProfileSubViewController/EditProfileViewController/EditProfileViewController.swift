@@ -23,7 +23,18 @@ class EditProfileViewController: UIViewController, customLocationDelegate, PaySt
     }
     
     func successaction(isfrom: String) {
-        
+        self.viewModel.getProfileData(user_id: UserDefaultModule.shared.getUserData()?.user_id ?? "", user_name: "",profile_id: "", onSuccess: { (success) in
+            print(success)
+            DispatchQueue.main.async {
+                if success {
+                    if let profileData = self.viewModel.profileModel?.result {
+                        self.profileData = profileData
+                        self.tableView.reloadData()
+                    }
+                }
+            }
+        }) { (failure) in
+        }
     }
     func photoLibraryDidChange(_ changeInstance: PHChange) {
         
@@ -36,6 +47,7 @@ class EditProfileViewController: UIViewController, customLocationDelegate, PaySt
     let authUI = FUIAuth.defaultAuthUI()
     var viewModel = ProfileViewModel()
     private var videoFetchResult: PHFetchResult<PHAsset>?
+    private var shouldReloadProfileAfterStripe = false
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(indicatorView)
@@ -47,6 +59,10 @@ class EditProfileViewController: UIViewController, customLocationDelegate, PaySt
         self.updateTheme(page: "present")
         NotificationCenter.default.addObserver(self, selector: #selector(self.barButtonAction(_:)), name: Notification.Name("BarButtonAction"), object: nil)
         self.navigationController?.isNavigationBarHidden = false
+        if self.shouldReloadProfileAfterStripe {
+            self.shouldReloadProfileAfterStripe = false
+            self.loadData()
+        }
     }
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return self.updateStatusBarStyle()
@@ -91,10 +107,12 @@ class EditProfileViewController: UIViewController, customLocationDelegate, PaySt
     func loadData() {
         self.viewModel.getProfileData(user_id: UserDefaultModule.shared.getUserData()?.user_id ?? "", user_name: "",profile_id: "", onSuccess: { (success) in
             print(success)
-            if success {
-                if let profileData = self.viewModel.profileModel?.result {
-                    self.profileData = profileData
-                    self.tableView.reloadData()
+            DispatchQueue.main.async {
+                if success {
+                    if let profileData = self.viewModel.profileModel?.result {
+                        self.profileData = profileData
+                        self.tableView.reloadData()
+                    }
                 }
             }
         }) { (failure) in
@@ -190,10 +208,12 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
         self.viewModel.stripeDetails(user_id: UserDefaultModule.shared.getUserData()?.user_id ?? "", stripe_privatekey: "", stripe_publickey: "", onSuccess: { (success) in
             Utility.shared.stopAnimation(viewController: self)
             if success {
+                self.shouldReloadProfileAfterStripe = true
                 let pageObj = PaystackViewController()
                 pageObj.url = self.viewModel.stripeModel?.url ?? ""
                 pageObj.PayStackPaymentDelegate = self
                 pageObj.return_url = self.viewModel.stripeModel?.returnurl ?? ""
+                pageObj.isform = "edit_profile"
                 pageObj.modalPresentationStyle = .overFullScreen
                 self.navigationController?.pushViewController(pageObj, animated: true)
                 
@@ -275,10 +295,12 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
                 self.viewModel.stripeDetails(user_id: UserDefaultModule.shared.getUserData()?.user_id ?? "", stripe_privatekey: "", stripe_publickey: "", onSuccess: { (success) in
                     Utility.shared.stopAnimation(viewController: self)
                     if success {
+                        self.shouldReloadProfileAfterStripe = true
                         let pageObj = PaystackViewController()
                         pageObj.url = self.viewModel.stripeModel?.url ?? ""
                         pageObj.PayStackPaymentDelegate = self
                         pageObj.return_url = self.viewModel.stripeModel?.returnurl ?? ""
+                        pageObj.isform = "edit_profile"
                         pageObj.modalPresentationStyle = .overFullScreen
                         self.navigationController?.pushViewController(pageObj, animated: true)
                         

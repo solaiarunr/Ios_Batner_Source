@@ -38,7 +38,7 @@ class EditProfileTableViewCell: UITableViewCell {
 //        StripeNewLbl.addGestureRecognizer(tapGesture)
         self.userImageView.cornerViewRadius()
         self.verifyLabel.config(color: UIColor(named: "AppTextColor"), font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .left, text: "")
-        self.NewSellLbl.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .left, text: "sellvia")
+        self.NewSellLbl.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .left, text: getLanguage["sellvia"] ?? "")
         self.titleLabel.config(color: UIColor(named: "ThemeTextColor"), font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .left, text: "")
         self.nextButton.tintColor = UIColor(named: "ThemeTextColor")
         self.descLabel.config(color: UIColor(named: "AppTextColor"), font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .left, text: "")
@@ -166,13 +166,28 @@ class EditProfileTableViewCell: UITableViewCell {
                     // In loadData(), where index.row == 1, add:
                     if index.row == 1 {
                         self.titleLabel.text = (getLanguage["manage_stripe"] ?? "")
-                        self.NewSellLbl.isHidden = false
-                        self.ViewStack.isHidden = false
-                        stripeTextView.attributedText = stripestring
-                        self.ViewStack.isUserInteractionEnabled = true
-                        self.stripeTextView.isUserInteractionEnabled = true
-                        self.stripeTextView.isSelectable = true
-                       
+                        if profileData.stripe_onboarding_complete ?? "false" == "true" {
+                            self.NewSellLbl.isHidden = true
+                            self.ViewStack.isHidden = true
+                            self.descLabel.isHidden = false
+                            self.descLabel.text = "ID: \(profileData.stripe_account_id ?? "")"
+                            self.verifyStackView.isHidden = false
+                            self.verifyButton.isHidden = false
+                            self.verifyButton.setImage(#imageLiteral(resourceName: "tick-green"), for: .normal)
+                            self.verifyLabel.text = getLanguage["verified"] ?? ""
+                            
+                        } else {
+                            self.NewSellLbl.isHidden = false
+                            self.NewSellLbl.text = getLanguage["sellvia"] ?? ""
+                            self.descLabel.isHidden = true
+                            self.verifyStackView.isHidden = true
+                            self.verifyButton.isHidden = true
+                            self.ViewStack.isHidden = false
+                            stripeTextView.attributedText = stripestring
+                            self.ViewStack.isUserInteractionEnabled = true
+                            self.stripeTextView.isUserInteractionEnabled = true
+                            self.stripeTextView.isSelectable = true
+                        }
                     }
                     else if index.row == 6 {
                         self.verifyStackView.isHidden = false

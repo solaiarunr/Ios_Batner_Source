@@ -21,6 +21,7 @@ class PaystackViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     var bookingID = ""
     var isform = ""
     var PayStackPaymentDelegate :PayStackPaymentDelegate?
+    private var didCompletePayment = false
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configWebView()
@@ -95,8 +96,6 @@ class PaystackViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        let url = webView.url?.absoluteString ?? ""
-        let codeval = url.components(separatedBy: "code=").last ?? ""
         self.flag = false
     }
 

@@ -133,8 +133,8 @@ class BuyNowViewController: UIViewController {
         
         var paymentSheet: PaymentSheet?
         let viewModel = StripeDataViewModel()
-
-        viewModel.getStripeDetails(amount: totalString, currency: cSymbol) { (success) in
+        let item_id = (self.itemDetailsvideo?.id ?? 0) > 0 ? self.itemDetailsvideo?.id : self.itemDetails?.id
+        viewModel.getStripeDetails(amount: totalString, currency: cSymbol, item_id: "\(item_id ?? 0)") { (success) in
             if viewModel.stripeModel?.status ?? false {
                 guard let viewData = viewModel.stripeModel else {
                     return

@@ -127,6 +127,8 @@ class ProfileResultModel{
     var userId : Int!
     var userImg : String!
     var userName : String!
+    var stripe_account_id : String!
+    var stripe_onboarding_complete : String!
     var verification : VerificationModel!
     var emailVerification : String!
 
@@ -156,6 +158,8 @@ class ProfileResultModel{
         userId = json["user_id"].intValue
         userImg = json["user_img"].stringValue
         userName = json["user_name"].stringValue
+        stripe_account_id = json["stripe_account_id"].stringValue
+        stripe_onboarding_complete = json["stripe_onboarding_complete"].stringValue
         let verificationJson = json["verification"]
         if !verificationJson.isEmpty{
             verification = VerificationModel(fromJson: verificationJson)
