@@ -203,6 +203,10 @@
 		4052CEB7248E30B00086AC85 /* HSImgView+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052CEAC248E30AF0086AC85 /* HSImgView+UIImageView.swift */; };
 		4052CEB8248E30B00086AC85 /* HSInterval+TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052CEAD248E30AF0086AC85 /* HSInterval+TimeInterval.swift */; };
 		4052CEBB248E49D40086AC85 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052CEBA248E49D40086AC85 /* Utility.swift */; };
+		F1BASE0082F0000100567B32 /* Bundle+FirebaseAuthLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BASE0072F0000100567B32 /* Bundle+FirebaseAuthLanguage.swift */; };
+		F1BASE0092F0000100567B32 /* StripePaymentLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BASE00A2F0000100567B32 /* StripePaymentLanguage.swift */; };
+		F1BASE0052F0000100567B32 /* FirebasePhoneAuthUI.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1BASE0032F0000100567B32 /* FirebasePhoneAuthUI.strings */; };
+		F1BASE0062F0000100567B32 /* FirebaseAuthUI.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1BASE0042F0000100567B32 /* FirebaseAuthUI.strings */; };
 		4052CEBD248E621C0086AC85 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4052CEBC248E621C0086AC85 /* WebKit.framework */; };
 		4052CEC1248E67190086AC85 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052CEC0248E67190086AC85 /* AuthenticationViewModel.swift */; };
 		40534C3A24D0468700258633 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40534C3924D0468700258633 /* SafariServices.framework */; };
@@ -695,6 +699,10 @@
 		4052CEAC248E30AF0086AC85 /* HSImgView+UIImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HSImgView+UIImageView.swift"; sourceTree = "<group>"; };
 		4052CEAD248E30AF0086AC85 /* HSInterval+TimeInterval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HSInterval+TimeInterval.swift"; sourceTree = "<group>"; };
 		4052CEBA248E49D40086AC85 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		F1BASE0072F0000100567B32 /* Bundle+FirebaseAuthLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+FirebaseAuthLanguage.swift"; sourceTree = "<group>"; };
+		F1BASE00A2F0000100567B32 /* StripePaymentLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripePaymentLanguage.swift; sourceTree = "<group>"; };
+		F1BASE0032F0000100567B32 /* FirebasePhoneAuthUI.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = FirebasePhoneAuthUI.strings; sourceTree = "<group>"; };
+		F1BASE0042F0000100567B32 /* FirebaseAuthUI.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = FirebaseAuthUI.strings; sourceTree = "<group>"; };
 		4052CEBC248E621C0086AC85 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		4052CEC0248E67190086AC85 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		40534C3924D0468700258633 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
@@ -2034,6 +2042,8 @@
 			isa = PBXGroup;
 			children = (
 				4052CEBA248E49D40086AC85 /* Utility.swift */,
+				F1BASE0072F0000100567B32 /* Bundle+FirebaseAuthLanguage.swift */,
+				F1BASE00A2F0000100567B32 /* StripePaymentLanguage.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -2126,11 +2136,29 @@
 			isa = PBXGroup;
 			children = (
 				B6FE1A872FAC76B400F080FA /* ios translate 2026 */,
+				F1BASE0012F0000100567B32 /* FirebaseAuth */,
 				40584BE5248B807000E0243B /* Assets */,
 				40584BE0248B803300E0243B /* ColorAssets */,
 				40584BE3248B805400E0243B /* Fonts */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		F1BASE0012F0000100567B32 /* FirebaseAuth */ = {
+			isa = PBXGroup;
+			children = (
+				F1BASE0022F0000100567B32 /* cs.lproj */,
+			);
+			path = FirebaseAuth;
+			sourceTree = "<group>";
+		};
+		F1BASE0022F0000100567B32 /* cs.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				F1BASE0032F0000100567B32 /* FirebasePhoneAuthUI.strings */,
+				F1BASE0042F0000100567B32 /* FirebaseAuthUI.strings */,
+			);
+			path = cs.lproj;
 			sourceTree = "<group>";
 		};
 		40584BE0248B803300E0243B /* ColorAssets */ = {
@@ -3486,6 +3514,8 @@
 				407B14AF24C0902F00B21103 /* AddBannerViewController.xib in Resources */,
 				40381C6024C5D65D00884ED2 /* PromotionDetailTableViewCell.xib in Resources */,
 				B6FE1A882FAC76B400F080FA /* Czech.json in Resources */,
+				F1BASE0052F0000100567B32 /* FirebasePhoneAuthUI.strings in Resources */,
+				F1BASE0062F0000100567B32 /* FirebaseAuthUI.strings in Resources */,
 				B6FE1A892FAC76B400F080FA /* Polish.json in Resources */,
 				B6FE1A8A2FAC76B400F080FA /* English.json in Resources */,
 				B6FE1A8B2FAC76B400F080FA /* Slovakia.json in Resources */,
@@ -3643,6 +3673,8 @@
 				B69E2FFA2D9130C100567B32 /* DGElasticPullToRefreshLoadingViewCircle.swift in Sources */,
 				4005844D252DEE6000065D2C /* UIButton_Badge.swift in Sources */,
 				4052CEBB248E49D40086AC85 /* Utility.swift in Sources */,
+				F1BASE0082F0000100567B32 /* Bundle+FirebaseAuthLanguage.swift in Sources */,
+				F1BASE0092F0000100567B32 /* StripePaymentLanguage.swift in Sources */,
 				189DB03C2754C425003948D6 /* ARDWebSocketChannel.m in Sources */,
 				B69E2FAF2D912D6D00567B32 /* CameraViewModel.swift in Sources */,
 				40C2B0B1248A7CA40035A1C2 /* Joysale_Swift.xcdatamodeld in Sources */,

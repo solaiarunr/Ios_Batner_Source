@@ -760,8 +760,8 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
                 cell.likeBtn.isUserInteractionEnabled = false
                 if self.storyModel[sender.tag].publisherId != UserDefaultModule.shared.getUserData()?.user_id ?? ""{
                     if (self.storyModel[sender.tag].liked ?? "") == "yes" {
-                        sender.setImage(#imageLiteral(resourceName: "newwhiteheart"), for: .normal)
-                        sender.tintColor = UIColor.white
+                        sender.setImage(#imageLiteral(resourceName: "newwhiteheart1"), for: .normal)
+                        sender.tintColor = .clear
                         self.storyModel[sender.tag].liked = "no"
                         self.storyModel[sender.tag].likesCount = (self.storyModel[sender.tag].likesCount ?? 0) > 0 ? ((self.storyModel[sender.tag].likesCount ?? 0)-1) : 0
                         print("self.storyModel[sender.tag].likesCount_minus :\(self.storyModel[sender.tag].likesCount)")

@@ -85,6 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
         Utility.shared.configureLanguage()
+        Utility.shared.configureFirebaseAuthLanguage()
         UserDefaults.standard.set([DEFAULT_LANGUAGE_CODE], forKey: "AppleLanguages")
         self.loadAdminData()
         self.registerForPushNotification(application)

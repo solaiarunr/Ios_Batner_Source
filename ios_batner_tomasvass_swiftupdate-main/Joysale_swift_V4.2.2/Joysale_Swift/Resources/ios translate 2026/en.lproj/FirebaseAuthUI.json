@@ -1,0 +1,9 @@
+
+/* Title banner or header text instructions */
+"Enter phone number" = "Please provide your mobile number:";
+
+/* TextField helper text or placeholders */
+"Phone number" = "Mobile Number";
+
+/* Action buttons */
+"Verify" = "Send Code";

@@ -94,6 +94,7 @@ class BuyNowViewController: UIViewController {
         if UserDefaultModule.shared.getAppLanguage().capitalized == "Arabic" {
             UIView.appearance().semanticContentAttribute = .forceLeftToRight
         }
+        Utility.shared.configureStripePaymentLanguage()
 
         
         let currencyCode: [String]?

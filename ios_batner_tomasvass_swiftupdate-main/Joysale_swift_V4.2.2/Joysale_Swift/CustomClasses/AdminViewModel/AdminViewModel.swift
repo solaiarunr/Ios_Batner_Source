@@ -43,7 +43,7 @@ class AdminViewModel {
 //                print("sdfw",chatURL)
                 BANNNER_ID = (self.adminModel?.result.googleAdsIos ?? "")
                 MAPBOXACCESSTOKEN = (self.adminModel?.result.mapboxToken ?? "")
-                APP_RTC_URL = (self.adminModel?.result.apprtcUrl ?? "")
+               // APP_RTC_URL = (self.adminModel?.result.apprtcUrl ?? "")
                 
           
                 print("sdfnwfb",APP_RTC_URL)

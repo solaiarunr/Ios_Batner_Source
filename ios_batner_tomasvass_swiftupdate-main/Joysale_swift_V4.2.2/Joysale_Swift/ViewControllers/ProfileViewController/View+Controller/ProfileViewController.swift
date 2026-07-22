@@ -325,7 +325,9 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             case "credit":
                 if self.viewModel.profileModel?.result.credit_balance != "0" {
                     cell.notificationButton.isHidden = false
-                    cell.notificationButton.setTitle("\(self.viewModel.profileModel?.result.credit_balance ?? "0")Kč", for: .normal)
+                let balance = (self.viewModel.profileModel?.result.credit_balance ?? "0").czechFormattedCreditBalance
+                    cell.notificationButton.setTitle("\(balance) Kč", for: .normal)
+                    cell.notificationButton.backgroundColor = UIColor(named: "AppThemeColorNew")
                 } else {
                     cell.notificationButton.isHidden = true
                 }

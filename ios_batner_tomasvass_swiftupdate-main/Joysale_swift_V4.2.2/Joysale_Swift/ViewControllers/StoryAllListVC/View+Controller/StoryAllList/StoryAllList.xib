@@ -62,7 +62,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Zm-Ux-Rze">
                     <rect key="frame" x="10" y="156" width="30" height="30"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="detail_back" translatesAutoresizingMaskIntoConstraints="NO" id="13f-5q-oyg">
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="detail_back 1" translatesAutoresizingMaskIntoConstraints="NO" id="13f-5q-oyg">
                             <rect key="frame" x="5.5" y="7.5" width="15" height="15"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
@@ -145,7 +145,7 @@
     </objects>
     <resources>
         <image name="ItemTransparentImg" width="251" height="76"/>
-        <image name="detail_back" width="13.5" height="24"/>
+        <image name="detail_back 1" width="24" height="24"/>
         <image name="product_no_videos" width="48" height="48"/>
         <image name="product_top_to_bottom" width="251" height="76"/>
         <namedColor name="clearcolor">

@@ -177,7 +177,8 @@ class ChatViewController: UIViewController,PHPhotoLibraryChangeObserver {
         if let flowLayout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.estimatedItemSize = CGSize(width: 1, height: 1)
         }
-        SocketIOManager.sharedInstance.connect(false)
+        print("chaturllll:\(UserDefaultModule.shared.getchaturl() ?? "")")
+        SocketIOManager.sharedInstance.connect(true)
         // Audio Message
         self.configRecordView()
         self.callView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.callViewAct)))

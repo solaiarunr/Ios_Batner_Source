@@ -9,6 +9,8 @@
 import Foundation
 import SystemConfiguration
 import UIKit
+import FirebaseAuth
+import FirebaseAuthUI
 
 class Utility: NSObject {
     static let shared = Utility()
@@ -37,6 +39,17 @@ class Utility: NSObject {
                 print(error)
             }
         }
+    }
+
+    /// Applies in-app language to Stripe PaymentSheet UI.
+    func configureStripePaymentLanguage() {
+        StripePaymentLanguage.apply(languageCode: DEFAULT_LANGUAGE_CODE)
+    }
+
+    /// Applies in-app language to Firebase Auth SMS/errors and FirebaseUI phone screens.
+    func configureFirebaseAuthLanguage(authUI: FUIAuth? = FUIAuth.defaultAuthUI()) {
+        Auth.auth().languageCode = DEFAULT_LANGUAGE_CODE
+        FirebaseAuthLanguage.apply(languageCode: DEFAULT_LANGUAGE_CODE, authUI: authUI)
     }
     
     func getCountryData(){
@@ -485,6 +498,20 @@ extension Date {
         }
     }
 }
+extension String {
+    /// Formats a raw numeric credit balance with Czech thousands separator (e.g. 4881 → "4 881").
+    var czechFormattedCreditBalance: String {
+        let cleaned = replacingOccurrences(of: " ", with: "")
+        guard let number = Double(cleaned) else { return self }
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.locale = Locale(identifier: "cs_CZ")
+        formatter.maximumFractionDigits = number.truncatingRemainder(dividingBy: 1) == 0 ? 0 : 2
+        formatter.minimumFractionDigits = 0
+        return formatter.string(from: NSNumber(value: number)) ?? self
+    }
+}
+
 extension CGFloat {
     func SecondsFromTimer() -> String {
         let minutes = Int(self) / 60 % 60

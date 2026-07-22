@@ -481,6 +481,7 @@ extension SignupViewController: UITextFieldDelegate {
         if textField == mobileTextField {
             UINavigationBar.appearance().tintColor = UIColor(named: "whitecolor")
             guard let authUI = FUIAuth.defaultAuthUI() else { return }
+            Utility.shared.configureFirebaseAuthLanguage(authUI: authUI)
             if UserDefaultModule.shared.getcountrycode()  ??  "CZ" == "CZ"{
                 let phoneProvider = FUIPhoneAuth(
                     authUI: authUI,

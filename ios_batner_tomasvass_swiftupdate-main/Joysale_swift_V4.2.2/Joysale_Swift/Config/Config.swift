@@ -29,7 +29,7 @@ let GOOGLE_URL = "https://maps.google.com/maps/api/geocode/json?sensor=false"
 var BASE_URL = "https://batner.com/"
 var chatURL = "https://batner.com:2087"
 //var APP_RTC_URL = "http://152.44.43.72:8080"
-var APP_RTC_URL = "https://batner.cz/apprtc/"
+var APP_RTC_URL = "https://batner.cz/apprtc"
 
 
 

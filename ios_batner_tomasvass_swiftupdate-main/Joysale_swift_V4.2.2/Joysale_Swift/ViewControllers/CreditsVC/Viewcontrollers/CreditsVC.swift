@@ -92,7 +92,8 @@ class CreditsVC: UIViewController {
                  print("sucesscredit")
                 }
                 else {
-                    self.balbtn.setTitle("\(self.viewModel.creditModel?.balance ?? "")Kč", for: .normal)
+                    let balance = (self.viewModel.creditModel?.balance ?? "").czechFormattedCreditBalance
+                    self.balbtn.setTitle("\(balance)Kč", for: .normal)
                     self.promocodelbl.text = self.viewModel.creditModel?.referral_code
                     self.refferaltxt.text = self.viewModel.creditModel?.invite_url
                 }

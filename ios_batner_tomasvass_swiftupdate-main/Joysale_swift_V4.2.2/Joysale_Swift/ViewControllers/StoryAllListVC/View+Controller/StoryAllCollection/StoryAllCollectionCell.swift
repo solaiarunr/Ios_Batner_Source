@@ -420,9 +420,9 @@ class StoryAllCollectionCell: UICollectionViewCell,UIScrollViewDelegate, UIGestu
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.contentView.bringSubviewToFront(self.collectionView)
-        self.likeLbl.config(color: .white, font: UIFont(name: APP_FONT_BOLD, size: 13), align: .center, text: "")
-        self.cmntLbl.config(color: .white, font: UIFont(name: APP_FONT_BOLD, size: 13), align: .center, text: "")
-        self.shareLbl.config(color: .white, font: UIFont(name: APP_FONT_BOLD, size: 13), align: .center, text: "share")
+        self.likeLbl.config(color: UIColor(named: "SecondaryTextColor"), font: UIFont(name: APP_FONT_BOLD, size: 13), align: .center, text: "")
+        self.cmntLbl.config(color: UIColor(named: "SecondaryTextColor"), font: UIFont(name: APP_FONT_BOLD, size: 13), align: .center, text: "")
+        self.shareLbl.config(color: UIColor(named: "SecondaryTextColor"), font: UIFont(name: APP_FONT_BOLD, size: 13), align: .center, text: "share")
         self.MoreBtnNew.config(color: UIColor(named: "AppThemeColorNew"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align: .left, title: "More")
         self.likeLbl.text = "1"
         print("likeLbl1")
@@ -493,10 +493,10 @@ class StoryAllCollectionCell: UICollectionViewCell,UIScrollViewDelegate, UIGestu
         self.buyNowButton.backgroundColor = UIColor(named: "ShadowGreen")
         self.chatButton.backgroundColor = UIColor(named: "ShadowGreen")
         self.chatButton.config(color: UIColor(named: "AppThemeColorNew"), font: UIFont(name: APP_FONT_REGULAR, size: 16), align: .center, title: "chat")
-        self.NewShareLbl.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.left, text: "share")
+        self.NewShareLbl.config(color: UIColor(named: "SecondaryTextColor"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.left, text: "share")
         self.CallLbl.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.left, text: "Call")
         self.ExchageLbl.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.left, text: "Exchange")
-        self.MoreLbl.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.left, text: "More")
+        self.MoreLbl.config(color: UIColor(named: "SecondaryTextColor"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.left, text: "More")
 //        self.setTextViewPadding(self.DesTv, centerVertically: true)
         
         self.imageBtn.setTitle("", for: .normal)
@@ -566,8 +566,8 @@ class StoryAllCollectionCell: UICollectionViewCell,UIScrollViewDelegate, UIGestu
             self.likeBtn.setImage(#imageLiteral(resourceName: "newwhiteheart"), for: .normal)
             self.likeBtn.tintColor = UIColor.init(named: "redcolor")
         }else{
-            self.likeBtn.setImage(#imageLiteral(resourceName: "newwhiteheart"), for: .normal)
-            self.likeBtn.tintColor = UIColor.white
+            self.likeBtn.setImage(#imageLiteral(resourceName: "newwhiteheart1"), for: .normal)
+            self.likeBtn.tintColor = .clear
         }
         
         self.likeLbl.text = "\(playerData.likesCount ?? 0)"

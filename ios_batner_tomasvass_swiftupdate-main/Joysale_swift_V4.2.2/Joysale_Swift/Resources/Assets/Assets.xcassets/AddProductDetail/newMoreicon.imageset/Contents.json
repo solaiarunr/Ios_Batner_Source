@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "XMLID_88_.svg",
+      "filename" : "menu.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "XMLID_88_ 1.svg",
+      "filename" : "menu@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "XMLID_88_ 2.svg",
+      "filename" : "menu@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

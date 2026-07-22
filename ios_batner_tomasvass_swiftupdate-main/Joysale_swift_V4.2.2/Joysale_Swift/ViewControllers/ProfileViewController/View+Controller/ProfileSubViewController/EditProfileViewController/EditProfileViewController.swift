@@ -99,7 +99,7 @@ class EditProfileViewController: UIViewController, customLocationDelegate, PaySt
         let providers: [FUIAuthProvider] = [
             FUIPhoneAuth(authUI:FUIAuth.defaultAuthUI()!),
         ]
-        Auth.auth().languageCode = DEFAULT_LANGUAGE_CODE
+        Utility.shared.configureFirebaseAuthLanguage(authUI: self.authUI)
         self.authUI?.providers = providers
         self.authUI?.delegate = self
         self.loadData()
@@ -331,52 +331,10 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
             
         }
         else if indexPath.section == 2 && indexPath.row == 3 {
-            if self.profileData?.can_access == false{
-                UINavigationBar.appearance().tintColor = UIColor(named: "whitecolor")
-                guard let authUI = FUIAuth.defaultAuthUI() else { return }
-                if UserDefaultModule.shared.getcountrycode()  ??  "CZ" == "CZ"{
-                    let phoneProvider = FUIPhoneAuth(
-                        authUI: authUI,
-                        whitelistedCountries: ["CZ","SK"]
-                    )
-                    print("Msmdmf",UserDefaultModule.shared.getcountrycode()  ??  "IN")
-                    phoneProvider.defaultCountryCode = UserDefaultModule.shared.getcountrycode()  ??  "IN"
-                    authUI.providers = [phoneProvider]
-                    phoneProvider.signIn(withPresenting: self, phoneNumber: nil)
-                }else{
-                    let phoneProvider = FUIPhoneAuth(
-                        authUI: authUI,
-                        whitelistedCountries: [UserDefaultModule.shared.getcountrycode()  ??  "IN"]
-                    )
-                    print("Msmdmf",UserDefaultModule.shared.getcountrycode()  ??  "IN")
-                    phoneProvider.defaultCountryCode = UserDefaultModule.shared.getcountrycode()  ??  "IN"
-                    authUI.providers = [phoneProvider]
-                    phoneProvider.signIn(withPresenting: self, phoneNumber: nil)
-                }
-            }else{
-                if self.profileData?.can_access == true && self.profileData?.verification.mobNo == true{
-                    UINavigationBar.appearance().tintColor = UIColor(named: "whitecolor")
-                    guard let authUI = FUIAuth.defaultAuthUI() else { return }
-                    if UserDefaultModule.shared.getcountrycode()  ??  "CZ" == "CZ"{
-                        let phoneProvider = FUIPhoneAuth(
-                            authUI: authUI,
-                            whitelistedCountries: ["CZ","SK"]
-                        )
-                        print("Msmdmf",UserDefaultModule.shared.getcountrycode()  ??  "IN")
-                        phoneProvider.defaultCountryCode = UserDefaultModule.shared.getcountrycode()  ??  "IN"
-                        authUI.providers = [phoneProvider]
-                        phoneProvider.signIn(withPresenting: self, phoneNumber: nil)
-                    }else{
-                        let phoneProvider = FUIPhoneAuth(
-                            authUI: authUI,
-                            whitelistedCountries: [UserDefaultModule.shared.getcountrycode()  ??  "IN"]
-                        )
-                        print("Msmdmf",UserDefaultModule.shared.getcountrycode()  ??  "IN")
-                        phoneProvider.defaultCountryCode = UserDefaultModule.shared.getcountrycode()  ??  "IN"
-                        authUI.providers = [phoneProvider]
-                        phoneProvider.signIn(withPresenting: self, phoneNumber: nil)
-                    }
-                }
+            if self.profileData?.can_access == false {
+                self.presentFirebasePhoneAuth()
+            } else if self.profileData?.can_access == true && self.profileData?.verification.mobNo == true {
+                self.presentFirebasePhoneAuth()
             }
         }
         else if indexPath.section == 2 && indexPath.row == 4 {
@@ -403,6 +361,23 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
         if textField.tag == 0 {
             self.profileData?.fullName = textField.text!
         }
+    }
+
+    private func presentFirebasePhoneAuth() {
+        UINavigationBar.appearance().tintColor = UIColor(named: "whitecolor")
+        guard let authUI = FUIAuth.defaultAuthUI() else { return }
+        Utility.shared.configureFirebaseAuthLanguage(authUI: authUI)
+
+        let countryCode = UserDefaultModule.shared.getcountrycode() ?? "CZ"
+        let phoneProvider: FUIPhoneAuth
+        if countryCode == "CZ" {
+            phoneProvider = FUIPhoneAuth(authUI: authUI, whitelistedCountries: ["CZ", "SK"])
+        } else {
+            phoneProvider = FUIPhoneAuth(authUI: authUI, whitelistedCountries: [countryCode])
+        }
+        phoneProvider.defaultCountryCode = countryCode
+        authUI.providers = [phoneProvider]
+        phoneProvider.signIn(withPresenting: self, phoneNumber: nil)
     }
 }
 extension EditProfileViewController: ImageDelegate {
