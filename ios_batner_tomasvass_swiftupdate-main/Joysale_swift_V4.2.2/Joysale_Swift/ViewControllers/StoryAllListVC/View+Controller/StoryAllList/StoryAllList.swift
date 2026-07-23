@@ -119,6 +119,7 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
         super.viewDidLoad()
         Backview.layer.cornerRadius = Backview.frame.width / 2
         Backview.layer.masksToBounds = true
+        Backview.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         self.loadFilterData()
         self.configUI()
         if #available(iOS 13.0, *) {

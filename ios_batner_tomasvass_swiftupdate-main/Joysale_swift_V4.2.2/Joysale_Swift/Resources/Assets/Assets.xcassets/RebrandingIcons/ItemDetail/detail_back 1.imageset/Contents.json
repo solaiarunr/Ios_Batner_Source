@@ -1,25 +1,25 @@
 {
   "images" : [
     {
-      "filename" : "Back arrow.png",
+      "filename" : "Back arrow@3x 3.png",
       "idiom" : "universal",
       "language-direction" : "left-to-right",
       "scale" : "1x"
     },
     {
-      "filename" : "Back arrow 1.png",
+      "filename" : "Back arrow@3x 4.png",
       "idiom" : "universal",
       "language-direction" : "right-to-left",
       "scale" : "1x"
     },
     {
-      "filename" : "Back arrow@2x.png",
+      "filename" : "Back arrow@3x 2.png",
       "idiom" : "universal",
       "language-direction" : "left-to-right",
       "scale" : "2x"
     },
     {
-      "filename" : "Back arrow@2x 1.png",
+      "filename" : "Back arrow@3x 5.png",
       "idiom" : "universal",
       "language-direction" : "right-to-left",
       "scale" : "2x"

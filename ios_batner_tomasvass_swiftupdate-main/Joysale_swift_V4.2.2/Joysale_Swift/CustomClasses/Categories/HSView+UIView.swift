@@ -162,12 +162,68 @@ extension UIView{
     }
     
     func updateborder(color: UIColor, borderWidth: Int, radius: Int) {
-        self.layer.borderWidth = CGFloat(borderWidth)
-        self.layer.borderColor = color.cgColor
-        self.layer.cornerRadius = CGFloat(radius)
-        self.clipsToBounds = true
+        let config = UpdateBorderConfiguration(color: color, borderWidth: borderWidth, radius: radius)
+        objc_setAssociatedObject(self, &AssociatedKeys.updateBorderConfiguration, config, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        applyUpdateBorder()
+    }
+
+    func clearUpdateBorder() {
+        objc_setAssociatedObject(self, &AssociatedKeys.updateBorderConfiguration, nil, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        layer.sublayers?.filter { $0.name == UpdateBorderConfiguration.borderLayerName }.forEach { $0.removeFromSuperlayer() }
+        layer.borderWidth = 0
+        layer.borderColor = nil
+    }
+
+    func refreshUpdateBorder() {
+        applyUpdateBorder()
+    }
+
+    private func applyUpdateBorder() {
+        guard let config = objc_getAssociatedObject(self, &AssociatedKeys.updateBorderConfiguration) as? UpdateBorderConfiguration else {
+            return
+        }
+
+        let width = CGFloat(config.borderWidth)
+        let cornerRadius = CGFloat(config.radius)
+
+        layer.cornerRadius = cornerRadius
+        clipsToBounds = true
+        layer.borderWidth = 0
+        layer.borderColor = nil
+        if #available(iOS 13.0, *) {
+            layer.cornerCurve = .continuous
+        }
+
+        layer.sublayers?.filter { $0.name == UpdateBorderConfiguration.borderLayerName }.forEach { $0.removeFromSuperlayer() }
+
+        guard width > 0, bounds.width > 0, bounds.height > 0 else { return }
+
+        let borderLayer = CAShapeLayer()
+        borderLayer.name = UpdateBorderConfiguration.borderLayerName
+        borderLayer.strokeColor = config.color.cgColor
+        borderLayer.fillColor = UIColor.clear.cgColor
+        borderLayer.lineWidth = width
+        borderLayer.contentsScale = UIScreen.main.scale
+        borderLayer.frame = bounds
+        let inset = width / 2
+        borderLayer.path = UIBezierPath(
+            roundedRect: bounds.insetBy(dx: inset, dy: inset),
+            cornerRadius: max(0, cornerRadius - inset)
+        ).cgPath
+        layer.addSublayer(borderLayer)
     }
     
+}
+
+private enum AssociatedKeys {
+    static var updateBorderConfiguration = "updateBorderConfiguration"
+}
+
+private struct UpdateBorderConfiguration {
+    static let borderLayerName = "updateBorderShapeLayer"
+    let color: UIColor
+    let borderWidth: Int
+    let radius: Int
 }
 
 

@@ -585,10 +585,14 @@ class StoryAllCollectionCell: UICollectionViewCell,UIScrollViewDelegate, UIGestu
         DesTv.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         DesTv.layer.cornerRadius = 5
         DesTv.clipsToBounds = true
-        
         MoreViewCorner.backgroundColor = UIColor.black.withAlphaComponent(0.3)
-        MoreViewCorner.layer.cornerRadius = 5
+        itemconditionlbl.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        DaysCountLbl.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        Locationbtn.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         MoreViewCorner.clipsToBounds = true
+        DaysCountLbl.clipsToBounds = true
+        itemconditionlbl.clipsToBounds = true
+        self.applyOverlayBorders()
         self.prroducttitlename.text = playerData.itemTitle
         layerview.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         layerview.layer.cornerRadius = 5
@@ -606,6 +610,7 @@ class StoryAllCollectionCell: UICollectionViewCell,UIScrollViewDelegate, UIGestu
                 self.MoreBtnNewview.isHidden = true
              
             }
+            self.applyOverlayBorders()
         }
         
       
@@ -647,7 +652,7 @@ class StoryAllCollectionCell: UICollectionViewCell,UIScrollViewDelegate, UIGestu
         dateFormatterGet.dateFormat = "EEE, dd MMM yy HH:mm:ss VVVV"
         let date = dateFormatterGet.date(from: dateString)
         if let dateVal = date {
-            self.DaysCountLbl.text = Date().offset(from: dateVal)
+            self.DaysCountLbl.text = " \(Date().offset(from: dateVal)) "
         }
         self.Locationbtn.setTitle(playerData.location, for: .normal)
         
@@ -707,6 +712,14 @@ class StoryAllCollectionCell: UICollectionViewCell,UIScrollViewDelegate, UIGestu
     @IBAction func MoreAction(_ sender: Any) {
         self.descriptionDelegate?.showpopup(txt: self.fullDescriptionText)
     }
+    func applyOverlayBorders() {
+        MoreViewCorner.updateborder(color: UIColor.black, borderWidth: 1, radius: 5)
+        DaysCountLbl.updateborder(color: UIColor.black, borderWidth: 1, radius: 5)
+        itemconditionlbl.updateborder(color: UIColor.black, borderWidth: 1, radius: 5)
+        layerview.updateborder(color: UIColor.black, borderWidth: 1, radius: 5)
+        Locationbtn.updateborder(color: UIColor.black, borderWidth: 1, radius: 5)
+    }
+
     func setButton(playerData:StoryListModel){
         print("weneedplayerdaya",playerData)
         print("itemStatuscosodw",playerData.itemStatus ?? "")
@@ -1058,11 +1071,9 @@ extension StoryAllCollectionCell: UICollectionViewDelegate, UICollectionViewData
         print("selectedindex",selectedindex)
         print("selectedindex2",indexPath.item)
         if  indexPath.item == selectedindex {
-            cell.Cornerview.layer.borderColor = UIColor(named: "AppThemeColorNew")?.cgColor
-            cell.Cornerview.layer.borderWidth = 1.5 //
-        }else{
-            cell.Cornerview.layer.borderColor = UIColor.clear.cgColor
-            cell.Cornerview.layer.borderWidth = 0
+            cell.setSelectionBorder(true)
+        } else {
+            cell.setSelectionBorder(false)
         }
         return cell
     }
