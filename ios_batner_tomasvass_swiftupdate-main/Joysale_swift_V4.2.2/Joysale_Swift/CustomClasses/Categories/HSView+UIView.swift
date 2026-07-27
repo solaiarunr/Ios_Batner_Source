@@ -72,7 +72,7 @@ extension UIView{
         self.clipsToBounds = true
     }
     func cornerViewMiniumRadiuslight() {
-        self.layer.cornerRadius = 4
+        self.layer.cornerRadius = 5
         self.clipsToBounds = true
     }
     //MARK: minimum corner radius

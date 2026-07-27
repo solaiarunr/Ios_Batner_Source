@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "command@2x 1.png",
+      "filename" : "Dropdown Command.  Light@2x 3.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "command@2x.png",
+      "filename" : "Dropdown Command.  Light@2x 2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "command@2x 2.png",
+      "filename" : "Dropdown Command.  Light@2x 1.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -178,7 +178,10 @@ class ChatViewController: UIViewController,PHPhotoLibraryChangeObserver {
             flowLayout.estimatedItemSize = CGSize(width: 1, height: 1)
         }
         print("chaturllll:\(UserDefaultModule.shared.getchaturl() ?? "")")
-        SocketIOManager.sharedInstance.connect(true)
+        // Normal chat must use connect(false) → emits "join".
+        // connect(true) is only for exchange chat ("exchangejoin").
+        SocketIOManager.sharedInstance.delegate = self
+        SocketIOManager.sharedInstance.connect(false)
         // Audio Message
         self.configRecordView()
         self.callView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.callViewAct)))
@@ -858,7 +861,7 @@ class ChatViewController: UIViewController,PHPhotoLibraryChangeObserver {
             }
         }
         
-        SocketIOManager.sharedInstance.chatMessage(message: message, userImage: (ADMIN_VIEW_MODEL.profileModel?.result.userImg ?? ""), userName: (UserDefaultModule.shared.getUserData()?.userName ?? ""), type: type, messageContent: message_content, lat: current_latitude, lon: current_longitude, view_url: image_url, offerId: "0", senderId: (ADMIN_VIEW_MODEL.profileModel?.result.userName ?? ""), exchage_type: false, chatTime: (Int(timeStamp)), audio_duration: audioDuration, chatURL: self.viewModel.chatModel?.chatUrl ?? "")
+        SocketIOManager.sharedInstance.chatMessage(message: message, userImage: (UserDefaultModule.shared.getUserData()?.photo ?? ""), userName: (UserDefaultModule.shared.getUserData()?.userName ?? ""), type: type, messageContent: message_content, lat: current_latitude, lon: current_longitude, view_url: image_url, offerId: "0", senderId: (ADMIN_VIEW_MODEL.profileModel?.result.userName ?? ""), exchage_type: false, chatTime: (Int(timeStamp)), audio_duration: audioDuration, chatURL: self.viewModel.chatModel?.chatUrl ?? "")
       
         self.viewModel.sendChatData(sender_id: (UserDefaultModule.shared.getUserData()?.user_id ?? ""), chat_id: self.chatId, type: type, message: message, source_id: source_id, current_latitude: current_latitude, current_longitude: current_longitude, image_url: viewUrl, chat_type: "normal", timeStamp: (Int(timeStamp)), audio_url: image_url, created_date: "", audio_duration: audioDuration,onSuccess:{ (success) in
             if success {
@@ -1410,10 +1413,22 @@ class ChatViewController: UIViewController,PHPhotoLibraryChangeObserver {
             if (dict["message","type"].stringValue) == "offer" {
                 return
             }
+
+            // Ignore own echo (already added in sendChat). Prefer top-level "sender" (web format).
+            let myUserName = UserDefaultModule.shared.getUserData()?.userName ?? ""
+            let socketSender = dict["sender"].stringValue
+            let messageUserName = dict["message","userName"].stringValue
+            if !myUserName.isEmpty && (socketSender == myUserName || messageUserName == myUserName) {
+                print("Socket echo ignored (own message): \(dict["message","message"].stringValue)")
+                return
+            }
+
             let messageVal = MessageModel(chatTime: (dict["message","chatTime"].intValue), imageName: (dict["message","userImage"].stringValue), message: (dict["message","message"].stringValue), userImage: (dict["message","userImage"].stringValue), userName: (dict["message","userName"].stringValue), uploadImage: (dict["message","view_url"].string ?? dict["message","item_image"].stringValue), latitude:(dict["message","lat"].stringValue), longitude: (dict["message","lon"].stringValue), uploadAudio:(dict["message","view_url"].string ?? dict["message","item_image"].stringValue), image_url: (dict["message","view_url"].string ?? dict["message","item_image"].stringValue))
             
-            
-            let chatModel = ChildChatModel(type: (dict["message","type"].stringValue), receiver: (UserDefaultModule.shared.getUserData()?.userName ?? ""), sender: (ADMIN_VIEW_MODEL.profileModel?.result.userName ?? "") , message: messageVal, sourceID: (dict["message","offerId"].string ?? dict["message","offer_id"].stringValue), itemImage: (dict["message","view_url"].string ?? dict["message","item_image"].stringValue), itemTitle: (dict["message","view_url"].string ?? dict["message","item_image"].stringValue), audioDuration: "")
+            let otherUser = socketSender.isEmpty
+                ? (ADMIN_VIEW_MODEL.profileModel?.result.userName ?? "")
+                : socketSender
+            let chatModel = ChildChatModel(type: (dict["message","type"].stringValue), receiver: myUserName, sender: otherUser, message: messageVal, sourceID: (dict["message","offerId"].string ?? dict["message","offer_id"].stringValue), itemImage: (dict["message","view_url"].string ?? dict["message","item_image"].stringValue), itemTitle: (dict["message","view_url"].string ?? dict["message","item_image"].stringValue), audioDuration: "")
                 
                 
 

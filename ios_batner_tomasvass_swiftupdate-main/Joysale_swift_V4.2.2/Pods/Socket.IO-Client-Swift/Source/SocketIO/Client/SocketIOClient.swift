@@ -141,7 +141,7 @@ open class SocketIOClient : NSObject, SocketIOClientSpec {
         status = .connecting
 
         joinNamespace()
-
+        print("manager.status::\(manager.status)")
         if manager.status == .connected && nsp == "/" {
             // We might not get a connect event for the default nsp, fire immediately
             didConnect(toNamespace: nsp)

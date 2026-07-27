@@ -420,9 +420,10 @@ class StoryAllCollectionCell: UICollectionViewCell,UIScrollViewDelegate, UIGestu
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.contentView.bringSubviewToFront(self.collectionView)
-        self.likeLbl.config(color: UIColor(named: "SecondaryTextColor"), font: UIFont(name: APP_FONT_BOLD, size: 13), align: .center, text: "")
-        self.cmntLbl.config(color: UIColor(named: "SecondaryTextColor"), font: UIFont(name: APP_FONT_BOLD, size: 13), align: .center, text: "")
-        self.shareLbl.config(color: UIColor(named: "SecondaryTextColor"), font: UIFont(name: APP_FONT_BOLD, size: 13), align: .center, text: "share")
+        self.likeLbl.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_BOLD, size: 13), align: .center, text: "")
+        self.cmntLbl.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_BOLD, size: 13), align: .center, text: "")
+        self.shareLbl.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_BOLD, size: 13), align: .center, text: "share")
+        self.shareLbl.text = "\(getLanguage["share"] ?? "")"
         self.MoreBtnNew.config(color: UIColor(named: "AppThemeColorNew"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align: .left, title: "More")
         self.likeLbl.text = "1"
         print("likeLbl1")
@@ -449,15 +450,15 @@ class StoryAllCollectionCell: UICollectionViewCell,UIScrollViewDelegate, UIGestu
         self.adstatusView.backgroundColor = UIColor(named: "newurgentcolor")
         self.urgentstatusView.backgroundColor = UIColor(named: "newurgentcolor")
         
-        itemconditionlbl.contentEdgeInsets = .zero
-        itemconditionlbl.titleEdgeInsets = .zero
-        itemconditionlbl.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        itemconditionlbl.setContentCompressionResistancePriority(.required, for: .horizontal)
-        itemconditionlbl.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        itemconditionlbl.sizeToFit()
-       self.itemconditionlbl.layer.cornerRadius = 5
-//        itemconditionlbl.layer.cornerRadius = itemconditionlbl.frame.height / 1.5
-        self.itemconditionlbl.clipsToBounds = true
+//        itemconditionlbl.contentEdgeInsets = .zero
+//        itemconditionlbl.titleEdgeInsets = .zero
+//        itemconditionlbl.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+//        itemconditionlbl.setContentCompressionResistancePriority(.required, for: .horizontal)
+//        itemconditionlbl.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+//        itemconditionlbl.sizeToFit()
+//       self.itemconditionlbl.layer.cornerRadius = 5
+////        itemconditionlbl.layer.cornerRadius = itemconditionlbl.frame.height / 1.5
+//        self.itemconditionlbl.clipsToBounds = true
         self.itemconditionlbl.config(color: UIColor(named: "greencolortxt"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.center, title: "")
         //solai
         self.imagelistcv.register(UINib(nibName: "PhotocellCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "PhotocellCollectionViewCell")
@@ -493,10 +494,12 @@ class StoryAllCollectionCell: UICollectionViewCell,UIScrollViewDelegate, UIGestu
         self.buyNowButton.backgroundColor = UIColor(named: "ShadowGreen")
         self.chatButton.backgroundColor = UIColor(named: "ShadowGreen")
         self.chatButton.config(color: UIColor(named: "AppThemeColorNew"), font: UIFont(name: APP_FONT_REGULAR, size: 16), align: .center, title: "chat")
-        self.NewShareLbl.config(color: UIColor(named: "SecondaryTextColor"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.left, text: "share")
+        self.NewShareLbl.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.center, text: "share")
+        self.NewShareLbl.text = "\(getLanguage["share"] ?? "")"
         self.CallLbl.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.left, text: "Call")
         self.ExchageLbl.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.left, text: "Exchange")
-        self.MoreLbl.config(color: UIColor(named: "SecondaryTextColor"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.left, text: "More")
+        self.MoreLbl.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.center, text: "More")
+        self.MoreLbl.text = "\(getLanguage["More"] ?? "")"
 //        self.setTextViewPadding(self.DesTv, centerVertically: true)
         
         self.imageBtn.setTitle("", for: .normal)
@@ -589,6 +592,16 @@ class StoryAllCollectionCell: UICollectionViewCell,UIScrollViewDelegate, UIGestu
         itemconditionlbl.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         DaysCountLbl.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         Locationbtn.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        likeLbl.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        cmntLbl.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        shareLbl.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        NewShareLbl.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        MoreLbl.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        likeLbl.cornerViewMiniumRadiuslight()
+        cmntLbl.cornerViewMiniumRadiuslight()
+        shareLbl.cornerViewMiniumRadiuslight()
+        NewShareLbl.cornerViewMiniumRadiuslight()
+        MoreLbl.cornerViewMiniumRadiuslight()
         MoreViewCorner.clipsToBounds = true
         DaysCountLbl.clipsToBounds = true
         itemconditionlbl.clipsToBounds = true
@@ -718,6 +731,11 @@ class StoryAllCollectionCell: UICollectionViewCell,UIScrollViewDelegate, UIGestu
         itemconditionlbl.updateborder(color: UIColor.black, borderWidth: 1, radius: 5)
         layerview.updateborder(color: UIColor.black, borderWidth: 1, radius: 5)
         Locationbtn.updateborder(color: UIColor.black, borderWidth: 1, radius: 5)
+//        likeLbl.updateborder(color: UIColor.black, borderWidth: 1, radius: 5)
+//        cmntLbl.updateborder(color: UIColor.black, borderWidth: 1, radius: 5)
+//        shareLbl.updateborder(color: UIColor.black, borderWidth: 1, radius: 5)
+//        NewShareLbl.updateborder(color: UIColor.black, borderWidth: 1, radius: 5)
+//        MoreLbl.updateborder(color: UIColor.black, borderWidth: 1, radius: 5)
     }
 
     func setButton(playerData:StoryListModel){

@@ -60,10 +60,10 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Zm-Ux-Rze">
-                    <rect key="frame" x="10" y="156" width="30" height="30"/>
+                    <rect key="frame" x="13" y="156" width="33" height="33"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="detail_back 1" translatesAutoresizingMaskIntoConstraints="NO" id="13f-5q-oyg">
-                            <rect key="frame" x="5.5" y="7.5" width="15" height="15"/>
+                            <rect key="frame" x="7" y="9" width="15" height="15"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="15" id="0PJ-bL-HZx"/>
@@ -71,7 +71,7 @@
                             </constraints>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nvL-FX-y52">
-                            <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                            <rect key="frame" x="0.0" y="0.0" width="33" height="33"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="10" maxY="0.0"/>
@@ -88,10 +88,10 @@
                         <constraint firstAttribute="bottom" secondItem="nvL-FX-y52" secondAttribute="bottom" id="3Wd-DQ-52s"/>
                         <constraint firstAttribute="trailing" secondItem="nvL-FX-y52" secondAttribute="trailing" id="D14-Ho-Y1f"/>
                         <constraint firstItem="nvL-FX-y52" firstAttribute="leading" secondItem="3Zm-Ux-Rze" secondAttribute="leading" id="Gio-gv-uWQ"/>
-                        <constraint firstAttribute="width" constant="30" id="cno-gJ-u49"/>
+                        <constraint firstAttribute="width" constant="33" id="cno-gJ-u49"/>
                         <constraint firstItem="13f-5q-oyg" firstAttribute="centerY" secondItem="3Zm-Ux-Rze" secondAttribute="centerY" id="fk9-YE-Giw"/>
                         <constraint firstItem="13f-5q-oyg" firstAttribute="centerX" secondItem="3Zm-Ux-Rze" secondAttribute="centerX" constant="-2" id="oZV-tu-Tnp"/>
-                        <constraint firstAttribute="height" constant="30" id="vyc-rJ-GjE"/>
+                        <constraint firstAttribute="height" constant="33" id="vyc-rJ-GjE"/>
                         <constraint firstItem="nvL-FX-y52" firstAttribute="top" secondItem="3Zm-Ux-Rze" secondAttribute="top" id="yyL-yh-Y5r"/>
                     </constraints>
                 </view>
@@ -128,7 +128,7 @@
                 <constraint firstItem="bCu-BS-g1D" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="iiz-dT-sLR"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="fTS-yg-vjY" secondAttribute="trailing" id="jvg-h7-Q4v"/>
                 <constraint firstItem="fTS-yg-vjY" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ouv-Nz-8Iy"/>
-                <constraint firstItem="3Zm-Ux-Rze" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="po0-jK-okw"/>
+                <constraint firstItem="3Zm-Ux-Rze" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="13" id="po0-jK-okw"/>
                 <constraint firstItem="bCu-BS-g1D" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="uLc-yh-UaL"/>
                 <constraint firstItem="3Zm-Ux-Rze" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="60" id="up1-IF-zJ4"/>
                 <constraint firstItem="Ny0-YD-SQ4" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="vQT-Cp-oBP"/>
@@ -145,7 +145,7 @@
     </objects>
     <resources>
         <image name="ItemTransparentImg" width="251" height="76"/>
-        <image name="detail_back 1" width="24" height="24"/>
+        <image name="detail_back 1" width="42" height="42"/>
         <image name="product_no_videos" width="48" height="48"/>
         <image name="product_top_to_bottom" width="251" height="76"/>
         <namedColor name="clearcolor">

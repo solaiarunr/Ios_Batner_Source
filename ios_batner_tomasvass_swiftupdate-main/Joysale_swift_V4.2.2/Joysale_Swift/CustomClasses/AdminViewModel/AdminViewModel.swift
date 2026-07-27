@@ -39,7 +39,7 @@ class AdminViewModel {
                 EXCHANGE_MODEL_FLAG = ((self.adminModel?.result.exchange ?? "") == "disable") ? false : true
                 PAID_BANNER_FLAG = ((self.adminModel?.result.paidBanner ?? "") == "disable") ? false : true
                 EXCHANGE_MODEL_FLAG = ((self.adminModel?.result.exchange ?? "") == "disable") ? false : true
-                chatURL = UserDefaultModule.shared.getchaturl() ?? "https://batner.com:2087"
+                chatURL = UserDefaultModule.shared.getchaturl() ?? "https://batner.cz:2087"
 //                print("sdfw",chatURL)
                 BANNNER_ID = (self.adminModel?.result.googleAdsIos ?? "")
                 MAPBOXACCESSTOKEN = (self.adminModel?.result.mapboxToken ?? "")
