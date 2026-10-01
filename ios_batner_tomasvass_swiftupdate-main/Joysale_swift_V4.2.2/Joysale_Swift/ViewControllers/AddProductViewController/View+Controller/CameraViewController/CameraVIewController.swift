@@ -26,6 +26,8 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var previewView: UIView!
     let delegate = UIApplication.shared.delegate as! AppDelegate
     var captureSession: AVCaptureSession?
+    private var isViewVisible = false
+    private let sessionQueue = DispatchQueue(label: "com.joysale.camera.sessionQueue")
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     var capturePhotoOutput: AVCapturePhotoOutput?
     var qrCodeFrameView: UIView?
@@ -61,10 +63,15 @@ class CameraViewController: UIViewController {
     
    
     func stopCamera() {
-        captureSession?.stopRunning()
+        guard let session = captureSession else { return }
         captureSession = nil
+        sessionQueue.async {
+            session.stopRunning()
+        }
     }
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.isViewVisible = false
         self.motionManager.stopAccelerometerUpdates()
         self.stopCamera()
 
@@ -73,6 +80,7 @@ class CameraViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.isViewVisible = true
 
         self.updateTheme(page: "present")
         self.updateStatusbarBackgroundnew(Color: UIColor(named: "AddhemeColorNew")!)
@@ -84,7 +92,8 @@ class CameraViewController: UIViewController {
             // If it was torn down, set it up again
             self.moveToCamera()
         } else {
-            DispatchQueue.global(qos: .userInitiated).async {
+            sessionQueue.async { [weak self] in
+                guard let self = self, self.isViewVisible else { return }
                 self.captureSession?.startRunning()
             }
         }
@@ -226,7 +235,10 @@ class CameraViewController: UIViewController {
             videoPreviewLayer?.frame = self.previewView.bounds
             videoPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
             //start video capture
-            captureSession?.startRunning()
+            sessionQueue.async { [weak self] in
+                guard let self = self, self.isViewVisible else { return }
+                self.captureSession?.startRunning()
+            }
             videoPreviewLayer?.frame = self.previewView.bounds
 
             //Initialize QR Code Frame to highlight the QR code
@@ -412,7 +424,11 @@ class CameraViewController: UIViewController {
     }
     
     @IBAction func changeCameraButtonAct(_ sender: UIButton) {
-        captureSession?.stopRunning()
+        if let session = captureSession {
+            sessionQueue.async {
+                session.stopRunning()
+            }
+        }
         self.videoPreviewLayer?.removeFromSuperlayer()
         // Choose the back dual camera if available, otherwise default to a wide angle camera.
         if sender.tag == 1 {

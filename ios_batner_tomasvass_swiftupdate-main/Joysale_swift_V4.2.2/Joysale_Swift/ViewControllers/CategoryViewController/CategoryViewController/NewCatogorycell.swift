@@ -50,8 +50,17 @@ class NewCatogorycell: UICollectionViewCell {
                 completed: nil
             )
         }
+        if let index = index, index == 0 {
+            if  UserDefaultModule.shared.getAppLanguage() == "Czech"{
+                self.categoryNameLabel.text = getLanguage["all_category"]
+            }else{
+                self.categoryNameLabel.text = getLanguage["all_category"]
+            }
+        }else{
+            self.categoryNameLabel.text = categoryData.categoryName ?? ""
+        }
         
-        self.categoryNameLabel.text = categoryData.categoryName ?? ""
+       
         self.layoutIfNeeded()
     }
 

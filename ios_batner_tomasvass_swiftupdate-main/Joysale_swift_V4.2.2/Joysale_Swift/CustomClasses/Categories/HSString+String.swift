@@ -47,6 +47,15 @@ extension String {
             return false
         }
     }
+
+    /// Returns only the city/place name — text before the first comma.
+    var displayLocation: String {
+        let trimmed = trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let commaIndex = trimmed.firstIndex(of: ",") else {
+            return trimmed
+        }
+        return String(trimmed[..<commaIndex]).trimmingCharacters(in: .whitespacesAndNewlines)
+    }
 }
 extension Data {
     var html2AttributedString: NSAttributedString? {

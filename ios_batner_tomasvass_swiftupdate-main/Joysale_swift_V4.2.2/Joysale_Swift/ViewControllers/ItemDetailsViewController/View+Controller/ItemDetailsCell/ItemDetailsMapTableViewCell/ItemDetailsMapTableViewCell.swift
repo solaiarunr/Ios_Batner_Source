@@ -49,7 +49,7 @@ class ItemDetailsMapTableViewCell: UITableViewCell {
         self.userImageView.cornerViewRadius()
      }
     func loadData(_ itemDetails: ItemModel) {
-        self.locationLabel.text = itemDetails.location
+        self.locationLabel.text = itemDetails.location.displayLocation
         self.userNameLabel.text = itemDetails.sellerUsername
         self.userImageView.sd_setImage(with: URL(string: itemDetails.sellerImg), placeholderImage: #imageLiteral(resourceName: "applogo") , completed: nil)
         

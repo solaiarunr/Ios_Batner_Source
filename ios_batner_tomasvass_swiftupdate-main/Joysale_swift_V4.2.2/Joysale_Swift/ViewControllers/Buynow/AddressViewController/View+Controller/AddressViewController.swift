@@ -57,7 +57,7 @@ class AddressViewController: UIViewController {
         }
     }
     func configUI() {
-        self.addressModelArray.append(AddressModel(title: "nickname", desc: "Enter your name", value: ""))
+        self.addressModelArray.append(AddressModel(title: "newaddressname", desc: "enternewaddressname", value: ""))
         self.addressModelArray.append(AddressModel(title: "addressname", desc: "Enter your name", value: ""))
         self.addressModelArray.append(AddressModel(title: "addressone", desc: "Enter your address", value: ""))
         self.addressModelArray.append(AddressModel(title: "addresstwo", desc: "Enter your address", value: ""))
@@ -161,7 +161,7 @@ class AddressViewController: UIViewController {
          let zipCode = self.addressModelArray.filter({$0.title == "zipcode"}).first?.value ?? ""
          let mobileNo = self.addressModelArray.filter({$0.title == "mobileno"}).first?.value ?? ""
          
-         message = (userName == "") ? "please enter nick name" : ""
+         message = (userName == "") ? "please enter address name" : ""
          message = (userName.count < 3 && message == "") ? "please enter nick name atleast 3 characters" : message
          message = (firstName == "" && message == "") ? "please enter name" : message
          message = (firstName.count < 3 && message == "") ? "please enter name atleast 3 characters" : message

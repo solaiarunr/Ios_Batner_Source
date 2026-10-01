@@ -218,8 +218,11 @@ class StripeModel {
 
     var result : StripeResultModel!
     var status : Bool!
-    var url:String!
-    var returnurl:String!
+    var url: String!
+    var returnurl: String!
+    var accountId: String!
+    var verified: Bool!   // ← true = dashboard login link, false = onboarding link
+
     init(fromJson json: JSON!){
         if json.isEmpty{
             return
@@ -228,9 +231,11 @@ class StripeModel {
         if !resultJson.isEmpty{
             result = StripeResultModel(fromJson: resultJson)
         }
-        status = json["status"].boolValue
-        url = json["url"].stringValue
+        status    = json["status"].boolValue
+        url       = json["url"].stringValue
         returnurl = json["returnurl"].stringValue
+        accountId = json["accountId"].stringValue
+        verified  = json["verified"].boolValue
     }
 }
 class StripeResultModel {

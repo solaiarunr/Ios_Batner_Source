@@ -42,7 +42,7 @@ class InitialViewController: UIViewController{
     func configUI() {
 //        self.updateStatusbarBackgroundnew(Color: UIColor(named: "appcolor")!)
         self.navigationController?.isNavigationBarHidden = true
-        self.skipButton.config(color: UIColor(named: "AppTextColor"), font: UIFont(name: APP_FONT_REGULAR, size: 17), align: .right, title: "skip")
+        self.skipButton.config(color: UIColor(named: "AppTextColor"), font: UIFont(name: APP_FONT_REGULAR, size: 17), align: .right, title: "skipn")
         self.facebookButton.cornerMiniumRadius()
         self.googleButton.cornerMiniumRadius()
         self.appleButton.cornerMiniumRadius()

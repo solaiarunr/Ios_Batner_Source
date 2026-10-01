@@ -203,10 +203,6 @@
 		4052CEB7248E30B00086AC85 /* HSImgView+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052CEAC248E30AF0086AC85 /* HSImgView+UIImageView.swift */; };
 		4052CEB8248E30B00086AC85 /* HSInterval+TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052CEAD248E30AF0086AC85 /* HSInterval+TimeInterval.swift */; };
 		4052CEBB248E49D40086AC85 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052CEBA248E49D40086AC85 /* Utility.swift */; };
-		F1BASE0082F0000100567B32 /* Bundle+FirebaseAuthLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BASE0072F0000100567B32 /* Bundle+FirebaseAuthLanguage.swift */; };
-		F1BASE0092F0000100567B32 /* StripePaymentLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BASE00A2F0000100567B32 /* StripePaymentLanguage.swift */; };
-		F1BASE0052F0000100567B32 /* FirebasePhoneAuthUI.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1BASE0032F0000100567B32 /* FirebasePhoneAuthUI.strings */; };
-		F1BASE0062F0000100567B32 /* FirebaseAuthUI.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1BASE0042F0000100567B32 /* FirebaseAuthUI.strings */; };
 		4052CEBD248E621C0086AC85 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4052CEBC248E621C0086AC85 /* WebKit.framework */; };
 		4052CEC1248E67190086AC85 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052CEC0248E67190086AC85 /* AuthenticationViewModel.swift */; };
 		40534C3A24D0468700258633 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40534C3924D0468700258633 /* SafariServices.framework */; };
@@ -330,8 +326,6 @@
 		B61D5B802D79714500F5EDD3 /* CountryPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61D5B7A2D79714500F5EDD3 /* CountryPickerView.swift */; };
 		B61D5B812D79714500F5EDD3 /* CountryPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B61D5B7B2D79714500F5EDD3 /* CountryPickerView.xib */; };
 		B61D73A42E015C4B00927C42 /* MapboxMaps in Frameworks */ = {isa = PBXBuildFile; productRef = B61D73A32E015C4B00927C42 /* MapboxMaps */; };
-		B6281E7A2ED82BA500F8452A /* PremiumPromoVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6281E792ED82BA500F8452A /* PremiumPromoVc.xib */; };
-		B6281E7B2ED82BA500F8452A /* PremiumPromoVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6281E782ED82BA500F8452A /* PremiumPromoVc.swift */; };
 		B64816E52DC487FE00CBA377 /* MapboxMaps in Frameworks */ = {isa = PBXBuildFile; productRef = B64816E42DC487FE00CBA377 /* MapboxMaps */; };
 		B64ADA152E585B370092E731 /* AddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B64AD9E92E585B370092E731 /* AddressTableViewCell.xib */; };
 		B64ADA162E585B370092E731 /* MyOrderSalesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B64ADA042E585B370092E731 /* MyOrderSalesViewController.xib */; };
@@ -439,6 +433,8 @@
 		B6F5773D2D81871F00BD4AEF /* ThemeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6F577392D81871F00BD4AEF /* ThemeViewController.xib */; };
 		B6F577402D81BA9E00BD4AEF /* NewCatogorycell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F5773E2D81BA9E00BD4AEF /* NewCatogorycell.swift */; };
 		B6F577412D81BA9E00BD4AEF /* NewCatogorycell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6F5773F2D81BA9E00BD4AEF /* NewCatogorycell.xib */; };
+		B6FC05283023070100260700 /* PremiumPromoVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FC05263023070100260700 /* PremiumPromoVc.swift */; };
+		B6FC05293023070100260700 /* PremiumPromoVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6FC05273023070100260700 /* PremiumPromoVc.xib */; };
 		B6FE1A882FAC76B400F080FA /* Czech.json in Resources */ = {isa = PBXBuildFile; fileRef = B6FE1A832FAC76B400F080FA /* Czech.json */; };
 		B6FE1A892FAC76B400F080FA /* Polish.json in Resources */ = {isa = PBXBuildFile; fileRef = B6FE1A852FAC76B400F080FA /* Polish.json */; };
 		B6FE1A8A2FAC76B400F080FA /* English.json in Resources */ = {isa = PBXBuildFile; fileRef = B6FE1A842FAC76B400F080FA /* English.json */; };
@@ -448,6 +444,10 @@
 		ED7DEAD42DD31DCB007E93A6 /* DescriptionPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7DEAD12DD31DCB007E93A6 /* DescriptionPopupVC.swift */; };
 		ED7DEAD52DD31DCB007E93A6 /* DescriptionPopupVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED7DEAD22DD31DCB007E93A6 /* DescriptionPopupVC.xib */; };
 		ED8EF6BC2DCF850200EB62AC /* Carbon_Kit_Swift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ED8EF6BA2DCF850200EB62AC /* Carbon_Kit_Swift.xcdatamodeld */; };
+		F1BASE0052F0000100567B32 /* FirebasePhoneAuthUI.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1BASE0032F0000100567B32 /* FirebasePhoneAuthUI.strings */; };
+		F1BASE0062F0000100567B32 /* FirebaseAuthUI.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1BASE0042F0000100567B32 /* FirebaseAuthUI.strings */; };
+		F1BASE0082F0000100567B32 /* Bundle+FirebaseAuthLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BASE0072F0000100567B32 /* Bundle+FirebaseAuthLanguage.swift */; };
+		F1BASE0092F0000100567B32 /* StripePaymentLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BASE00A2F0000100567B32 /* StripePaymentLanguage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -699,10 +699,6 @@
 		4052CEAC248E30AF0086AC85 /* HSImgView+UIImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HSImgView+UIImageView.swift"; sourceTree = "<group>"; };
 		4052CEAD248E30AF0086AC85 /* HSInterval+TimeInterval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HSInterval+TimeInterval.swift"; sourceTree = "<group>"; };
 		4052CEBA248E49D40086AC85 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
-		F1BASE0072F0000100567B32 /* Bundle+FirebaseAuthLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+FirebaseAuthLanguage.swift"; sourceTree = "<group>"; };
-		F1BASE00A2F0000100567B32 /* StripePaymentLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripePaymentLanguage.swift; sourceTree = "<group>"; };
-		F1BASE0032F0000100567B32 /* FirebasePhoneAuthUI.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = FirebasePhoneAuthUI.strings; sourceTree = "<group>"; };
-		F1BASE0042F0000100567B32 /* FirebaseAuthUI.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = FirebaseAuthUI.strings; sourceTree = "<group>"; };
 		4052CEBC248E621C0086AC85 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		4052CEC0248E67190086AC85 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		40534C3924D0468700258633 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
@@ -828,8 +824,6 @@
 		B61D5B782D79714500F5EDD3 /* CountryList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CountryList.plist; sourceTree = "<group>"; };
 		B61D5B7A2D79714500F5EDD3 /* CountryPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryPickerView.swift; sourceTree = "<group>"; };
 		B61D5B7B2D79714500F5EDD3 /* CountryPickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryPickerView.xib; sourceTree = "<group>"; };
-		B6281E782ED82BA500F8452A /* PremiumPromoVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumPromoVc.swift; sourceTree = "<group>"; };
-		B6281E792ED82BA500F8452A /* PremiumPromoVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PremiumPromoVc.xib; sourceTree = "<group>"; };
 		B644B9A92F24BD9C0004715D /* Joysale_SwiftRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Joysale_SwiftRelease.entitlements; sourceTree = "<group>"; };
 		B64AD9DE2E585B370092E731 /* AddressListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressListTableViewCell.swift; sourceTree = "<group>"; };
 		B64AD9DF2E585B370092E731 /* AddressListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressListTableViewCell.xib; sourceTree = "<group>"; };
@@ -942,6 +936,8 @@
 		B6F577392D81871F00BD4AEF /* ThemeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ThemeViewController.xib; sourceTree = "<group>"; };
 		B6F5773E2D81BA9E00BD4AEF /* NewCatogorycell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCatogorycell.swift; sourceTree = "<group>"; };
 		B6F5773F2D81BA9E00BD4AEF /* NewCatogorycell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewCatogorycell.xib; sourceTree = "<group>"; };
+		B6FC05263023070100260700 /* PremiumPromoVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumPromoVc.swift; sourceTree = "<group>"; };
+		B6FC05273023070100260700 /* PremiumPromoVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PremiumPromoVc.xib; sourceTree = "<group>"; };
 		B6FE1A832FAC76B400F080FA /* Czech.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Czech.json; sourceTree = "<group>"; };
 		B6FE1A842FAC76B400F080FA /* English.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = English.json; sourceTree = "<group>"; };
 		B6FE1A852FAC76B400F080FA /* Polish.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Polish.json; sourceTree = "<group>"; };
@@ -951,6 +947,10 @@
 		ED7DEAD12DD31DCB007E93A6 /* DescriptionPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionPopupVC.swift; sourceTree = "<group>"; };
 		ED7DEAD22DD31DCB007E93A6 /* DescriptionPopupVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DescriptionPopupVC.xib; sourceTree = "<group>"; };
 		ED8EF6BB2DCF850200EB62AC /* Carbon_Kit_Swift.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Carbon_Kit_Swift.xcdatamodel; sourceTree = "<group>"; };
+		F1BASE0032F0000100567B32 /* FirebasePhoneAuthUI.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = FirebasePhoneAuthUI.strings; sourceTree = "<group>"; };
+		F1BASE0042F0000100567B32 /* FirebaseAuthUI.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = FirebaseAuthUI.strings; sourceTree = "<group>"; };
+		F1BASE0072F0000100567B32 /* Bundle+FirebaseAuthLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+FirebaseAuthLanguage.swift"; sourceTree = "<group>"; };
+		F1BASE00A2F0000100567B32 /* StripePaymentLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripePaymentLanguage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -1634,15 +1634,15 @@
 		403CFF9124C0228200DFD34C /* NotificationTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				B6FC05263023070100260700 /* PremiumPromoVc.swift */,
+				B6FC05273023070100260700 /* PremiumPromoVc.xib */,
+				B610E7772EBDC4C70000BF9E /* PreAdcellTableViewCell.swift */,
+				B610E7782EBDC4C70000BF9E /* PreAdcellTableViewCell.xib */,
 				403CFF9224C0229900DFD34C /* NotificationTableViewCell.swift */,
 				403CFF9324C0229900DFD34C /* NotificationTableViewCell.xib */,
-				B6281E782ED82BA500F8452A /* PremiumPromoVc.swift */,
-				B6281E792ED82BA500F8452A /* PremiumPromoVc.xib */,
 				B610E7732EBDC2080000BF9E /* PremiumAdvc.swift */,
 				B610E77B2EBDD6D30000BF9E /* PremiumAdModel.swift */,
 				B610E77D2EBDD7250000BF9E /* PremiumAdViewModel.swift */,
-				B610E7772EBDC4C70000BF9E /* PreAdcellTableViewCell.swift */,
-				B610E7782EBDC4C70000BF9E /* PreAdcellTableViewCell.xib */,
 				B610E7742EBDC2080000BF9E /* PremiumAdvc.xib */,
 			);
 			path = NotificationTableViewCell;
@@ -2142,23 +2142,6 @@
 				40584BE3248B805400E0243B /* Fonts */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		F1BASE0012F0000100567B32 /* FirebaseAuth */ = {
-			isa = PBXGroup;
-			children = (
-				F1BASE0022F0000100567B32 /* cs.lproj */,
-			);
-			path = FirebaseAuth;
-			sourceTree = "<group>";
-		};
-		F1BASE0022F0000100567B32 /* cs.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				F1BASE0032F0000100567B32 /* FirebasePhoneAuthUI.strings */,
-				F1BASE0042F0000100567B32 /* FirebaseAuthUI.strings */,
-			);
-			path = cs.lproj;
 			sourceTree = "<group>";
 		};
 		40584BE0248B803300E0243B /* ColorAssets */ = {
@@ -3297,6 +3280,23 @@
 			path = DescriptionPopupVC;
 			sourceTree = "<group>";
 		};
+		F1BASE0012F0000100567B32 /* FirebaseAuth */ = {
+			isa = PBXGroup;
+			children = (
+				F1BASE0022F0000100567B32 /* cs.lproj */,
+			);
+			path = FirebaseAuth;
+			sourceTree = "<group>";
+		};
+		F1BASE0022F0000100567B32 /* cs.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				F1BASE0032F0000100567B32 /* FirebasePhoneAuthUI.strings */,
+				F1BASE0042F0000100567B32 /* FirebaseAuthUI.strings */,
+			);
+			path = cs.lproj;
+			sourceTree = "<group>";
+		};
 		FAF1BCBB28EB08FD00B4741C /* MapBoxAddon */ = {
 			isa = PBXGroup;
 			children = (
@@ -3396,6 +3396,7 @@
 				B69E2FE22D9130C100567B32 /* filter_sample_image.jpg in Resources */,
 				4026B2912494E1F500AD4B1C /* FilterHeaderTableViewCell.xib in Resources */,
 				407B14B824C0943A00B21103 /* BannerListTableViewCell.xib in Resources */,
+				B6FC05293023070100260700 /* PremiumPromoVc.xib in Resources */,
 				B6A13ECA2DA8F15D00B96762 /* StoryAllList.xib in Resources */,
 				40E467F624EBDF6D00802AB9 /* AudioTableViewCell.xib in Resources */,
 				40381C4624C558FC00884ED2 /* MyPromotionViewController.xib in Resources */,
@@ -3541,7 +3542,6 @@
 				B69E2FEA2D9130C100567B32 /* Promote.json in Resources */,
 				189DB0242754C425003948D6 /* mozart.mp3 in Resources */,
 				189DB0202754C425003948D6 /* iPhone6p@3x.png in Resources */,
-				B6281E7A2ED82BA500F8452A /* PremiumPromoVc.xib in Resources */,
 				4022469024B079D800788177 /* HelpTableViewCell.xib in Resources */,
 				4020963C24A0700D00CD3623 /* ItemDetailsTableViewCell.xib in Resources */,
 				4026B28C2494E1A400AD4B1C /* FilterTableViewCell.xib in Resources */,
@@ -3688,7 +3688,6 @@
 				4034F9C224AF1D2F001BE520 /* ChatListModel.swift in Sources */,
 				4052CEB6248E30B00086AC85 /* HSColor+UIColor.swift in Sources */,
 				ED7DEAD42DD31DCB007E93A6 /* DescriptionPopupVC.swift in Sources */,
-				B6281E7B2ED82BA500F8452A /* PremiumPromoVc.swift in Sources */,
 				189DB0352754C425003948D6 /* RTCIceServer+JSON.m in Sources */,
 				B660D7EF2E6061D1002A4B58 /* PaystackViewController.swift in Sources */,
 				407B14BA24C0974D00B21103 /* BannerHistoryModel.swift in Sources */,
@@ -3842,6 +3841,7 @@
 				189DB0332754C425003948D6 /* ARDSignalingMessage.m in Sources */,
 				406027A32492287A00719206 /* ProfileViewController.swift in Sources */,
 				B69E2FF62D9130C100567B32 /* UIScrollView+APParallaxHeader.m in Sources */,
+				B6FC05283023070100260700 /* PremiumPromoVc.swift in Sources */,
 				B69E2FAC2D912D6D00567B32 /* CameraVC.swift in Sources */,
 				189DB0372754C425003948D6 /* ARDUtilities.m in Sources */,
 				B610E77E2EBDD7440000BF9E /* PremiumAdViewModel.swift in Sources */,
@@ -4066,7 +4066,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.10;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.app.batner;
 				PRODUCT_NAME = Batner;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4099,7 +4099,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.10;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.app.batner;
 				PRODUCT_NAME = Batner;
 				PROVISIONING_PROFILE_SPECIFIER = "";

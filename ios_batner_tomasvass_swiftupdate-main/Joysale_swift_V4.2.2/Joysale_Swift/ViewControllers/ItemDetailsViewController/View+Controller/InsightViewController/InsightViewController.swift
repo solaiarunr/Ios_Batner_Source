@@ -11,7 +11,6 @@ import Charts
 
 
 class InsightViewController: UIViewController {
-
     @IBOutlet weak var setLabel: UILabel!
     @IBOutlet weak var setView: UIView!
     @IBOutlet weak var chartView: LineChartView!

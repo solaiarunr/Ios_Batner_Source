@@ -34,6 +34,9 @@ class PromotionHeaderTableViewCell: UITableViewHeaderFooterView {
         self.promotion3Label.config(color: UIColor(named: "AppTextColor"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align: .left, text: "")
         self.promotion4Label.config(color: UIColor(named: "AppTextColor"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align: .left, text: "")
         self.statusButton.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align: .center, title: "")
+        
+        self.promotionTitleLabel.numberOfLines = 0
+        self.promotionTitleLabel.lineBreakMode = .byWordWrapping
     }
     func loadHeaderData(viewTag: Int) {
         self.promotionTitleLabel.config(color: UIColor(named: "AppTextColor"), font: UIFont(name: APP_FONT_REGULAR, size: 17), align: .center, text: "")

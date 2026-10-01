@@ -34,12 +34,9 @@ class InsightsTableViewCell: UITableViewCell {
         // Initialization code
     }
     func configUI() {
-//        progressBar.transform = progressBar.transform.scaledBy(x: 1, y: 8)
         progressBar.progress = 0.0
         progressBar.layer.cornerRadius = 5
         progressBar.clipsToBounds = true
-        progressBar.layer.sublayers![1].cornerRadius = 5
-        progressBar.subviews[1].clipsToBounds = true
         
         self.popularLabel.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_BOLD, size: 18), align: .left, text: "popularity_low")
         self.popularButton.config(color: UIColor(named: "appblackcolor"), font: UIFont(name: APP_FONT_BOLD, size: 16), align: .center, title: "promote")
@@ -203,10 +200,10 @@ class InsightsTableViewCell: UITableViewCell {
     }
 override func layoutSubviews() {
     super.layoutSubviews()
-//    self.progressBar.subviews.forEach { subview in
-//        subview.layer.masksToBounds = true
-//        subview.layer.cornerRadius = 5
-//    }
+    self.progressBar.subviews.forEach { subview in
+        subview.layer.masksToBounds = true
+        subview.layer.cornerRadius = 5
+    }
 }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

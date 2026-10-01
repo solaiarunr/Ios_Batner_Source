@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="balbtn" destination="L7F-aq-F5B" id="czN-Nc-L2q"/>
                 <outlet property="changecodeview" destination="0U1-mY-VbY" id="1t6-6x-4Na"/>
+                <outlet property="contentView" destination="uTq-Pu-d5a" id="a8K-pL-mN2"/>
                 <outlet property="copybtn" destination="QdX-vB-idU" id="r1q-Os-USz"/>
                 <outlet property="credit1point" destination="wxU-5f-SQK" id="2X1-4j-iGi"/>
                 <outlet property="credit2point" destination="87n-93-haw" id="9yW-Ya-rM6"/>
@@ -28,6 +29,7 @@
                 <outlet property="referalLbl" destination="qVR-in-I2H" id="p6u-wG-C8z"/>
                 <outlet property="referaldes" destination="46E-hT-Bw6" id="fpY-Pk-gal"/>
                 <outlet property="refferaltxt" destination="Uo3-SA-SyP" id="6f2-zd-ljZ"/>
+                <outlet property="scrollView" destination="WDH-7L-ucr" id="b7R-sV-kL1"/>
                 <outlet property="topview" destination="ued-Ap-q7l" id="geD-zW-gSO"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="yourcreditlbl" destination="upl-kM-aK7" id="tUI-8g-T1N"/>
@@ -51,7 +53,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ued-Ap-q7l">
                                             <rect key="frame" x="35" y="10.000000000000007" width="344" height="120.66666666666669"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="upl-kM-aK7">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="upl-kM-aK7" customClass="WrappingLabel" customModule="Batner" customModuleProvider="target">
                                                     <rect key="frame" x="10" y="9.9999999999999982" width="324" height="20.333333333333329"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -65,7 +67,7 @@
                                                     <inset key="contentEdgeInsets" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dN8-4U-zHg">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dN8-4U-zHg" customClass="WrappingLabel" customModule="Batner" customModuleProvider="target">
                                                     <rect key="frame" x="10" y="90.333333333333329" width="324" height="20.333333333333329"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -84,16 +86,16 @@
                                                 <constraint firstItem="L7F-aq-F5B" firstAttribute="centerX" secondItem="ued-Ap-q7l" secondAttribute="centerX" id="zSI-aw-1UQ"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kKt-mM-5mB">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kKt-mM-5mB" customClass="WrappingLabel" customModule="Batner" customModuleProvider="target">
                                             <rect key="frame" x="10" y="145.66666666666666" width="41.333333333333336" height="20.333333333333343"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Vem-na-yng">
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Vem-na-yng">
                                             <rect key="frame" x="10" y="176" width="394" height="111.33333333333331"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="p2p-MH-W25">
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="p2p-MH-W25">
                                                     <rect key="frame" x="0.0" y="0.0" width="394" height="20.333333333333332"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tick-red" translatesAutoresizingMaskIntoConstraints="NO" id="oZf-bj-Ao8">
@@ -103,18 +105,15 @@
                                                                 <constraint firstAttribute="width" constant="10" id="kfp-z4-qJb"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wxU-5f-SQK">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wxU-5f-SQK" customClass="WrappingLabel" customModule="Batner" customModuleProvider="target">
                                                             <rect key="frame" x="20" y="0.0" width="374" height="20.333333333333332"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <constraints>
-                                                        <constraint firstItem="wxU-5f-SQK" firstAttribute="top" secondItem="p2p-MH-W25" secondAttribute="top" id="v3w-2f-Jv9"/>
-                                                    </constraints>
                                                 </stackView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="wk7-Fz-q4K">
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="wk7-Fz-q4K">
                                                     <rect key="frame" x="0.0" y="30.333333333333343" width="394" height="20.333333333333329"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tick-red" translatesAutoresizingMaskIntoConstraints="NO" id="sEG-ZK-BF6">
@@ -124,18 +123,15 @@
                                                                 <constraint firstAttribute="width" constant="10" id="akh-LR-Mot"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="87n-93-haw">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="87n-93-haw" customClass="WrappingLabel" customModule="Batner" customModuleProvider="target">
                                                             <rect key="frame" x="20" y="0.0" width="374" height="20.333333333333332"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <constraints>
-                                                        <constraint firstItem="87n-93-haw" firstAttribute="top" secondItem="wk7-Fz-q4K" secondAttribute="top" id="GlX-8h-FQz"/>
-                                                    </constraints>
                                                 </stackView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="51V-TC-EZe">
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="51V-TC-EZe">
                                                     <rect key="frame" x="0.0" y="60.666666666666693" width="394" height="20.333333333333336"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tick-red" translatesAutoresizingMaskIntoConstraints="NO" id="DEH-BJ-Rfi">
@@ -145,18 +141,15 @@
                                                                 <constraint firstAttribute="height" constant="10" id="hpT-MI-Jcz"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AYD-a0-JjO">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AYD-a0-JjO" customClass="WrappingLabel" customModule="Batner" customModuleProvider="target">
                                                             <rect key="frame" x="20" y="0.0" width="374" height="20.333333333333332"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <constraints>
-                                                        <constraint firstItem="AYD-a0-JjO" firstAttribute="top" secondItem="51V-TC-EZe" secondAttribute="top" id="4EU-RR-gZg"/>
-                                                    </constraints>
                                                 </stackView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="qvI-lm-wCj">
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="qvI-lm-wCj">
                                                     <rect key="frame" x="0.0" y="91" width="394" height="20.333333333333329"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tick-red" translatesAutoresizingMaskIntoConstraints="NO" id="gV8-Pq-tk3">
@@ -166,29 +159,26 @@
                                                                 <constraint firstAttribute="width" constant="10" id="uSz-ux-E4b"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="htO-mg-rYj">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="htO-mg-rYj" customClass="WrappingLabel" customModule="Batner" customModuleProvider="target">
                                                             <rect key="frame" x="20" y="0.0" width="374" height="20.333333333333332"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <constraints>
-                                                        <constraint firstItem="htO-mg-rYj" firstAttribute="top" secondItem="qvI-lm-wCj" secondAttribute="top" id="eNb-JM-NpN"/>
-                                                    </constraints>
                                                 </stackView>
                                             </subviews>
                                         </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="bKK-zk-Nql">
                                             <rect key="frame" x="10" y="327.33333333333331" width="394" height="201.33333333333331"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gjT-YJ-Ya2">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gjT-YJ-Ya2" customClass="WrappingLabel" customModule="Batner" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="394" height="20.333333333333332"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ve9-dm-s2m">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ve9-dm-s2m" customClass="WrappingLabel" customModule="Batner" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="30.333333333333371" width="394" height="20.333333333333329"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -200,7 +190,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bip-Ti-6tm">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bip-Ti-6tm" customClass="WrappingLabel" customModule="Batner" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="91" width="394" height="20.333333333333329"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -262,13 +252,13 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="xcm-CT-hcD">
                                             <rect key="frame" x="10" y="568.66666666666663" width="394" height="180.66666666666663"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qVR-in-I2H">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qVR-in-I2H" customClass="WrappingLabel" customModule="Batner" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="394" height="20.333333333333332"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="46E-hT-Bw6">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="46E-hT-Bw6" customClass="WrappingLabel" customModule="Batner" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="30.333333333333371" width="394" height="20.333333333333329"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -321,6 +311,7 @@
                                         <constraint firstAttribute="bottom" secondItem="xcm-CT-hcD" secondAttribute="bottom" constant="60" id="Fid-jZ-6v9"/>
                                         <constraint firstItem="xcm-CT-hcD" firstAttribute="leading" secondItem="uTq-Pu-d5a" secondAttribute="leading" constant="10" id="P6k-Nn-XKU"/>
                                         <constraint firstItem="kKt-mM-5mB" firstAttribute="leading" secondItem="uTq-Pu-d5a" secondAttribute="leading" constant="10" id="VSD-1k-7ug"/>
+                                        <constraint firstAttribute="trailing" secondItem="kKt-mM-5mB" secondAttribute="trailing" constant="10" id="hKw-3m-T9x"/>
                                         <constraint firstItem="ued-Ap-q7l" firstAttribute="leading" secondItem="uTq-Pu-d5a" secondAttribute="leading" constant="35" id="XQu-Ho-efH"/>
                                         <constraint firstItem="xcm-CT-hcD" firstAttribute="top" secondItem="bKK-zk-Nql" secondAttribute="bottom" constant="40" id="ati-JS-Sua"/>
                                         <constraint firstItem="Vem-na-yng" firstAttribute="leading" secondItem="uTq-Pu-d5a" secondAttribute="leading" constant="10" id="c3B-Qa-1Ri"/>
@@ -336,7 +327,6 @@
                                 </view>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="uTq-Pu-d5a" firstAttribute="height" secondItem="WDH-7L-ucr" secondAttribute="height" multiplier="0.988827" priority="250" constant="400" id="2BO-1p-yKa"/>
                                 <constraint firstItem="uTq-Pu-d5a" firstAttribute="width" secondItem="WDH-7L-ucr" secondAttribute="width" id="4QD-TJ-x42"/>
                                 <constraint firstAttribute="bottom" secondItem="uTq-Pu-d5a" secondAttribute="bottom" id="H1L-Co-Nza"/>
                                 <constraint firstAttribute="trailing" secondItem="uTq-Pu-d5a" secondAttribute="trailing" id="QRA-zb-cGe"/>

@@ -55,7 +55,7 @@ class ItemDetailsViewController: UIViewController,UITextViewDelegate,MoreDelegat
     @IBOutlet weak var itemconditionlbl: UIButton!
     @IBOutlet weak var Locationbtn: UIButton!
     @IBOutlet weak var prroducttitlename: UILabel!
-    @IBOutlet weak var prroductprice: UILabel!
+    @IBOutlet weak var prroductprice: PaddingLabel!
     @IBOutlet weak var DaysCountLbl: UILabel!
     @IBOutlet weak var Profileimageview: UIImageView!
     @IBOutlet weak var Newlikebtn: UIButton!
@@ -363,7 +363,14 @@ class ItemDetailsViewController: UIViewController,UITextViewDelegate,MoreDelegat
         self.Profileimageview.roundedImage()
         self.itemconditionlbl.config(color: UIColor(named: "greencolortxt"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.center, title: "")
         self.prroducttitlename.config(color: UIColor(named: "greencolortxt"), font: UIFont(name: APP_FONT_BOLD, size: 14), align:.left, text: "")
-        self.prroductprice.config(color: UIColor(named: "greencolortxt"), font: UIFont(name: APP_FONT_BOLD, size: 20), align:.left, text: "")
+        self.prroductprice.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_BOLD, size: 14), align:.center, text: "")
+        self.prroductprice.leftInset = 10
+        self.prroductprice.rightInset = 10
+        self.prroductprice.topInset = 4
+        self.prroductprice.bottomInset = 4
+        self.prroductprice.layer.cornerRadius = 5
+        self.prroductprice.clipsToBounds = true
+        self.prroductprice.backgroundColor = UIColor(named: "AppThemeColorNew")
         self.Locationbtn.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.center, title: "")
 //                self.DaysCountLbl.config(color: UIColor(named: "greencolorbold"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.left, text: "")
         self.NewlikecountLbl.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.left, text: "")
@@ -954,11 +961,23 @@ class ItemDetailsViewController: UIViewController,UITextViewDelegate,MoreDelegat
                         print("asdfsdgjh",itemModel.publisher_id ?? "")
                         self.itemDetails?.productUrl = productURL
                         self.itemDetails?.formattedTotalPrice = totalPrice
-                        self.itemconditionlbl.setTitle(self.itemDetails?.itemCondition, for: .normal)
-                        self.Locationbtn.setTitle(self.itemDetails?.location, for: .normal)
+                        let cleanCondition = (self.itemDetails?.itemCondition ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+                        if !cleanCondition.isEmpty,
+                           cleanCondition != "0",
+                           cleanCondition.lowercased() != "null",
+                           cleanCondition.lowercased() != "(null)",
+                           cleanCondition.lowercased() != "<null>",
+                           cleanCondition.lowercased() != "json error" {
+                            self.itemconditionlbl.isHidden = false
+                            self.itemconditionlbl.setTitle(cleanCondition, for: .normal)
+                            self.itemconditionlbl.sizeToFit()
+                        } else {
+                            self.itemconditionlbl.isHidden = true
+                        }
+                        self.Locationbtn.setTitle(self.itemDetails?.location?.displayLocation, for: .normal)
                         self.prroducttitlename.text  = self.itemDetails?.itemTitle
+                        self.prroductprice.textColor = UIColor(named: "whitecolor")
                         if self.itemDetails?.totalPrice == 0 {
-                            self.prroductprice.textColor  = UIColor(named: "AppThemeColorNew")
                             self.prroductprice.text = "Giving away"
                         }else{
                             self.prroductprice.text = self.itemDetails?.formattedPrice

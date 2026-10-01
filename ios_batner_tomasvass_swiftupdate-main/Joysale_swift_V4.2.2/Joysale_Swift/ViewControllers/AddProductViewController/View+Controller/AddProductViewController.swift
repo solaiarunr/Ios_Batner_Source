@@ -422,6 +422,24 @@ var thumb  = ""
             }
 
             group.notify(queue: .main) {
+                // Validate lat/lon before proceeding
+                let lat = ADD_EDIT_ITEM_MODEL.lat.trimmingCharacters(in: .whitespacesAndNewlines)
+                let lon = ADD_EDIT_ITEM_MODEL.lon.trimmingCharacters(in: .whitespacesAndNewlines)
+
+                guard !lat.isEmpty, !lon.isEmpty else {
+                    // Reset posting flag and re-enable button
+                    self.isPosting = false
+                    self.postButton.isUserInteractionEnabled = true
+                    self.postButton.alpha = 1.0
+
+                    let locationMsg = getLanguage["set_your_location"] ?? "set_your_location"
+                    let alert = UIAlertController(title: nil, message: locationMsg, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: getLanguage["ok"] ?? "OK", style: .cancel, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                    alert.view.tintColor = UIColor(named: "DefaultBoxClr")
+                    return
+                }
+
                 self.postButton.isUserInteractionEnabled = false
                 if self.isskip == "image" {
                     self.uploadImageToCamerViaServer()
@@ -439,13 +457,9 @@ var thumb  = ""
     }
     
     func enablePostButton() {
-
            DispatchQueue.main.async {
-
                self.isPosting = false
-
                self.postButton.isUserInteractionEnabled = true
-
                self.postButton.alpha = 1.0
            }
        }

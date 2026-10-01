@@ -238,8 +238,8 @@ class SocketIOManager: NSObject {
                 "receiver": otherUserName,
                 "sender": myUserName,
                 // Original mobile format (required by Node join rooms)
-                "receiverId": myUserName,
-                "senderId": otherUserName,
+                "receiverId": otherUserName,
+                "senderId": myUserName,
                 "offerId": offerValue,
                 "type": type
             ]
@@ -261,7 +261,7 @@ class SocketIOManager: NSObject {
         }
     }
 
-    func messageTyping(message: String, senderId: String, exchage_type: Bool, sourceId: String = "") {
+    func messageTypingol(message: String, senderId: String, exchage_type: Bool, sourceId: String = "") {
         let myUserName = UserDefaultModule.shared.getUserData()?.userName ?? ""
         let otherUserName = senderId
         var msgDict: [String : Any] = [
@@ -279,6 +279,20 @@ class SocketIOManager: NSObject {
         else {
             msgDict["sourceId"] = sourceId
             self.socket.emit(EX_MESSAGE_TYPING_EMIT, msgDict)
+        }
+    }
+    
+    
+    func messageTyping(message: String, senderId: String, exchage_type: Bool, sourceId: String = "") {
+        var msgDict: [String : Any] = ["message": message, "receiverId":senderId , "senderId": (UserDefaultModule.shared.getUserData()?.userName ?? "")]
+        if !exchage_type {
+            self.socket.emit(MESSAGE_TYPING_EMIT, msgDict)
+//            self.socket.defaultSocket.emit(MESSAGE_TYPING_EMIT, msgDict)
+        }
+        else {
+            msgDict["sourceId"] = sourceId
+            self.socket.emit(EX_MESSAGE_TYPING_EMIT, msgDict)
+//            socket.defaultSocket.emit(EX_MESSAGE_TYPING_EMIT, msgDict)
         }
     }
 

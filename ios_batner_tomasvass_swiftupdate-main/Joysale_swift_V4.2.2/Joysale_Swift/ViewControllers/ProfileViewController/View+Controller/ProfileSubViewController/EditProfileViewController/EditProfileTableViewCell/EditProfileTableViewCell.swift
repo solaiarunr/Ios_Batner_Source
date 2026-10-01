@@ -23,7 +23,6 @@ class EditProfileTableViewCell: UITableViewCell {
     @IBOutlet weak var ViewStack: UIStackView!
     
     @IBOutlet weak var stripeTextView: LinkOnlyTextView!
-    var stripestring = NSMutableAttributedString()
     override func awakeFromNib() {
         super.awakeFromNib()
         self.configUI()
@@ -37,6 +36,8 @@ class EditProfileTableViewCell: UITableViewCell {
 //        StripeNewLbl.isUserInteractionEnabled = true
 //        StripeNewLbl.addGestureRecognizer(tapGesture)
         self.userImageView.cornerViewRadius()
+        self.clipsToBounds = true
+        self.contentView.clipsToBounds = true
         self.verifyLabel.config(color: UIColor(named: "AppTextColor"), font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .left, text: "")
         self.NewSellLbl.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .left, text: getLanguage["sellvia"] ?? "")
         self.titleLabel.config(color: UIColor(named: "ThemeTextColor"), font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .left, text: "")
@@ -49,60 +50,57 @@ class EditProfileTableViewCell: UITableViewCell {
         self.ViewStack.layer.borderWidth = 0.5
         self.ViewStack.clipsToBounds = true
         self.ViewStack.layer.cornerRadius = 5
+        self.ViewStack.setContentCompressionResistancePriority(.required, for: .vertical)
+        self.BorderView.setContentCompressionResistancePriority(.required, for: .vertical)
         stripeTextView.isEditable = false
         stripeTextView.isScrollEnabled = false
+        stripeTextView.showsVerticalScrollIndicator = false
+        stripeTextView.showsHorizontalScrollIndicator = false
         stripeTextView.dataDetectorTypes = [] // prevent auto detection
         stripeTextView.backgroundColor = .clear
         stripeTextView.textContainerInset = .zero
         stripeTextView.textContainer.lineFragmentPadding = 0
+        stripeTextView.textContainer.maximumNumberOfLines = 0
+        stripeTextView.textContainer.lineBreakMode = .byWordWrapping
+        stripeTextView.textContainer.widthTracksTextView = true
+        stripeTextView.textContainer.heightTracksTextView = false
         stripeTextView.delegate = self
         self.ViewStack.isUserInteractionEnabled = true
         self.stripeTextView.isUserInteractionEnabled = true
         self.stripeTextView.isSelectable = true
-        let fullText = getLanguage["Uponregistration"] ?? ""
-
-        let attributedString = NSMutableAttributedString(string: fullText)
-        let linkText = "View Terms & Policy"
-        let range = (fullText as NSString).range(of: linkText)
-
-        attributedString.addAttribute(.link,
-                                      value: "https://batner.com/message/help?details=terms-and-policy",
-                                      range: range)
-
-        attributedString.addAttribute(.foregroundColor,
-                                      value: UIColor(named: "AppTextColor") ?? .white,
-                                      range: NSRange(location: 0, length: fullText.count))
-
-        stripeTextView.linkTextAttributes = [
-            .foregroundColor: UIColor(named: "AppThemeColorNew") ?? UIColor.green,
-            .underlineStyle: NSUnderlineStyle.single.rawValue,
-            .font: UIFont(name: APP_FONT_BOLD, size: 12) ?? UIFont.boldSystemFont(ofSize: 12)
-        ]
-        stripestring = attributedString
-        stripeTextView.attributedText = attributedString
-        stripeTextView.textContainer.lineBreakMode = .byWordWrapping
-        stripeTextView.textContainer.widthTracksTextView = true
-        stripeTextView.textContainer.heightTracksTextView = false
         stripeTextView.setContentCompressionResistancePriority(.required, for: .vertical)
         stripeTextView.setContentHuggingPriority(.required, for: .vertical)
         
         if UserDefaultModule.shared.getAppLanguage().capitalized == "Arabic" {
             self.switchButton.transform = CGAffineTransform(scaleX: -1, y: 1)
         }
-        stripeTextView.sizeToFit()
-        stripeTextView.layoutIfNeeded()
     }
-    
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
+
+    override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
+        let fitted = super.systemLayoutSizeFitting(
+            targetSize,
+            withHorizontalFittingPriority: horizontalFittingPriority,
+            verticalFittingPriority: verticalFittingPriority
+        )
+        guard !ViewStack.isHidden else { return fitted }
+
+        layoutIfNeeded()
         stripeTextView.invalidateIntrinsicContentSize()
+        ViewStack.invalidateIntrinsicContentSize()
+
+        return super.systemLayoutSizeFitting(
+            targetSize,
+            withHorizontalFittingPriority: horizontalFittingPriority,
+            verticalFittingPriority: verticalFittingPriority
+        )
     }
     func loadData(_ profileData: ProfileResultModel, index: IndexPath) {
         
         self.stripeTextView.setNeedsLayout()
         self.stripeTextView.layoutIfNeeded()
         self.textField.tag = index.row
+        self.titleLabel.isHidden = false
         self.userImageView.isHidden = true
         self.verifyStackView.isHidden = true
         self.nextButton.isHidden = true
@@ -133,12 +131,12 @@ class EditProfileTableViewCell: UITableViewCell {
 
             if index.row == 0 || index.row == 1 {
                 if index.row == 0 {
-                    self.titleLabel.text = (getLanguage["Name"] ?? "").capitalized
+                    self.titleLabel.text = (getLanguage["Name"] ?? "Name").capitalized
                     self.textField.text = profileData.fullName
                     self.textField.isUserInteractionEnabled = true
                 }
                 else {
-                    self.titleLabel.text = (getLanguage["username"] ?? "").capitalized
+                    self.titleLabel.text = (getLanguage["username"] ?? "Username").capitalized
                     self.textField.text = profileData.userName
                     self.textField.isUserInteractionEnabled = false
                 }
@@ -146,7 +144,7 @@ class EditProfileTableViewCell: UITableViewCell {
             else {
                 self.textField.text = "***************"
                 self.textField.isUserInteractionEnabled = false
-                self.titleLabel.text = (getLanguage["changepassword"] ?? "").capitalized
+                self.titleLabel.text = (getLanguage["changepassword"] ?? "Change Password").capitalized
                 self.nextButton.isHidden = false
             }
         }
@@ -157,36 +155,41 @@ class EditProfileTableViewCell: UITableViewCell {
                 self.verifyStackView.isHidden = false
                 self.verifyButton.isHidden = true
                 if index.row == 0 {
-                    self.titleLabel.text = (getLanguage["location"] ?? "")
+                    self.titleLabel.text = (getLanguage["location"] ?? "Location")
                     self.descLabel.text = profileData.location
                 }
                 else {
                     self.descLabel.isHidden = true
 
-                    // In loadData(), where index.row == 1, add:
                     if index.row == 1 {
-                        self.titleLabel.text = (getLanguage["manage_stripe"] ?? "")
+                        self.ViewStack.isHidden = true
                         if profileData.stripe_onboarding_complete ?? "false" == "true" {
+                            self.titleLabel.text = (getLanguage["manage_stripe"] ?? "Manage Stripe")
                             self.NewSellLbl.isHidden = true
-                            self.ViewStack.isHidden = true
                             self.descLabel.isHidden = false
-                            self.descLabel.text = "ID: \(profileData.stripe_account_id ?? "")"
+                            let dashboardText = getLanguage["go_to_dashboard"] ?? "Go to Dashboard"
+                            let idText = "ID: \(profileData.stripe_account_id ?? "")"
+                            let paragraphStyle = NSMutableParagraphStyle()
+                            paragraphStyle.paragraphSpacing = 6
+                            self.descLabel.attributedText = NSAttributedString(
+                                string: "\(idText)\n\(dashboardText)",
+                                attributes: [
+                                    .font: UIFont(name: APP_FONT_REGULAR, size: 15) ?? UIFont.systemFont(ofSize: 15),
+                                    .foregroundColor: UIColor(named: "AppTextColor") ?? .white,
+                                    .paragraphStyle: paragraphStyle
+                                ]
+                            )
                             self.verifyStackView.isHidden = false
                             self.verifyButton.isHidden = false
                             self.verifyButton.setImage(#imageLiteral(resourceName: "tick-green"), for: .normal)
-                            self.verifyLabel.text = getLanguage["verified"] ?? ""
-                            
+                            self.verifyLabel.text = getLanguage["verified"] ?? "Verified"
                         } else {
+                            self.titleLabel.text = (getLanguage["manage_stripe"] ?? "Manage Stripe")
                             self.NewSellLbl.isHidden = false
-                            self.NewSellLbl.text = getLanguage["sellvia"] ?? ""
+                            self.NewSellLbl.text = getLanguage["sellvia"] ?? "Sell via"
                             self.descLabel.isHidden = true
                             self.verifyStackView.isHidden = true
                             self.verifyButton.isHidden = true
-                            self.ViewStack.isHidden = false
-                            stripeTextView.attributedText = stripestring
-                            self.ViewStack.isUserInteractionEnabled = true
-                            self.stripeTextView.isUserInteractionEnabled = true
-                            self.stripeTextView.isSelectable = true
                         }
                     }
                     else if index.row == 6 {
@@ -194,9 +197,9 @@ class EditProfileTableViewCell: UITableViewCell {
                         self.verifyButton.isHidden = true
                         self.verifyLabel.config(color: UIColor(named: "textfiledBackGroundColor"), font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .left, text: "")
                         self.verifyLabel.text = getLanguage[UserDefaultModule.shared.getAppLanguage().lowercased()]
-                        self.titleLabel.text = (getLanguage["language"] ?? "")
+                        self.titleLabel.text = (getLanguage["language"] ?? "Language")
                     }else{
-                        self.titleLabel.text = (getLanguage["theme"] ?? "")
+                        self.titleLabel.text = (getLanguage["theme"] ?? "Theme")
                         self.verifyLabel.text = UserDefaultModule.shared.getTheme()
                     }
                 }
@@ -207,11 +210,11 @@ class EditProfileTableViewCell: UITableViewCell {
                 self.switchButton.isHidden = true
                 self.descLabel.isHidden = false
                 if index.row == 2 {
-                    self.titleLabel.text = (getLanguage["Email"] ?? "").capitalized
+                    self.titleLabel.text = (getLanguage["Email"] ?? "Email").capitalized
                     self.descLabel.text = profileData.email
                     if profileData.emailVerification == "enable"{
                         if profileData.verification.email == true{
-                            self.verifyLabel.text = getLanguage["verified"]
+                            self.verifyLabel.text = getLanguage["verified"] ?? "Verified"
                             self.verifyButton.setImage(#imageLiteral(resourceName: "tick-green"), for: .normal)
                         }
                     }
@@ -221,7 +224,7 @@ class EditProfileTableViewCell: UITableViewCell {
                      }
                  }
                 else if index.row == 3 {
-                    self.titleLabel.text = (getLanguage["Phone"] ?? "").capitalized
+                    self.titleLabel.text = (getLanguage["Phone"] ?? "Phone").capitalized
 
                     if profileData.verification.mobNo {
 
@@ -236,11 +239,10 @@ class EditProfileTableViewCell: UITableViewCell {
                             self.descLabel.text = "+\(profileData.mobileNo ?? "")"
                         }
 
-                        self.verifyLabel.text = getLanguage["verified"] ?? ""
+                        self.verifyLabel.text = getLanguage["verified"] ?? "Verified"
                         self.verifyButton.setImage(#imageLiteral(resourceName: "tick-green"), for: .normal)
 
                     } else if profileData.can_access {
-
                         // Phone not verified, waiting for admin approval
                         self.descLabel.isHidden = false
                         self.ViewStack.isHidden = false
@@ -280,33 +282,31 @@ class EditProfileTableViewCell: UITableViewCell {
                         self.stripeTextView.isSelectable = true
 
                     } else {
-
                         // Phone not verified and no access
                         self.descLabel.isHidden = false
                         self.ViewStack.isHidden = true
                         self.verifyButton.isHidden = false
-
-                        self.descLabel.text = getLanguage["link_your_account"] ?? ""
-                        self.verifyLabel.text = getLanguage["unverified"] ?? ""
+                        self.descLabel.text = getLanguage["link_your_account"] ?? "Link your account"
+                        self.verifyLabel.text = getLanguage["unverified"] ?? "Unverified"
                         self.verifyButton.setImage(#imageLiteral(resourceName: "cancel-1"), for: .normal)
                     }                }
                 else if index.row == 4 {
-                    self.titleLabel.text = (getLanguage["Facebook"] ?? "").capitalized
+                    self.titleLabel.text = (getLanguage["Facebook"] ?? "Facebook").capitalized
                     if (profileData.verification.facebook == false){
                         self.descLabel.isHidden = false
-                        self.descLabel.text = getLanguage["link_your_account"] ?? ""
+                        self.descLabel.text = getLanguage["link_your_account"] ?? "Link your account"
                     }
                     else {
                         self.descLabel.isHidden = true
                     }
-                    self.verifyLabel.text = (profileData.verification.facebook == true) ? (getLanguage["verified"] ?? "") : (getLanguage["unverified"] ?? "")
+                    self.verifyLabel.text = (profileData.verification.facebook == true) ? (getLanguage["verified"] ?? "Verified") : (getLanguage["unverified"] ?? "Unverified")
                     self.verifyButton.setImage((profileData.verification.facebook == true) ? #imageLiteral(resourceName: "tick-green") : #imageLiteral(resourceName: "cancel-1"), for: .normal)
                 }
                 else if index.row == 5 {
                     self.verifyStackView.isHidden = true
                     self.switchButton.isHidden = false
-                    self.titleLabel.text = (getLanguage["Allow calls"] ?? "").capitalized
-                    self.descLabel.text = getLanguage["Allow user to call you"] ?? ""
+                    self.titleLabel.text = (getLanguage["Allow calls"] ?? "Allow Calls").capitalized
+                    self.descLabel.text = getLanguage["Allow user to call you"] ?? "Allow user to call you"
                     self.switchButton.isOn = profileData.showMobileNo
                 }
             }
@@ -314,12 +314,32 @@ class EditProfileTableViewCell: UITableViewCell {
         else {
             self.nextButton.setImage(#imageLiteral(resourceName: "InArrowImg"), for: .normal)
             self.descLabel.isHidden = true
-            self.titleLabel.text = (getLanguage["logout"] ?? "")
+            self.titleLabel.text = (getLanguage["logout"] ?? "Logout")
         }
         DispatchQueue.main.async {
+            guard !self.ViewStack.isHidden else { return }
+            self.stripeTextView.invalidateIntrinsicContentSize()
+            self.ViewStack.invalidateIntrinsicContentSize()
+            self.setNeedsLayout()
             self.layoutIfNeeded()
         }
     }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        isHidden = false
+        ViewStack.isHidden = true
+        switchButton.isHidden = true
+        NewSellLbl.isHidden = true
+        verifyStackView.isHidden = true
+        userImageView.isHidden = true
+        nextButton.isHidden = true
+        textField.isHidden = true
+        descLabel.isHidden = true
+        stripeTextView.attributedText = nil
+        stripeTextView.invalidateIntrinsicContentSize()
+    }
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
@@ -361,14 +381,70 @@ extension EditProfileTableViewCell: UITextViewDelegate {
 }
 
 class LinkOnlyTextView: UITextView {
-    
+
+    private var lastLayoutWidth: CGFloat = 0
+
+    override init(frame: CGRect, textContainer: NSTextContainer?) {
+        super.init(frame: frame, textContainer: textContainer)
+        commonInit()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
+        commonInit()
+    }
+
+    private func commonInit() {
+        isScrollEnabled = false
+        textContainerInset = .zero
+        textContainer.lineFragmentPadding = 0
+        textContainer.maximumNumberOfLines = 0
+        textContainer.lineBreakMode = .byWordWrapping
+        setContentCompressionResistancePriority(.required, for: .vertical)
+        setContentHuggingPriority(.required, for: .vertical)
         // Remove long press gestures to prevent selection menu
         gestureRecognizers?.forEach { gesture in
             if let longPress = gesture as? UILongPressGestureRecognizer {
                 removeGestureRecognizer(longPress)
             }
+        }
+    }
+
+    override var attributedText: NSAttributedString! {
+        get { super.attributedText }
+        set {
+            super.attributedText = newValue
+            invalidateIntrinsicContentSize()
+        }
+    }
+
+    override var intrinsicContentSize: CGSize {
+        let width = bounds.width > 0 ? bounds.width : super.intrinsicContentSize.width
+        guard width > 0, let text = attributedText, text.length > 0 else {
+            return super.intrinsicContentSize
+        }
+
+        let horizontalInsets = textContainerInset.left + textContainerInset.right + (textContainer.lineFragmentPadding * 2)
+        let textWidth = max(0, width - horizontalInsets)
+        let boundingRect = text.boundingRect(
+            with: CGSize(width: textWidth, height: .greatestFiniteMagnitude),
+            options: [.usesLineFragmentOrigin, .usesFontLeading],
+            context: nil
+        )
+        let height = ceil(boundingRect.height + textContainerInset.top + textContainerInset.bottom)
+        return CGSize(width: UIView.noIntrinsicMetric, height: height)
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        guard !isHidden else { return }
+        if abs(bounds.width - lastLayoutWidth) > 0.5 {
+            lastLayoutWidth = bounds.width
+            invalidateIntrinsicContentSize()
         }
     }
     

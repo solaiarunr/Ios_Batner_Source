@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SafariServices
+import AuthenticationServices
 //import FirebaseUI
 import PhoneNumberKit
 import FBSDKLoginKit
@@ -17,7 +19,7 @@ import FirebaseAuth
 import FirebaseAuthUI
 import FirebasePhoneAuthUI
 
-class EditProfileViewController: UIViewController, customLocationDelegate, PayStackPaymentDelegate,PHPhotoLibraryChangeObserver {
+class EditProfileViewController: UIViewController, customLocationDelegate, PayStackPaymentDelegate, PHPhotoLibraryChangeObserver, SFSafariViewControllerDelegate, ASWebAuthenticationPresentationContextProviding {
     func backaction(isfrom: String) {
         
     }
@@ -36,12 +38,68 @@ class EditProfileViewController: UIViewController, customLocationDelegate, PaySt
         }) { (failure) in
         }
     }
+
+    // SFSafariViewController fallback: called when user taps Done
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        if shouldReloadProfileAfterStripe {
+            shouldReloadProfileAfterStripe = false
+            self.loadData()
+        }
+    }
+
+    // Required for ASWebAuthenticationSession
+    func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+
+    // MARK: - Stripe Connect
+    // ✅ Uses system Safari browser — handles cross-domain cookies correctly
+    // ✅ Detects return_url redirect exactly like old WKWebView (PaystackViewController) did
+    // ✅ Works for BOTH: verified=true (dashboard login_link) AND verified=false (onboarding)
+    private var stripeAuthSession: ASWebAuthenticationSession?
+
+    func openStripeConnect(url stripeURLString: String, returnURL returnURLString: String) {
+        guard let stripeURL = URL(string: stripeURLString) else { return }
+
+        // callbackURLScheme = "https" — intercepts when Stripe redirects to returnurl
+        let session = ASWebAuthenticationSession(
+            url: stripeURL,
+            callbackURLScheme: "https"
+        ) { [weak self] callbackURL, error in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                if let callbackURL = callbackURL {
+                    let callbackStr = callbackURL.absoluteString
+                    print("Stripe callback: \(callbackStr)")
+                    // Detect return_url — same as old WKWebView didFinish check
+                    if callbackStr.hasPrefix(returnURLString) ||
+                       callbackStr.contains("stripesuccess") {
+                        self.shouldReloadProfileAfterStripe = false
+                        self.successaction(isfrom: "edit_profile") // ← same as old delegate
+                    }
+                } else if let err = error as? ASWebAuthenticationSessionError,
+                          err.code == .canceledLogin {
+                    // User tapped Cancel / X — same as back button in old WebView
+                    self.shouldReloadProfileAfterStripe = false
+                }
+            }
+        }
+        // false = share cookies with Safari — critical for Stripe cross-domain redirect
+        session.prefersEphemeralWebBrowserSession = false
+        session.presentationContextProvider = self
+        self.stripeAuthSession = session
+        session.start()
+    }
     func photoLibraryDidChange(_ changeInstance: PHChange) {
         
     }
 
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
+    private let footerWrapperView = UIView()
+    private let disclaimerContainerView = UIView()
+    private let disclaimerIndicatorBar = UIView()
+    private let disclaimerTextView = LinkOnlyTextView()
     var profileData: ProfileResultModel?
     var imagePicker: ImagePicker!
     let authUI = FUIAuth.defaultAuthUI()
@@ -59,6 +117,7 @@ class EditProfileViewController: UIViewController, customLocationDelegate, PaySt
         self.updateTheme(page: "present")
         NotificationCenter.default.addObserver(self, selector: #selector(self.barButtonAction(_:)), name: Notification.Name("BarButtonAction"), object: nil)
         self.navigationController?.isNavigationBarHidden = false
+        self.applyDisclaimerText()
         if self.shouldReloadProfileAfterStripe {
             self.shouldReloadProfileAfterStripe = false
             self.loadData()
@@ -86,6 +145,8 @@ class EditProfileViewController: UIViewController, customLocationDelegate, PaySt
         self.tableView.register(UINib(nibName: "EditProfileTableViewCell", bundle: nil), forCellReuseIdentifier: "EditProfileTableViewCell")
         self.navigationController?.customNavigationBarView(title: "edit_profile", fColor: "whitecolor", fontName: UIFont(name: APP_FONT_REGULAR, size: 20), vc: self)
         self.navigationController?.customRightBarButtonView(title: "", fColor: "whitecolor", fontName: UIFont(name: APP_FONT_REGULAR, size: 14), imageName: "detail_back", isLeft: true, vc: self, transparantView: false)
+        self.tableView.rowHeight = UITableView.automaticDimension
+        self.tableView.estimatedRowHeight = 180
         self.tableView.sectionHeaderHeight = UITableView.automaticDimension
         
         self.tableView.estimatedSectionHeaderHeight = 50
@@ -94,6 +155,7 @@ class EditProfileViewController: UIViewController, customLocationDelegate, PaySt
         self.saveButton.backgroundColor = UIColor(named: "AppThemeColorNew") ?? .white
         self.saveButton.cornerMiniumRadius()
         self.saveButton.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .center, title: "save")
+        self.setupDisclaimerFooter()
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(sender:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(sender:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         let providers: [FUIAuthProvider] = [
@@ -126,6 +188,10 @@ class EditProfileViewController: UIViewController, customLocationDelegate, PaySt
             self.view.layoutIfNeeded()
         })
         self.viewDidLayoutSubviews()
+    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.updateFooterViewHeight()
     }
     @objc func keyboardWillHide(sender: NSNotification) {
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -160,6 +226,135 @@ class EditProfileViewController: UIViewController, customLocationDelegate, PaySt
             alert.addAction(UIAlertAction(title: getLanguage["ok"] ?? "", style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
+    }
+
+    private func setupDisclaimerFooter() {
+        footerWrapperView.backgroundColor = .clear
+
+        disclaimerContainerView.translatesAutoresizingMaskIntoConstraints = false
+        disclaimerContainerView.backgroundColor = UIColor(red: 125/255, green: 189/255, blue: 0/255, alpha: 0.215)
+        disclaimerContainerView.layer.borderColor = UIColor(named: "AppThemeColorNew")?.cgColor
+        disclaimerContainerView.layer.borderWidth = 0.5
+        disclaimerContainerView.layer.cornerRadius = 5
+        disclaimerContainerView.clipsToBounds = true
+
+        disclaimerIndicatorBar.translatesAutoresizingMaskIntoConstraints = false
+        disclaimerIndicatorBar.backgroundColor = UIColor(named: "AppThemeColorNew")
+        disclaimerContainerView.addSubview(disclaimerIndicatorBar)
+
+        disclaimerTextView.translatesAutoresizingMaskIntoConstraints = false
+        disclaimerTextView.isEditable = false
+        disclaimerTextView.isScrollEnabled = false
+        disclaimerTextView.showsVerticalScrollIndicator = false
+        disclaimerTextView.showsHorizontalScrollIndicator = false
+        disclaimerTextView.dataDetectorTypes = []
+        disclaimerTextView.backgroundColor = .clear
+        disclaimerTextView.textContainerInset = .zero
+        disclaimerTextView.textContainer.lineFragmentPadding = 0
+        disclaimerTextView.textContainer.maximumNumberOfLines = 0
+        disclaimerTextView.textContainer.lineBreakMode = .byWordWrapping
+        disclaimerTextView.delegate = self
+        disclaimerTextView.isUserInteractionEnabled = true
+        disclaimerTextView.isSelectable = true
+        disclaimerTextView.setContentCompressionResistancePriority(.required, for: .vertical)
+        disclaimerTextView.setContentHuggingPriority(.required, for: .vertical)
+        disclaimerContainerView.addSubview(disclaimerTextView)
+
+        footerWrapperView.addSubview(disclaimerContainerView)
+
+        NSLayoutConstraint.activate([
+            disclaimerIndicatorBar.leadingAnchor.constraint(equalTo: disclaimerContainerView.leadingAnchor),
+            disclaimerIndicatorBar.topAnchor.constraint(equalTo: disclaimerContainerView.topAnchor),
+            disclaimerIndicatorBar.bottomAnchor.constraint(equalTo: disclaimerContainerView.bottomAnchor),
+            disclaimerIndicatorBar.widthAnchor.constraint(equalToConstant: 3),
+
+            disclaimerTextView.leadingAnchor.constraint(equalTo: disclaimerIndicatorBar.trailingAnchor, constant: 6),
+            disclaimerTextView.trailingAnchor.constraint(equalTo: disclaimerContainerView.trailingAnchor, constant: -6),
+            disclaimerTextView.topAnchor.constraint(equalTo: disclaimerContainerView.topAnchor, constant: 6),
+            disclaimerTextView.bottomAnchor.constraint(equalTo: disclaimerContainerView.bottomAnchor, constant: -6),
+
+            disclaimerContainerView.topAnchor.constraint(equalTo: footerWrapperView.topAnchor, constant: 12),
+            disclaimerContainerView.leadingAnchor.constraint(equalTo: footerWrapperView.leadingAnchor, constant: 10),
+            disclaimerContainerView.trailingAnchor.constraint(equalTo: footerWrapperView.trailingAnchor, constant: -10),
+            disclaimerContainerView.bottomAnchor.constraint(equalTo: footerWrapperView.bottomAnchor, constant: -15)
+        ])
+
+        applyDisclaimerText()
+        updateFooterViewHeight()
+    }
+
+    private func updateFooterViewHeight() {
+        let targetWidth = tableView.bounds.width > 0 ? tableView.bounds.width : UIScreen.main.bounds.width
+        guard targetWidth > 0 else { return }
+        let size = footerWrapperView.systemLayoutSizeFitting(
+            CGSize(width: targetWidth, height: UIView.layoutFittingCompressedSize.height),
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .fittingSizeLevel
+        )
+        let newHeight = ceil(size.height)
+        if abs(footerWrapperView.frame.height - newHeight) > 0.5 || abs(footerWrapperView.frame.width - targetWidth) > 0.5 {
+            footerWrapperView.frame = CGRect(x: 0, y: 0, width: targetWidth, height: newHeight)
+            tableView.tableFooterView = footerWrapperView
+        }
+    }
+
+    private func applyDisclaimerText() {
+        disclaimerContainerView.layer.borderColor = UIColor(named: "AppThemeColorNew")?.cgColor
+        disclaimerIndicatorBar.backgroundColor = UIColor(named: "AppThemeColorNew")
+
+        let fullText = getLanguage["Uponregistration"] ?? ""
+        let bodyFont = UIFont(name: APP_FONT_REGULAR, size: 12) ?? UIFont.systemFont(ofSize: 12)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineBreakMode = .byWordWrapping
+
+        let attributedString = NSMutableAttributedString(
+            string: fullText,
+            attributes: [
+                .font: bodyFont,
+                .foregroundColor: UIColor(named: "AppTextColor") ?? .white,
+                .paragraphStyle: paragraphStyle
+            ]
+        )
+
+        let linkRange = termsLinkRange(in: fullText)
+        if linkRange.location != NSNotFound {
+            attributedString.addAttribute(
+                .link,
+                value: "https://batner.com/message/help?details=terms-and-policy",
+                range: linkRange
+            )
+        }
+
+        disclaimerTextView.linkTextAttributes = [
+            .foregroundColor: UIColor(named: "AppThemeColorNew") ?? UIColor.green,
+            .underlineStyle: NSUnderlineStyle.single.rawValue,
+            .font: UIFont(name: APP_FONT_BOLD, size: 12) ?? UIFont.boldSystemFont(ofSize: 12)
+        ]
+        disclaimerTextView.attributedText = attributedString
+        disclaimerTextView.invalidateIntrinsicContentSize()
+        updateFooterViewHeight()
+    }
+
+    private func termsLinkRange(in fullText: String) -> NSRange {
+        let linkCandidates = [
+            "View Terms & Policy",
+            "Zobrazit podmínky a zásady",
+            "Zobacz Regulamin i Politykę",
+            "Zobraziť podmienky a zásady"
+        ]
+        for candidate in linkCandidates {
+            let range = (fullText as NSString).range(of: candidate)
+            if range.location != NSNotFound {
+                return range
+            }
+        }
+        return NSRange(location: NSNotFound, length: 0)
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        disclaimerContainerView.layer.borderColor = UIColor(named: "AppThemeColorNew")?.cgColor
+        disclaimerIndicatorBar.backgroundColor = UIColor(named: "AppThemeColorNew")
     }
     
 }
@@ -209,14 +404,12 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
             Utility.shared.stopAnimation(viewController: self)
             if success {
                 self.shouldReloadProfileAfterStripe = true
-                let pageObj = PaystackViewController()
-                pageObj.url = self.viewModel.stripeModel?.url ?? ""
-                pageObj.PayStackPaymentDelegate = self
-                pageObj.return_url = self.viewModel.stripeModel?.returnurl ?? ""
-                pageObj.isform = "edit_profile"
-                pageObj.modalPresentationStyle = .overFullScreen
-                self.navigationController?.pushViewController(pageObj, animated: true)
-                
+                // verified=true  → login_link URL → Dashboard opens directly
+                // verified=false → onboarding URL → Setup page opens
+                self.openStripeConnect(
+                    url: self.viewModel.stripeModel?.url ?? "",
+                    returnURL: self.viewModel.stripeModel?.returnurl ?? ""
+                )
             }
         }) { (failure) in
             Utility.shared.stopAnimation(viewController: self)
@@ -224,6 +417,9 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
     }
     
     @objc func newSellLabelTapped() {
+        // Guard: don't show if an alert is already presented (prevents flicker)
+        guard self.presentedViewController == nil else { return }
+
         let alert = UIAlertController(
             title: "Connect Stripe Account",
             message: """
@@ -251,22 +447,32 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
 //        cell.nextButton.tag = indexPath.row
 //        cell.nextButton.addTarget(self, action: #selector(self.nextButtonaction), for: .touchUpInside)
         cell.switchButton.addTarget(self, action: #selector(self.switchControllAct(_:)), for: .valueChanged)
-        cell.NewSellLbl.isUserInteractionEnabled = true
-        // Add tap gesture recognizer
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(newSellLabelTapped))
-        cell.NewSellLbl.addGestureRecognizer(tapGesture)
-        // ✅ Remove old gestures first (prevents duplicates on cell reuse)
-     
 
-        if indexPath.section == 2 && indexPath.row == 5 {
-            if (self.profileData?.mobileNo ?? "") == "" {
-                cell.isHidden = true
-            }
+        // ✅ Remove OLD gesture recognizers first (prevents duplicates on cell reuse → flicker fix)
+        cell.NewSellLbl.gestureRecognizers?.forEach { cell.NewSellLbl.removeGestureRecognizer($0) }
+
+        // Only add the info tap gesture to the Stripe row (section 2, row 1)
+        if indexPath.section == 2 && indexPath.row == 1 {
+            cell.NewSellLbl.isUserInteractionEnabled = true
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(newSellLabelTapped))
+            cell.NewSellLbl.addGestureRecognizer(tapGesture)
+        } else {
+            cell.NewSellLbl.isUserInteractionEnabled = false
+        }
+
+
+
+        if indexPath.section == 2 && indexPath.row == 4 {
+            cell.isHidden = true
+        }
+        else if indexPath.section == 2 && indexPath.row == 5 {
+            cell.isHidden = (self.profileData?.mobileNo ?? "") == ""
         }
         else if indexPath.section == 2 && indexPath.row == 1 {
-            if (ADMIN_VIEW_MODEL.adminModel?.result.buynow ?? "") == "disable" {
-                cell.isHidden = true
-            }
+            cell.isHidden = (ADMIN_VIEW_MODEL.adminModel?.result.buynow ?? "") == "disable"
+        }
+        else {
+            cell.isHidden = false
         }
         return cell
     }
@@ -296,14 +502,12 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
                     Utility.shared.stopAnimation(viewController: self)
                     if success {
                         self.shouldReloadProfileAfterStripe = true
-                        let pageObj = PaystackViewController()
-                        pageObj.url = self.viewModel.stripeModel?.url ?? ""
-                        pageObj.PayStackPaymentDelegate = self
-                        pageObj.return_url = self.viewModel.stripeModel?.returnurl ?? ""
-                        pageObj.isform = "edit_profile"
-                        pageObj.modalPresentationStyle = .overFullScreen
-                        self.navigationController?.pushViewController(pageObj, animated: true)
-                        
+                        // verified=true  → login_link URL → Dashboard opens directly
+                        // verified=false → onboarding URL → Setup page opens
+                        self.openStripeConnect(
+                            url: self.viewModel.stripeModel?.url ?? "",
+                            returnURL: self.viewModel.stripeModel?.returnurl ?? ""
+                        )
                     }
                 }) { (failure) in
                     Utility.shared.stopAnimation(viewController: self)
@@ -345,8 +549,21 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
         else if indexPath.section == 2 && indexPath.row == 6 {
             let pageObj = LanguageViewController()
             let appLanguage = UserDefaultModule.shared.getAppLanguage()
-            print("appLanguage:\(appLanguage)")
-            pageObj.languageArray = [appLanguage]
+            let countryCode = UserDefaultModule.shared.getcountrycode() ?? ""
+            print("appLanguage:\(appLanguage), countryCode:\(countryCode)")
+            if appLanguage.lowercased() == "czech" || countryCode.lowercased() == "cz" {
+                pageObj.languageArray = ["Czech", "English"]
+                pageObj.languageCode = ["cs", "en"]
+            } else {
+                pageObj.languageArray = [appLanguage]
+                if appLanguage.lowercased() == "polish" {
+                    pageObj.languageCode = ["pl"]
+                } else if appLanguage.lowercased() == "slovakia" {
+                    pageObj.languageCode = ["sk"]
+                } else {
+                    pageObj.languageCode = ["en"]
+                }
+            }
             self.navigationController?.pushViewController(pageObj, animated: true)
         }  else if indexPath.section == 2 && indexPath.row == 7 {
             let pageObj = ThemeViewController()
@@ -604,4 +821,15 @@ extension EditProfileViewController {
       })
     }
   }
+}
+
+extension EditProfileViewController: UITextViewDelegate {
+    func textView(_ textView: UITextView,
+                  shouldInteractWith URL: URL,
+                  in characterRange: NSRange,
+                  interaction: UITextItemInteraction) -> Bool {
+        print("✅ Terms clicked:", URL)
+        UIApplication.shared.open(URL)
+        return false
+    }
 }

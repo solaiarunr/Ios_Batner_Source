@@ -1327,6 +1327,7 @@ class ChatViewController: UIViewController,PHPhotoLibraryChangeObserver {
  extension ChatViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         SocketIOManager.sharedInstance.messageTyping(message: "type", senderId: (ADMIN_VIEW_MODEL.profileModel?.result.userName ?? ""), exchage_type: false)
+        print("dejkefkfe",ADMIN_VIEW_MODEL.profileModel?.result.userName ?? "")
         
         //         if textView.contentSize.height >= 100 {
         //             textView.isScrollEnabled = true

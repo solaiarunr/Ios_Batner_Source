@@ -48,6 +48,8 @@ class CameraVC: UIViewController {
     @IBOutlet weak var galleryLabel: UILabel!
     @IBOutlet weak var timerCountLabel: UILabel!
     
+    @IBOutlet weak var Skipbtn: UIButton!
+    
     private var camera: BBMetalCamera!
     private var metalView: BBMetalView!
     private var videoWriter: BBMetalVideoWriter!
@@ -69,6 +71,7 @@ class CameraVC: UIViewController {
     
     var isCameraEnabled = false
     var isAudioEnabled = false
+    private var isViewVisible = false
     private var videoFetchResult: PHFetchResult<PHAsset>?
 
     let VIDEO_MAXIMUM_DURATIONS: Int = 60
@@ -189,6 +192,8 @@ class CameraVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.isViewVisible = true
         self.tabBarController?.tabBar.isHidden = true
         self.navigationController?.isNavigationBarHidden = true
         self.updateTheme(page: "present")
@@ -198,13 +203,15 @@ class CameraVC: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
+        super.viewDidAppear(animated)
    
         self.tabBarController?.tabBar.isHidden = true
         self.updateStatusbarBackgroundnew(Color: UIColor(named: "AddhemeColorNew")!)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.isViewVisible = false
         self.updateStatusbarBackgroundnew(Color: UIColor(named: "appcolor")!)
         self.turnOffTorch()
         camera?.stop()
@@ -262,6 +269,7 @@ class CameraVC: UIViewController {
 //    }
     
     func checkAndSetup() {
+        guard isViewVisible else { return }
         if isCameraEnabled && isAudioEnabled {
             if camera == nil {   // ✅ Only create once
                 setup()
@@ -311,7 +319,7 @@ class CameraVC: UIViewController {
         self.flipLabel.config(color: .white, font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .center, text: "flip")
         self.galleryLabel.config(color: .white, font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .center, text: "gallery")
         self.filterTitleLabel.config(color: .white, font: UIFont(name: APP_FONT_BOLD, size: 15), align: .center, text: "portrait")
-        
+        self.Skipbtn.config(color: .white, font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .right, title: "skip")
         self.reshootButton.config(color: UIColor.init(named: "AppTextColor"), font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .left, title: "reshoot")
         self.cancelButton.config(color: UIColor.init(named: "AppTextColor"), font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .left, title: "cancel")
         self.exitButton.config(color: UIColor.init(named: "AppTextColor"), font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .left, title: "exit")
@@ -480,8 +488,10 @@ class CameraVC: UIViewController {
             }
             self.cancelView.isHidden = true
 
-            self.camera.resetBenchmark()
-            self.camera.start()
+            if self.isViewVisible {
+                self.camera.resetBenchmark()
+                self.camera.start()
+            }
             
             recordButton.tag = 0
             recordButton.setImage(#imageLiteral(resourceName: "product_start"), for: .normal)
@@ -1203,8 +1213,10 @@ extension CameraVC : uploadDelegate1 {
         
         self.cancelView.isHidden = true
         
-        self.camera.resetBenchmark()
-        self.camera.start()
+        if self.isViewVisible {
+            self.camera.resetBenchmark()
+            self.camera.start()
+        }
         recordButton.tag = 0
         recordButton.setImage(#imageLiteral(resourceName: "product_start"), for: .normal)
         self.progressView.setProgress(0, animated: true)

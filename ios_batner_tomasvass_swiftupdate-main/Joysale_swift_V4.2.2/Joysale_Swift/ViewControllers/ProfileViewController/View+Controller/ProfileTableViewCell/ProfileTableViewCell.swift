@@ -25,6 +25,14 @@ class ProfileTableViewCell: UITableViewCell {
         self.notificationButton.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 13), align: .center, title: "")
         self.titleLabel.config(color: UIColor(named: "AppTextColor"), font: UIFont(name: APP_FONT_REGULAR, size: 17), align: .left, text: "notifications")
     }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        notificationButton.isHidden = true
+        titleLabel.textColor = UIColor(named: "AppTextColor")
+        arrowImageView.image = #imageLiteral(resourceName: "InArrowImg")
+        arrowImageView.tintColor = UIColor(named: "Placeholdercolor")
+    }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state

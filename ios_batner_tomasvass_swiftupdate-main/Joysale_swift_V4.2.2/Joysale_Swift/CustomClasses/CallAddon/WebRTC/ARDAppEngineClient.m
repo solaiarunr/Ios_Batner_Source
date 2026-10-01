@@ -31,16 +31,14 @@ static NSString * const kARDRoomServerLeaveFormat =
     @"https://appr.tc/leave/%@/%@";
 */
 
+// #define kARDRoomServerHostUrl = @"http://192.168.1.23:8080";
+// #define kARDRoomServerJoinFormat = @"http://192.168.1.23:8080/join/%@";
+// #define kARDRoomServerJoinFormatLoopback =
+// @"http://192.168.1.23:8080/join/%@?debug=loopback"; #define
+// kARDRoomServerMessageFormat = @"http://192.168.1.23:8080/message/%@/%@";
+// #define kARDRoomServerLeaveFormat = @"http://192.168.1.23:8080/leave/%@/%@";
 
-//#define kARDRoomServerHostUrl = @"http://192.168.1.23:8080";
-//#define kARDRoomServerJoinFormat = @"http://192.168.1.23:8080/join/%@";
-//#define kARDRoomServerJoinFormatLoopback = @"http://192.168.1.23:8080/join/%@?debug=loopback";
-//#define kARDRoomServerMessageFormat = @"http://192.168.1.23:8080/message/%@/%@";
-//#define kARDRoomServerLeaveFormat = @"http://192.168.1.23:8080/leave/%@/%@";
-
-
-
-static NSString * const kARDAppEngineClientErrorDomain = @"ARDAppEngineClient";
+static NSString *const kARDAppEngineClientErrorDomain = @"ARDAppEngineClient";
 static NSInteger const kARDAppEngineClientErrorBadResponse = -1;
 
 @implementation ARDAppEngineClient
@@ -56,27 +54,35 @@ static NSInteger const kARDAppEngineClientErrorBadResponse = -1;
   NSString *urlString = nil;
   if (isLoopback) {
     urlString =
-        [NSString stringWithFormat:@"%@/join/%@?debug=loopback",[[NSUserDefaults standardUserDefaults]valueForKey:@"web_rtc_web"], roomId];
+        [NSString stringWithFormat:@"%@/join/%@?debug=loopback",
+                                   [[NSUserDefaults standardUserDefaults]
+                                       valueForKey:@"web_rtc_web"],
+                                   roomId];
   } else {
     urlString =
-        [NSString stringWithFormat:@"%@/join/%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"web_rtc_web"], roomId];
+        [NSString stringWithFormat:@"%@/join/%@",
+                                   [[NSUserDefaults standardUserDefaults]
+                                       valueForKey:@"web_rtc_web"],
+                                   roomId];
   }
 
   NSURL *roomURL = [NSURL URLWithString:urlString];
   RTCLog(@"Joining room:%@ on room server.", roomId);
   NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:roomURL];
-    NSLog(@"JOIN ROOM API REQUEST %@",roomURL);
+  NSLog(@"JOIN ROOM API REQUEST %@", roomURL);
   request.HTTPMethod = @"POST";
   [NSURLConnection sendAsyncRequest:request
-                  completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                  completionHandler:^(NSURLResponse *response, NSData *data,
+                                      NSError *error) {
                     if (error) {
                       if (completionHandler) {
                         completionHandler(nil, error);
                       }
                       return;
                     }
-                    ARDJoinResponse *joinResponse = [ARDJoinResponse responseFromJSONData:data];
-                      NSLog(@"JOIN ROOM API RESPONSE %@",joinResponse);
+                    ARDJoinResponse *joinResponse =
+                        [ARDJoinResponse responseFromJSONData:data];
+                    NSLog(@"JOIN ROOM API RESPONSE %@", joinResponse);
                     if (!joinResponse) {
                       if (completionHandler) {
                         NSError *error = [[self class] badResponseError];
@@ -101,37 +107,39 @@ static NSInteger const kARDAppEngineClientErrorBadResponse = -1;
 
   NSData *data = [message JSONData];
   NSString *urlString =
-      [NSString stringWithFormat:@"%@/message/%@/%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"web_rtc_web"],roomId, clientId];
+      [NSString stringWithFormat:@"%@/message/%@/%@",
+                                 [[NSUserDefaults standardUserDefaults]
+                                     valueForKey:@"web_rtc_web"],
+                                 roomId, clientId];
   NSURL *url = [NSURL URLWithString:urlString];
   RTCLog(@"C->RS POST: %@", message);
-//    NSLog(@"SEND MESSAGE API REQUEST %@",urlString);
+  //    NSLog(@"SEND MESSAGE API REQUEST %@",urlString);
 
   NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
   request.HTTPMethod = @"POST";
   request.HTTPBody = data;
   [NSURLConnection sendAsyncRequest:request
-                  completionHandler:^(NSURLResponse *response,
-                                      NSData *data,
+                  completionHandler:^(NSURLResponse *response, NSData *data,
                                       NSError *error) {
-    if (error) {
-      if (completionHandler) {
-        completionHandler(nil, error);
-      }
-      return;
-    }
-    ARDMessageResponse *messageResponse =
-        [ARDMessageResponse responseFromJSONData:data];
-    if (!messageResponse) {
-      if (completionHandler) {
-        NSError *error = [[self class] badResponseError];
-        completionHandler(nil, error);
-      }
-      return;
-    }
-    if (completionHandler) {
-      completionHandler(messageResponse, nil);
-    }
-  }];
+                    if (error) {
+                      if (completionHandler) {
+                        completionHandler(nil, error);
+                      }
+                      return;
+                    }
+                    ARDMessageResponse *messageResponse =
+                        [ARDMessageResponse responseFromJSONData:data];
+                    if (!messageResponse) {
+                      if (completionHandler) {
+                        NSError *error = [[self class] badResponseError];
+                        completionHandler(nil, error);
+                      }
+                      return;
+                    }
+                    if (completionHandler) {
+                      completionHandler(messageResponse, nil);
+                    }
+                  }];
 }
 
 - (void)leaveRoomWithRoomId:(NSString *)roomId
@@ -140,7 +148,11 @@ static NSInteger const kARDAppEngineClientErrorBadResponse = -1;
   NSParameterAssert(roomId.length);
   NSParameterAssert(clientId.length);
 
-  NSString *urlString = [NSString stringWithFormat:@"%@/leave/%@/%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"web_rtc_web"],roomId, clientId];
+  NSString *urlString =
+      [NSString stringWithFormat:@"%@/leave/%@/%@",
+                                 [[NSUserDefaults standardUserDefaults]
+                                     valueForKey:@"web_rtc_web"],
+                                 roomId, clientId];
   NSURL *url = [NSURL URLWithString:urlString];
   NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
   request.HTTPMethod = @"POST";
@@ -151,17 +163,19 @@ static NSInteger const kARDAppEngineClientErrorBadResponse = -1;
   // We want a synchronous request so that we know that we've left the room on
   // room server before we do any further work.
   dispatch_semaphore_t sem = dispatch_semaphore_create(0);
-  [NSURLConnection sendAsyncRequest:request
-                  completionHandler:^(NSURLResponse *response, NSData *data, NSError *e) {
-                    if (e) {
-                      error = e;
-                    }
-                    dispatch_semaphore_signal(sem);
-                  }];
+  [NSURLConnection
+       sendAsyncRequest:request
+      completionHandler:^(NSURLResponse *response, NSData *data, NSError *e) {
+        if (e) {
+          error = e;
+        }
+        dispatch_semaphore_signal(sem);
+      }];
 
   dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
   if (error) {
-    RTCLogError(@"Error leaving room %@ on room server: %@", roomId, error.localizedDescription);
+    RTCLogError(@"Error leaving room %@ on room server: %@", roomId,
+                error.localizedDescription);
     if (completionHandler) {
       completionHandler(error);
     }
@@ -176,12 +190,12 @@ static NSInteger const kARDAppEngineClientErrorBadResponse = -1;
 #pragma mark - Private
 
 + (NSError *)badResponseError {
-  NSError *error =
-      [[NSError alloc] initWithDomain:kARDAppEngineClientErrorDomain
-                                 code:kARDAppEngineClientErrorBadResponse
-                             userInfo:@{
-    NSLocalizedDescriptionKey: @"Error parsing response.",
-  }];
+  NSError *error = [[NSError alloc]
+      initWithDomain:kARDAppEngineClientErrorDomain
+                code:kARDAppEngineClientErrorBadResponse
+            userInfo:@{
+              NSLocalizedDescriptionKey : @"Error parsing response.",
+            }];
   return error;
 }
 

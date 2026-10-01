@@ -85,26 +85,14 @@ extension UILabel{
         self.frame = frame
     }
     
-//    override open var intrinsicContentSize: CGSize {
-//        guard let text = self.text else { return super.intrinsicContentSize }
-//
-//        var contentSize = super.intrinsicContentSize
-//        var textWidth: CGFloat = frame.size.width
-//        var insetsHeight: CGFloat = 0.0
-//
-//        if let insets = padding {
-//            textWidth -= insets.left + insets.right
-//            insetsHeight += insets.top + insets.bottom
-//        }
-//
-//        let newSize = text.boundingRect(with: CGSize(width: textWidth, height: CGFloat.greatestFiniteMagnitude),
-//                                        options: NSStringDrawingOptions.usesLineFragmentOrigin,
-//                                        attributes: [NSAttributedString.Key.font: self.font], context: nil)
-//
-//        contentSize.height = ceil(newSize.size.height) + insetsHeight
-//
-//        return contentSize
-//    }
+    override open var intrinsicContentSize: CGSize {
+        let size = super.intrinsicContentSize
+        if let insets = padding {
+            return CGSize(width: size.width + insets.left + insets.right,
+                          height: size.height + insets.top + insets.bottom)
+        }
+        return size
+    }
 }
 extension NSMutableAttributedString{
     func setColorForText(_ textToFind: String, with color: UIColor) {
@@ -112,5 +100,107 @@ extension NSMutableAttributedString{
         if range.location != NSNotFound {
             addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: range)
         }
+    }
+}
+
+@IBDesignable
+class WrappingLabel: UILabel {
+    private var explicitLayoutWidth: CGFloat?
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        numberOfLines = 0
+        lineBreakMode = .byWordWrapping
+        setContentCompressionResistancePriority(.required, for: .vertical)
+        setContentHuggingPriority(.defaultLow, for: .horizontal)
+    }
+
+    override func layoutSubviews() {
+        updateWrappingWidthIfNeeded()
+        super.layoutSubviews()
+    }
+
+    override var intrinsicContentSize: CGSize {
+        guard preferredMaxLayoutWidth > 0 else {
+            return super.intrinsicContentSize
+        }
+
+        let text = self.text ?? attributedText?.string ?? ""
+        guard !text.isEmpty, let font else {
+            return super.intrinsicContentSize
+        }
+
+        let boundingRect = (text as NSString).boundingRect(
+            with: CGSize(width: preferredMaxLayoutWidth, height: .greatestFiniteMagnitude),
+            options: [.usesLineFragmentOrigin, .usesFontLeading],
+            attributes: [.font: font],
+            context: nil
+        )
+
+        return CGSize(width: UIView.noIntrinsicMetric, height: ceil(boundingRect.height))
+    }
+
+    func setExplicitLayoutWidth(_ width: CGFloat) {
+        let roundedWidth = floor(max(width, 0))
+        guard roundedWidth > 0 else { return }
+
+        explicitLayoutWidth = roundedWidth
+        preferredMaxLayoutWidth = roundedWidth
+        invalidateIntrinsicContentSize()
+    }
+
+    func refreshLayout(explicitWidth: CGFloat) {
+        setExplicitLayoutWidth(explicitWidth)
+        var ancestor = superview
+        while ancestor != nil {
+            ancestor?.setNeedsLayout()
+            if ancestor is UIStackView {
+                ancestor?.invalidateIntrinsicContentSize()
+            }
+            ancestor = ancestor?.superview
+        }
+    }
+
+    private func updateWrappingWidthIfNeeded() {
+        if let explicitLayoutWidth, explicitLayoutWidth > 0 {
+            if preferredMaxLayoutWidth != explicitLayoutWidth {
+                preferredMaxLayoutWidth = explicitLayoutWidth
+                invalidateIntrinsicContentSize()
+            }
+            return
+        }
+
+        let screenWidth = window?.bounds.width ?? UIScreen.main.bounds.width
+        guard screenWidth > 0 else { return }
+
+        let targetWidth: CGFloat
+        if let rowStack = superview as? UIStackView, rowStack.axis == .horizontal {
+            targetWidth = floor(screenWidth - 40)
+        } else {
+            targetWidth = floor(screenWidth - 20)
+        }
+
+        guard targetWidth > 0, preferredMaxLayoutWidth != targetWidth else { return }
+        preferredMaxLayoutWidth = targetWidth
+        invalidateIntrinsicContentSize()
+    }
+}
+
+@IBDesignable
+class PaddingLabel: UILabel {
+    @IBInspectable var topInset: CGFloat = 4.0
+    @IBInspectable var bottomInset: CGFloat = 4.0
+    @IBInspectable var leftInset: CGFloat = 10.0
+    @IBInspectable var rightInset: CGFloat = 10.0
+
+    override func drawText(in rect: CGRect) {
+        let insets = UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
+        super.drawText(in: rect.inset(by: insets))
+    }
+
+    override var intrinsicContentSize: CGSize {
+        let size = super.intrinsicContentSize
+        return CGSize(width: size.width + leftInset + rightInset,
+                      height: size.height + topInset + bottomInset)
     }
 }

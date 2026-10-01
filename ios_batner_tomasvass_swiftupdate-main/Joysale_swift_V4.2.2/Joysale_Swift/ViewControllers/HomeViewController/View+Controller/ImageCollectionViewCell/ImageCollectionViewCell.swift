@@ -141,7 +141,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
         }
 //        self.priceLabel.sizeToFit()
         self.productTitleLabel.text = itemData.itemTitle
-        self.locationLabel.text = itemData.location
+        self.locationLabel.text = itemData.location.displayLocation
         self.imageViewHeightConst.constant = self.frame.width
         self.dateButton.layer.insertSublayer(gradientLayer, at: 0)
     }

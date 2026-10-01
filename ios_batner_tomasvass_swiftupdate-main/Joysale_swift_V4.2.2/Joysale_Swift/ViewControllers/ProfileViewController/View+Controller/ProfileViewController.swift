@@ -293,6 +293,8 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             cell.isHidden = false
             cell.notificationButton.isHidden = true
             cell.titleLabel.text = getLanguage[self.profileArr[indexPath.section]]
+            cell.arrowImageView.image = #imageLiteral(resourceName: "InArrowImg")
+            cell.arrowImageView.tintColor = UIColor(named: "Placeholdercolor")
             
 
             let key = self.profileArr[indexPath.section]
@@ -309,20 +311,17 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 } else {
                     cell.notificationButton.isHidden = true
                 }
-                cell.arrowImageView.image = #imageLiteral(resourceName: "InArrowImg")
 
             case "logout":
                 cell.arrowImageView.image = #imageLiteral(resourceName: "logout")
 
-            case "AdPremium":
-                cell.arrowImageView.image = #imageLiteral(resourceName: "InArrowImg")
-                
-            case "PremiumFeatures":
-                cell.arrowImageView.image = #imageLiteral(resourceName: "InArrowImg")
-                
             case "delete_account":
                 cell.arrowImageView.image = #imageLiteral(resourceName: "Delete_icon")
+                cell.arrowImageView.tintColor = .red
+                cell.titleLabel.textColor = .red
             case "credit":
+                cell.arrowImageView.image = #imageLiteral(resourceName: "InArrowImg")
+                cell.arrowImageView.tintColor = UIColor(named: "Placeholdercolor")
                 if self.viewModel.profileModel?.result.credit_balance != "0" {
                     cell.notificationButton.isHidden = false
                 let balance = (self.viewModel.profileModel?.result.credit_balance ?? "0").czechFormattedCreditBalance
@@ -334,7 +333,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
 
 
             default:
-                cell.arrowImageView.image = #imageLiteral(resourceName: "InArrowImg")
+                break
             }
             return cell
         }

@@ -370,7 +370,6 @@
      func streamDetails(_ state: Int) {
           print("ICE STATE \(state)")
          if state == 2 { // CONNECTED STATE
-             
              call_status = "connected"
              av_Player.stop()
              self.statusLabel.textColor = .white

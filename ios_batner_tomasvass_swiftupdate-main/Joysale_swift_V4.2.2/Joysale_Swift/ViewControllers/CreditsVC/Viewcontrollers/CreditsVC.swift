@@ -30,6 +30,8 @@ class CreditsVC: UIViewController {
     @IBOutlet weak var refferaltxt: UITextField!
     @IBOutlet weak var copybtn: UIButton!
     @IBOutlet weak var changecodeview: UIView!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var contentView: UIView!
     
     
     
@@ -38,10 +40,22 @@ class CreditsVC: UIViewController {
     private let refreshControl = UIRefreshControl()
     var referral_code_locked = false
 
+    private var multilineLabels: [UILabel] {
+        [yourcreditlbl, creditdeslbl, howcreditworkLbl,
+         credit1point, credit2point, credit3point, credit4point,
+         yourpromoLbl, promodeslbl, promohint,
+         referalLbl, referaldes]
+    }
+
+    private enum Layout {
+        static let contentHorizontalInset: CGFloat = 20
+        static let bulletExtraInset: CGFloat = 20
+        static let topCardHorizontalInset: CGFloat = 90
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         config()
-        // Do any additional setup after loading the view.
     }
 
     func config(){
@@ -62,7 +76,9 @@ class CreditsVC: UIViewController {
         self.howcreditworkLbl.config(color: UIColor(named: "appblackcolor"), font: UIFont(name: APP_FONT_BOLD, size: 18), align: .center, text: "how_credit_works")
         self.yourpromoLbl.config(color: UIColor(named: "appblackcolor"), font: UIFont(name: APP_FONT_BOLD, size: 18), align: .left, text: "your_promocode")
         self.referalLbl.config(color: UIColor(named: "appblackcolor"), font: UIFont(name: APP_FONT_BOLD, size: 18), align: .left, text: "invite_friend_credit")
-        self.creditdeslbl.numberOfLines = 0
+        
+        configureMultilineLabels()
+        applyLabelWidths()
         self.balbtn.backgroundColor = UIColor(named: "AppThemeColorNew")
         self.balbtn.config(color: UIColor(named: "appblackcolor"), font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .center, title: "")
         self.promotxt.config(color: UIColor(named: "appblackcolor"), align: .left, placeHolder: "promo_placeholder", font: UIFont(name: APP_FONT_REGULAR, size: 15))
@@ -73,14 +89,88 @@ class CreditsVC: UIViewController {
         self.promobtn.cornerMiniumRadius(10)
         self.copybtn.backgroundColor = UIColor(named: "AppThemeColorNew")
         self.copybtn.config(color: UIColor(named: "appblackcolor"), font: UIFont(name: APP_FONT_REGULAR, size: 15), align: .center, title: "copy_the_link")
+        self.copybtn.titleLabel?.numberOfLines = 0
+        self.copybtn.titleLabel?.lineBreakMode = .byWordWrapping
+        self.promobtn.titleLabel?.numberOfLines = 0
+        self.promobtn.titleLabel?.lineBreakMode = .byWordWrapping
         self.promotxt.addDoneButtonOnKeyboard()
-      //  self.copybtn.setTitle("copy_the_link", for: .normal)
         self.copybtn.cornerMiniumRadius(10)
+        self.refferaltxt.adjustsFontSizeToFitWidth = true
+        self.refferaltxt.minimumFontSize = 10
         if referral_code_locked{
             self.changecodeview.isHidden = true
             self.promohint.text = "🔒 \(getLanguage["changecode_alert"] ?? "")"
         }
         loaddata()
+    }
+
+    private func configureMultilineLabels() {
+        multilineLabels.forEach { label in
+            label.numberOfLines = 0
+            label.lineBreakMode = .byWordWrapping
+            label.setContentCompressionResistancePriority(.required, for: .vertical)
+            label.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        }
+    }
+
+    private func currentScreenWidth() -> CGFloat {
+        if view.bounds.width > 0 {
+            return view.bounds.width
+        }
+        if let windowWidth = view.window?.bounds.width, windowWidth > 0 {
+            return windowWidth
+        }
+        return UIScreen.main.bounds.width
+    }
+
+    private func targetWidth(for label: UILabel, screenWidth: CGFloat) -> CGFloat {
+        if label === credit1point || label === credit2point || label === credit3point || label === credit4point {
+            return floor(screenWidth - Layout.contentHorizontalInset - Layout.bulletExtraInset)
+        }
+        if label === yourcreditlbl || label === creditdeslbl {
+            return floor(screenWidth - Layout.topCardHorizontalInset)
+        }
+        return floor(screenWidth - Layout.contentHorizontalInset)
+    }
+
+    private func applyLabelWidths(forceLayout: Bool = false) {
+        let screenWidth = currentScreenWidth()
+        guard screenWidth > 0 else { return }
+
+        multilineLabels.forEach { label in
+            let width = targetWidth(for: label, screenWidth: screenWidth)
+            guard width > 0 else { return }
+
+            if let wrappingLabel = label as? WrappingLabel {
+                wrappingLabel.setExplicitLayoutWidth(width)
+            } else {
+                label.preferredMaxLayoutWidth = width
+                label.invalidateIntrinsicContentSize()
+            }
+        }
+
+        contentView?.setNeedsLayout()
+        scrollView?.setNeedsLayout()
+        if forceLayout {
+            contentView?.layoutIfNeeded()
+            scrollView?.layoutIfNeeded()
+        }
+    }
+
+    private func refreshMultilineLayout() {
+        applyLabelWidths(forceLayout: true)
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
+    }
+
+    override func viewWillLayoutSubviews() {
+        applyLabelWidths()
+        super.viewWillLayoutSubviews()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        refreshMultilineLayout()
     }
     
     func loaddata(){
@@ -103,6 +193,7 @@ class CreditsVC: UIViewController {
             }
         group.notify(queue: DispatchQueue.main) {
             self.refreshControl.endRefreshing()
+            self.refreshMultilineLayout()
         }
         
     }
@@ -125,6 +216,7 @@ class CreditsVC: UIViewController {
                 else {
                     self.changecodeview.isHidden = true
                     self.promohint.text = "🔒 \(getLanguage["changecode_alert"] ?? "")"
+                    self.refreshMultilineLayout()
                 }
                 let alert = UIAlertController(title: nil, message: self.viewModel.ChangecodeModel?.message, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: getLanguage["ok"] ?? "", style: .cancel, handler: nil))
@@ -136,6 +228,7 @@ class CreditsVC: UIViewController {
             })
             group.notify(queue: DispatchQueue.main) {
                 self.refreshControl.endRefreshing()
+                self.refreshMultilineLayout()
             }
         }
     }
@@ -154,7 +247,9 @@ class CreditsVC: UIViewController {
     
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(self.barButtonAction(_:)), name: Notification.Name("BarButtonAction"), object: nil)
+        refreshMultilineLayout()
     }
     override func viewWillDisappear(_ animated: Bool) {
 
@@ -174,14 +269,5 @@ class CreditsVC: UIViewController {
             }
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

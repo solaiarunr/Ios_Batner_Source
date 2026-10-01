@@ -12,7 +12,7 @@ class LanguageViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
 //    var languageArray = ["english","french" ,"arabic"]
 //    var languageCode = ["en","fr", "ar"]
-    var languageArray = ["english"]
+    var languageArray = ["English"]
     var languageCode = ["en"]
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,14 +66,13 @@ extension LanguageViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LanguageTableViewCell") as! LanguageTableViewCell
         cell.titleLabel.text = (getLanguage[self.languageArray[indexPath.section].lowercased()] ?? "").capitalized
         cell.checkImageView.isHidden = true
-        if UserDefaultModule.shared.getAppLanguage().lowercased() == self.languageArray[indexPath.section] {
+        if UserDefaultModule.shared.getAppLanguage().lowercased() == self.languageArray[indexPath.section].lowercased() {
             cell.checkImageView.isHidden = false
         }
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         DEFAULT_LANGUAGE_CODE = self.languageCode[indexPath.section]
-      
         UserDefaults.standard.set([DEFAULT_LANGUAGE_CODE], forKey: "AppleLanguages")
         UserDefaultModule.shared.setAppLanguage(language: self.languageArray[indexPath.section].capitalized)
         Utility.shared.configureLanguage()

@@ -57,7 +57,7 @@ class StoryAllCollectionCell: UICollectionViewCell,UIScrollViewDelegate, UIGestu
     @IBOutlet weak var callStack: UIStackView!
     @IBOutlet weak var itemconditionlbl: UIButton!
     @IBOutlet weak var prroducttitlename: UILabel!
-    @IBOutlet weak var prroductprice: UILabel!
+    @IBOutlet weak var prroductprice: PaddingLabel!
     @IBOutlet weak var DesTv: UITextView!
     @IBOutlet weak var DesTvHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var DaysCountLbl: UILabel!
@@ -79,15 +79,10 @@ class StoryAllCollectionCell: UICollectionViewCell,UIScrollViewDelegate, UIGestu
     @IBOutlet weak var imageBtn: UIButton!
     @IBOutlet weak var MakeAnOfferbtn: UIButton!
     @IBOutlet weak var NeedStack: UIStackView!
-    
     @IBOutlet weak var layerview: UIStackView!
-    
     @IBOutlet weak var MoreBtnNew: UIButton!
-    
     @IBOutlet weak var DesLblew: UILabel!
-    
     @IBOutlet weak var MoreViewCorner: UIView!
-    
     @IBOutlet weak var MoreBtnNewview: UIView!
     
     
@@ -450,15 +445,13 @@ class StoryAllCollectionCell: UICollectionViewCell,UIScrollViewDelegate, UIGestu
         self.adstatusView.backgroundColor = UIColor(named: "newurgentcolor")
         self.urgentstatusView.backgroundColor = UIColor(named: "newurgentcolor")
         
-//        itemconditionlbl.contentEdgeInsets = .zero
-//        itemconditionlbl.titleEdgeInsets = .zero
-//        itemconditionlbl.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-//        itemconditionlbl.setContentCompressionResistancePriority(.required, for: .horizontal)
-//        itemconditionlbl.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-//        itemconditionlbl.sizeToFit()
-//       self.itemconditionlbl.layer.cornerRadius = 5
-////        itemconditionlbl.layer.cornerRadius = itemconditionlbl.frame.height / 1.5
-//        self.itemconditionlbl.clipsToBounds = true
+        itemconditionlbl.contentEdgeInsets = .zero
+        itemconditionlbl.titleEdgeInsets = .zero
+        itemconditionlbl.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        itemconditionlbl.setContentCompressionResistancePriority(.required, for: .horizontal)
+        itemconditionlbl.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        itemconditionlbl.sizeToFit()
+        self.itemconditionlbl.clipsToBounds = true
         self.itemconditionlbl.config(color: UIColor(named: "greencolortxt"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.center, title: "")
         //solai
         self.imagelistcv.register(UINib(nibName: "PhotocellCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "PhotocellCollectionViewCell")
@@ -466,7 +459,11 @@ class StoryAllCollectionCell: UICollectionViewCell,UIScrollViewDelegate, UIGestu
         self.imagelistcv.dataSource = self
         
         self.prroducttitlename.config(color: UIColor(named: "greencolortxt"), font: UIFont(name: APP_FONT_BOLD, size: 14), align:.left, text: "")
-        self.prroductprice.config(color: UIColor(named: "AppThemeColorNew"), font: UIFont(name: APP_FONT_BOLD, size: 20), align:.left, text: "")
+        self.prroductprice.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_BOLD, size: 14), align:.center, text: "")
+        self.prroductprice.leftInset = 10
+        self.prroductprice.rightInset = 10
+        self.prroductprice.topInset = 4
+        self.prroductprice.bottomInset = 4
     
         DesTv.delegate = self
         self.DesTv.textColor = UIColor(named: "greencolortxt")
@@ -486,8 +483,13 @@ class StoryAllCollectionCell: UICollectionViewCell,UIScrollViewDelegate, UIGestu
         Locationbtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: -spacing, bottom: 0, right: spacing)
         Locationbtn.titleEdgeInsets = UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: -spacing)
         
+        
+        self.prroductprice.layer.cornerRadius = 5
+         self.prroductprice.clipsToBounds = true
+        self.prroductprice.backgroundColor = UIColor(named: "AppThemeColorNew")
+        
+        
        self.Locationbtn.layer.cornerRadius = 5
-//        Locationbtn.layer.cornerRadius = Locationbtn.frame.height / 1.8
         self.Locationbtn.clipsToBounds = true
         self.Locationbtn.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.center, title: "")
         self.buyNowButton.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 16), align: .center, title: "instantbuy")
@@ -496,8 +498,8 @@ class StoryAllCollectionCell: UICollectionViewCell,UIScrollViewDelegate, UIGestu
         self.chatButton.config(color: UIColor(named: "AppThemeColorNew"), font: UIFont(name: APP_FONT_REGULAR, size: 16), align: .center, title: "chat")
         self.NewShareLbl.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.center, text: "share")
         self.NewShareLbl.text = "\(getLanguage["share"] ?? "")"
-        self.CallLbl.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.left, text: "Call")
-        self.ExchageLbl.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.left, text: "Exchange")
+        self.CallLbl.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.center, text: "Call")
+        self.ExchageLbl.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.center, text: "Exchange")
         self.MoreLbl.config(color: UIColor(named: "whitecolor"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align:.center, text: "More")
         self.MoreLbl.text = "\(getLanguage["More"] ?? "")"
 //        self.setTextViewPadding(self.DesTv, centerVertically: true)
@@ -584,7 +586,19 @@ class StoryAllCollectionCell: UICollectionViewCell,UIScrollViewDelegate, UIGestu
         self.productID.removeAll()
         self.productID.append(playerData.products)
         print("self.productID:\(self.productID)")
-        self.itemconditionlbl.setTitle(playerData.itemCondition, for: .normal)
+        let cleanCondition = (playerData.itemCondition ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        if !cleanCondition.isEmpty,
+           cleanCondition != "0",
+           cleanCondition.lowercased() != "null",
+           cleanCondition.lowercased() != "(null)",
+           cleanCondition.lowercased() != "<null>",
+           cleanCondition.lowercased() != "json error" {
+            self.itemconditionlbl.isHidden = false
+            self.itemconditionlbl.setTitle(cleanCondition, for: .normal)
+            self.itemconditionlbl.sizeToFit()
+        } else {
+            self.itemconditionlbl.isHidden = true
+        }
         DesTv.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         DesTv.layer.cornerRadius = 5
         DesTv.clipsToBounds = true
@@ -596,12 +610,16 @@ class StoryAllCollectionCell: UICollectionViewCell,UIScrollViewDelegate, UIGestu
         cmntLbl.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         shareLbl.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         NewShareLbl.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        CallLbl.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         MoreLbl.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        ExchageLbl.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         likeLbl.cornerViewMiniumRadiuslight()
         cmntLbl.cornerViewMiniumRadiuslight()
         shareLbl.cornerViewMiniumRadiuslight()
         NewShareLbl.cornerViewMiniumRadiuslight()
         MoreLbl.cornerViewMiniumRadiuslight()
+        CallLbl.cornerViewMiniumRadiuslight()
+        ExchageLbl.cornerViewMiniumRadiuslight()
         MoreViewCorner.clipsToBounds = true
         DaysCountLbl.clipsToBounds = true
         itemconditionlbl.clipsToBounds = true
@@ -667,7 +685,7 @@ class StoryAllCollectionCell: UICollectionViewCell,UIScrollViewDelegate, UIGestu
         if let dateVal = date {
             self.DaysCountLbl.text = " \(Date().offset(from: dateVal)) "
         }
-        self.Locationbtn.setTitle(playerData.location, for: .normal)
+        self.Locationbtn.setTitle(playerData.location.displayLocation, for: .normal)
         
         if (playerData.photos.count ?? 0) >= 1 {
             self.imagelistcv.isHidden = false
@@ -703,8 +721,13 @@ class StoryAllCollectionCell: UICollectionViewCell,UIScrollViewDelegate, UIGestu
           
         }
         if playerData.totalPrice == 0 {
-            self.prroductprice.textColor  = UIColor(named: "AppThemeColorNew")
-            self.prroductprice.text = "Giving away"
+            self.prroductprice.textColor  = UIColor(named: "whitecolor")
+            if  UserDefaultModule.shared.getAppLanguage() == "Czech"{
+                self.prroductprice.text = "Darovat"
+            }else{
+                self.prroductprice.text = "Giving away"
+            }
+          
         }else{
             self.prroductprice.text = playerData.formattedPrice
         }
@@ -726,11 +749,11 @@ class StoryAllCollectionCell: UICollectionViewCell,UIScrollViewDelegate, UIGestu
         self.descriptionDelegate?.showpopup(txt: self.fullDescriptionText)
     }
     func applyOverlayBorders() {
-        MoreViewCorner.updateborder(color: UIColor.black, borderWidth: 1, radius: 5)
-        DaysCountLbl.updateborder(color: UIColor.black, borderWidth: 1, radius: 5)
-        itemconditionlbl.updateborder(color: UIColor.black, borderWidth: 1, radius: 5)
-        layerview.updateborder(color: UIColor.black, borderWidth: 1, radius: 5)
-        Locationbtn.updateborder(color: UIColor.black, borderWidth: 1, radius: 5)
+        MoreViewCorner.updateborder(color: UIColor.black, borderWidth: 0, radius: 5)
+        DaysCountLbl.updateborder(color: UIColor.black, borderWidth: 0, radius: 5)
+        itemconditionlbl.updateborder(color: UIColor.black, borderWidth: 0, radius: 5)
+        layerview.updateborder(color: UIColor.black, borderWidth: 0, radius: 5)
+        Locationbtn.updateborder(color: UIColor.black, borderWidth: 0, radius: 5)
 //        likeLbl.updateborder(color: UIColor.black, borderWidth: 1, radius: 5)
 //        cmntLbl.updateborder(color: UIColor.black, borderWidth: 1, radius: 5)
 //        shareLbl.updateborder(color: UIColor.black, borderWidth: 1, radius: 5)

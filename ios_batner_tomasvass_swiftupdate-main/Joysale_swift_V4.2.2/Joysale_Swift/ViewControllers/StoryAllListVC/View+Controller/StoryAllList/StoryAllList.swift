@@ -115,6 +115,7 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
     var savedPlayerIndex: IndexPath?
     var newOffset = 0
     var isReturningFromLogin = false
+    var lastViewedItemId: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         Backview.layer.cornerRadius = Backview.frame.width / 2
@@ -166,6 +167,7 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
         self.isPlayVideo = false
         NotificationCenter.default.removeObserver(self)
         savedPlayerIndex = currentPlayerIndex  // ✅ save current position
+        lastViewedItemId = nil
     }
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return self.updateStatusBarStyle()
@@ -211,6 +213,22 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
         NotificationCenter.default.removeObserver(self,
                                                   name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
                                                   object: nil)
+    }
+    
+    func trackViewCount(forIndex index: Int) {
+        guard index >= 0 && index < self.storyModel.count else { return }
+        let item = self.storyModel[index]
+        let itemId = (item.id != 0 && item.id != nil) ? "\(item.id!)" : (item.products ?? "")
+        
+        guard itemId != "" && itemId != "0" else { return }
+        if lastViewedItemId == itemId {
+            return
+        }
+        lastViewedItemId = itemId
+        
+        let userId = UserDefaultModule.shared.getUserData()?.user_id ?? ""
+        self.itemdetailsmodel.updateViewCount(item_id: itemId, user_id: userId)
+        print("StoryAllList: updated view count for item_id \(itemId), user_id: \(userId)")
     }
     
     func configUI() {
@@ -699,6 +717,7 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
             else {
                 print("herecomes page is havig data3:\(self.storyModel.count)")
                 self.noDataStackView.isHidden = true
+                self.trackViewCount(forIndex: self.currentPlayerIndex.item)
             }
             self.loadFilterData()
         }
@@ -875,7 +894,8 @@ class StoryAllList: UIViewController,UIScrollViewDelegate,playpassdelegate {
             }else{
                 let pageObj = ViewProfileViewController()
                 pageObj.isTabBar = false
-                pageObj.userId = "\(self.storyModel[sender.tag].publisherId ?? "")"
+                print("msmsms","\(self.storyModel[sender.tag].publisherId ?? "")")
+                pageObj.userId = "\(self.storyModel[sender.tag].sellerId ?? "")"
                 self.navigationController?.pushViewController(pageObj, animated: true)
             }
         }else{
@@ -1854,6 +1874,7 @@ extension StoryAllList: UICollectionViewDelegate, UICollectionViewDataSource, UI
             self.stopAllPlayer()
             self.isStopPlayer = currentPlayerIndex.row
         }
+        self.trackViewCount(forIndex: currentPlayerIndex.item)
         if let cell = self.collectionView.cellForItem(at: currentPlayerIndex) as? StoryAllCollectionCell {
             if let vc = self.appdelegate?.window?.visibleViewController() {
                 //             if vc is StoryAllList {
@@ -2238,6 +2259,7 @@ extension StoryAllList: UICollectionViewDelegate, UICollectionViewDataSource, UI
                         print("the print check for 4")
                         if checkVisibilityOfCell(cell: cell1, indexPath: index) {
                             currentPlayerIndex = index
+                            self.trackViewCount(forIndex: index.item)
                             cell1.selectedindex = 0
                             cell1.imagelistcv.reloadData()
                             print("storyModel.count-1 : \(storyModel.count-1) currentPlayerIndex.item : \(currentPlayerIndex.item)")

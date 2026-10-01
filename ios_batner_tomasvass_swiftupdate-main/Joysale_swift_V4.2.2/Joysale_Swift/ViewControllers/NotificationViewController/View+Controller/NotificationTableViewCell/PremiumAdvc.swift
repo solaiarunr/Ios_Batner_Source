@@ -24,12 +24,17 @@ class PremiumAdvc: UIViewController {
     @IBOutlet weak var ExpireLbl: UILabel!
     @IBOutlet weak var ExpireDateLbl: UILabel!
     @IBOutlet weak var DesLbl: UILabel!
+    @IBOutlet weak var DesViews: UIView!
     
     @IBOutlet weak var promotion4Label: UILabel!
     @IBOutlet weak var promotion3Label: UILabel!
     @IBOutlet weak var promotion2Label: UILabel!
     @IBOutlet weak var promotion1Label: UILabel!
     let delegate = UIApplication.shared.delegate as! AppDelegate
+    
+    private var tableViewHeightConstraint: NSLayoutConstraint?
+    private var desViewsHeightConstraint: NSLayoutConstraint?
+    private var contentSizeObservation: NSKeyValueObservation?
     
     var selectedIndex: IndexPath?
     var viewModel = PremiumAdViewModel()
@@ -89,28 +94,42 @@ class PremiumAdvc: UIViewController {
     func CheckPlanDeatilsApi(){
         Utility.shared.startAnimation(viewController: self)
         ADMIN_VIEW_MODEL.GetAdStatus(user_id:UserDefaultModule.shared.getUserData()?.user_id ?? "",onSuccess: { (success) in
-            Utility.shared.stopAnimation(viewController: self)
-            if success == "true" {
-                self.DesLbl.text = ADMIN_VIEW_MODEL.adModel?.ad_desc ?? "Ad Free Ad Plans"
-                if ADMIN_VIEW_MODEL.adModel?.adstatus ?? "" == "disable" {
-                    self.PlanView.isHidden = false
-//                    self.DesLbl.text = ADMIN_VIEW_MODEL.adModel?.ad_desc ?? "Ad Free Ad Plans"
-                    self.PlanNameDetailLbl.text = ADMIN_VIEW_MODEL.adModel?.plan_name
-                    self.PlanNameDaysDetailLbl.text = "\(ADMIN_VIEW_MODEL.adModel?.plan_days ?? "") Days"
-                    if let expiry = ADMIN_VIEW_MODEL.adModel?.expiry_date {
-                        let dateString = self.convertTimestampToDate(TimeInterval(expiry) ?? 0.8999)
-                        self.ExpireDateLbl.text = dateString
-                    } else {
-                        self.ExpireDateLbl.text = "-"
-                    }
+            DispatchQueue.main.async {
+                Utility.shared.stopAnimation(viewController: self)
+                if success == "true" {
+                    self.DesLbl.text = ADMIN_VIEW_MODEL.adModel?.ad_desc ?? "Ad Free Ad Plans"
 
-                }else{
-                    self.PlanView.isHidden = true
+                    self.DesLbl.numberOfLines = 0
+                    self.DesLbl.lineBreakMode = .byWordWrapping
+                    self.DesLbl.adjustsFontSizeToFitWidth = false
+
+                    self.DesLbl.setContentHuggingPriority(.required, for: .vertical)
+                    self.DesLbl.setContentCompressionResistancePriority(.required, for: .vertical)
+                    self.updateDesViewsHeight()
+                    self.view.setNeedsLayout()
+                    self.view.layoutIfNeeded()
+
+                    if ADMIN_VIEW_MODEL.adModel?.adstatus ?? "" == "disable" {
+                        self.PlanView.isHidden = false
+                        self.PlanNameDetailLbl.text = ADMIN_VIEW_MODEL.adModel?.plan_name
+                        self.PlanNameDaysDetailLbl.text = "\(ADMIN_VIEW_MODEL.adModel?.plan_days ?? "") Days"
+                        if let expiry = ADMIN_VIEW_MODEL.adModel?.expiry_date {
+                            let dateString = self.convertTimestampToDate(TimeInterval(expiry) ?? 0.8999)
+                            self.ExpireDateLbl.text = dateString
+                        } else {
+                            self.ExpireDateLbl.text = "-"
+                        }
+
+                    }else{
+                        self.PlanView.isHidden = true
+                    }
+                    self.loadData()
                 }
-                self.loadData()
             }
         }, onFailure: { (failure) in
-            Utility.shared.stopAnimation(viewController: self)
+            DispatchQueue.main.async {
+                Utility.shared.stopAnimation(viewController: self)
+            }
         })
         
     }
@@ -159,6 +178,29 @@ class PremiumAdvc: UIViewController {
         self.promotion3Label.config(color: UIColor(named: "whitecolorfir"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align: .left, text: "")
         self.promotion4Label.config(color: UIColor(named: "whitecolorfir"), font: UIFont(name: APP_FONT_REGULAR, size: 14), align: .left, text: "")
         
+        // Allow every feature-bullet label to wrap onto multiple lines instead of truncating.
+        for label in [promotion1Label, promotion2Label, promotion3Label, promotion4Label] {
+            guard let lbl = label, let parent = lbl.superview else { continue }
+            lbl.numberOfLines = 0
+            lbl.lineBreakMode = .byWordWrapping
+            lbl.setContentHuggingPriority(.required, for: .vertical)
+            lbl.setContentCompressionResistancePriority(.required, for: .vertical)
+            
+            // Remove existing vertical constraints on the label to prevent conflicts
+            let verticalConstraints = parent.constraints.filter { constraint in
+                (constraint.firstItem as? UIView == lbl || constraint.secondItem as? UIView == lbl) &&
+                (constraint.firstAttribute == .top || constraint.firstAttribute == .bottom || constraint.firstAttribute == .centerY ||
+                 constraint.secondAttribute == .top || constraint.secondAttribute == .bottom || constraint.secondAttribute == .centerY)
+            }
+            parent.removeConstraints(verticalConstraints)
+            
+            lbl.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                lbl.topAnchor.constraint(equalTo: parent.topAnchor, constant: 8),
+                lbl.bottomAnchor.constraint(equalTo: parent.bottomAnchor, constant: -8)
+            ])
+        }
+        
         self.promotion1Label.text = getLanguage["add_list1"] ?? ""
         self.promotion2Label.text = getLanguage["add_list2"] ?? ""
         self.promotion3Label.text = getLanguage["add_list3"] ?? ""
@@ -169,6 +211,31 @@ class PremiumAdvc: UIViewController {
         
         tableView.register(UINib(nibName: "PreAdcellTableViewCell", bundle: nil), forCellReuseIdentifier: "PreAdcellTableViewCell")
         
+        tableView.backgroundColor = .clear
+        tableView.isScrollEnabled = false
+        tableView.sectionHeaderHeight = CGFloat.leastNormalMagnitude
+        tableView.sectionFooterHeight = CGFloat.leastNormalMagnitude
+        
+        if let existingHeightConstraint = tableView.constraints.first(where: { $0.firstAttribute == .height && $0.secondItem == nil }) {
+            tableViewHeightConstraint = existingHeightConstraint
+        } else {
+            tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: 370)
+            tableViewHeightConstraint?.isActive = true
+        }
+        
+        if let existingDesHeightConstraint = DesViews.constraints.first(where: { $0.firstAttribute == .height && $0.secondItem == nil }) {
+            desViewsHeightConstraint = existingDesHeightConstraint
+        } else {
+            desViewsHeightConstraint = DesViews.heightAnchor.constraint(equalToConstant: 50)
+            desViewsHeightConstraint?.isActive = true
+        }
+        
+        contentSizeObservation = tableView.observe(\.contentSize, options: .new) { [weak self] tableView, change in
+            guard let self = self, let newSize = change.newValue else { return }
+            self.tableViewHeightConstraint?.constant = newSize.height
+            self.view.layoutIfNeeded()
+        }
+        
         Continue.cornerMiniumRadius()
         Continue.backgroundColor = UIColor(named: "AppThemeColorNew")
         Continue.config(color: UIColor(named: "whitecolor"),
@@ -176,8 +243,41 @@ class PremiumAdvc: UIViewController {
                         align: .center,
                         title: "continue")
        
+        self.DesLbl.numberOfLines = 0
+        self.DesLbl.lineBreakMode = .byWordWrapping
+        self.DesLbl.setContentHuggingPriority(.required, for: .vertical)
+        self.DesLbl.setContentCompressionResistancePriority(.required, for: .vertical)
+        
+        if let parent = self.DesLbl.superview {
+            let existingConstraints = parent.constraints.filter { constraint in
+                (constraint.firstItem as? UIView == self.DesLbl || constraint.secondItem as? UIView == self.DesLbl) &&
+                (constraint.firstAttribute == .leading || constraint.firstAttribute == .trailing ||
+                 constraint.secondAttribute == .leading || constraint.secondAttribute == .trailing)
+            }
+            parent.removeConstraints(existingConstraints)
+            
+            NSLayoutConstraint.activate([
+                self.DesLbl.leadingAnchor.constraint(equalTo: parent.leadingAnchor, constant: 16),
+                self.DesLbl.trailingAnchor.constraint(equalTo: parent.trailingAnchor, constant: -16)
+            ])
+        }
+        
         CheckPlanDeatilsApi()
 //        loadData()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.updateDesViewsHeight()
+    }
+    
+    private func updateDesViewsHeight() {
+        let width = self.DesLbl.frame.width > 0 ? self.DesLbl.frame.width : (self.view.frame.width - 32)
+        let size = self.DesLbl.sizeThatFits(CGSize(width: width, height: .greatestFiniteMagnitude))
+        let targetHeight = size.height + 10
+        if self.desViewsHeightConstraint?.constant != targetHeight {
+            self.desViewsHeightConstraint?.constant = targetHeight
+        }
     }
     
     func sortMatchedProductsByPrice() {
@@ -355,6 +455,8 @@ class PremiumAdvc: UIViewController {
                 self.Continue.isHidden = false
                 self.DesLbl.isHidden = false   // 👈 Always show when count >= 1
             }
+            self.view.setNeedsLayout()
+            self.view.layoutIfNeeded()
         }
     }
 
@@ -421,5 +523,7 @@ extension PremiumAdvc: UITableViewDelegate, UITableViewDataSource {
         tableView.reloadData()
     }
 }
+
+
 
 

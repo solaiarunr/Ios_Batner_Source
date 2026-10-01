@@ -87,16 +87,31 @@ class FollowAndReviewTableCell: UITableViewCell {
         self.reviewDescLabel.text = reviewData.reviewDes
     }
     
+//    override func layoutSubviews() {
+//        if self.followStatus == "follow" {
+//            self.followButton.setImage(#imageLiteral(resourceName: "Follow"), for: .normal)
+//            self.followButton.backgroundColor = UIColor(named: "AppThemeColorNew")
+//            self.followButton.tintColor = UIColor(named: "whitecolor")
+//        }
+//        else {
+//            self.followButton.setImage(#imageLiteral(resourceName: "unFollow"), for: .normal)
+//            self.followButton.backgroundColor = UIColor(named: "FollwerButtonColor")
+//            self.followButton.tintColor = UIColor(named: "lightWhite")
+//        }
+//    }
     override func layoutSubviews() {
+        super.layoutSubviews()
+        guard !self.followButton.isHidden else { return }
         if self.followStatus == "follow" {
             self.followButton.setImage(#imageLiteral(resourceName: "Follow"), for: .normal)
-            self.followButton.backgroundColor = UIColor(named: "AppThemeColorNew")
-            self.followButton.tintColor = UIColor(named: "whitecolor")
-        }
-        else {
+            self.followButton.backgroundColor = UIColor(named: "AppThemeColor")
+            self.followButton.tintColor = .white
+        } else {
             self.followButton.setImage(#imageLiteral(resourceName: "unFollow"), for: .normal)
             self.followButton.backgroundColor = UIColor(named: "FollwerButtonColor")
             self.followButton.tintColor = UIColor(named: "lightWhite")
         }
     }
+
+    
 }
